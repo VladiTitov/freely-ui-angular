@@ -1,0 +1,63 @@
+:host {
+  position: relative;
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+}
+
+/* Lies over the cells and takes every tap, but shows nothing itself: the cells draw the code. */
+.fy-code-input__native {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: transparent;
+  caret-color: transparent;
+  font-size: 16px;
+  letter-spacing: 0;
+  opacity: 0.01;
+  cursor: text;
+}
+
+.fy-code-input__cells {
+  display: flex;
+  gap: var(--fy-code-input-gap, var(--fy-space-s));
+}
+
+.fy-code-input__cell {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--fy-code-input-cell-width, 44px);
+  height: var(--fy-code-input-cell-height, 52px);
+  border: 1px solid var(--fy-code-input-border-color, var(--fy-tertiary-background));
+  border-radius: var(--fy-code-input-radius, var(--fy-radius-md));
+  background: var(--fy-code-input-background, var(--fy-primary-background));
+  color: var(--fy-primary-text);
+  font-family: var(--fy-font-family);
+  font-size: var(--fy-font-size-xl);
+  font-variant-numeric: tabular-nums;
+  transition: border-color var(--fy-duration-base) ease;
+}
+
+.fy-code-input__cell--active {
+  border-color: var(--fy-code-input-focus-color, var(--fy-accent));
+}
+
+:host(.fy-code-input--invalid) .fy-code-input__cell {
+  border-color: var(--fy-danger);
+}
+
+:host(.fy-code-input--disabled) {
+  opacity: 0.5;
+}
+
+:host(.fy-code-input--disabled) .fy-code-input__native {
+  cursor: default;
+}

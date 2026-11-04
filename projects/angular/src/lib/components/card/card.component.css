@@ -1,0 +1,119 @@
+:host {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--fy-card-gap, 6px);
+  min-width: 0;
+  padding: var(--fy-card-padding, var(--fy-space-m) var(--fy-space-m) var(--fy-space-m) 18px);
+  border-radius: var(--fy-card-radius, var(--fy-radius-lg));
+  background: var(--fy-card-background, var(--fy-secondary-background));
+  color: var(--fy-primary-text);
+  font-family: var(--fy-font-family);
+}
+
+/* The label or the figure, and the action at the end of the row. */
+.fy-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fy-space-s);
+}
+
+:host(.fy-card--labelled) .fy-card__head {
+  align-items: flex-start;
+}
+
+.fy-card__label {
+  padding-top: var(--fy-space-xs);
+  color: var(--fy-card-label-color, var(--fy-secondary-text));
+  font-size: var(--fy-card-label-size, var(--fy-font-size-l));
+  font-weight: 500;
+}
+
+/* Under a label the figure sits low, as on a card: the label on top, the number and its lines at the bottom. */
+.fy-card__figure {
+  margin-top: var(--fy-card-figure-offset, auto);
+  margin-bottom: var(--fy-space-s);
+}
+
+.fy-card__value-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--fy-card-value-gap, 10px);
+  min-width: 0;
+  animation: fy-card-content-in 0.35s ease-out both;
+}
+
+.fy-card__value {
+  color: var(--fy-primary-text);
+  font-size: var(--fy-card-value-size, var(--fy-font-size-xxl));
+  font-weight: 600;
+  line-height: 1.1;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.fy-card__value-skeleton {
+  width: var(--fy-card-value-skeleton-width, 32px);
+  height: var(--fy-card-value-skeleton-height, 24px);
+}
+
+.fy-card__caption {
+  margin-top: 2px;
+  padding-right: var(--fy-space-s);
+  overflow: hidden;
+  color: var(--fy-secondary-text);
+  font-size: var(--fy-font-size-m);
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  animation: fy-card-content-in 0.35s ease-out both;
+}
+
+.fy-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fy-card-body-gap, var(--fy-space-m));
+}
+
+.fy-card__body:empty,
+.fy-card__footer:empty {
+  display: none;
+}
+
+.fy-card__lines-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fy-space-xs);
+  margin-top: 2px;
+}
+
+.fy-card__line-skeleton {
+  width: var(--fy-card-line-skeleton-width, 90%);
+  height: 14px;
+}
+
+.fy-card__line-skeleton--short {
+  width: 60%;
+}
+
+.fy-card__footer {
+  display: flex;
+  gap: var(--fy-space-s);
+  margin-top: auto;
+}
+
+@keyframes fy-card-content-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fy-card__value-row,
+  .fy-card__caption {
+    animation: none;
+  }
+}

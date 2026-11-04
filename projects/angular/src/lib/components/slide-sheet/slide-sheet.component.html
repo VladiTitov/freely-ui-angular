@@ -1,0 +1,39 @@
+<div class="fy-slide-sheet-backdrop" (click)="isFull() || close()"></div>
+
+<section class="fy-slide-sheet" [class.fy-slide-sheet--full]="isFull()" role="dialog" aria-modal="true"
+  [attr.aria-label]="label() ?? caption()">
+  <div class="fy-slide-sheet__top">
+    @if (isFull()) {
+      @if (!isLast()) {
+        <button type="button" class="fy-slide-sheet__skip fy-label" [fyHaptic]="HapticImpact.Light" (click)="close()">{{ labels().slideSkip }}</button>
+      }
+    } @else {
+      <span class="fy-label fy-slide-sheet__caption">{{ caption() }}</span>
+      <button type="button" fyButton variant="tertiary" iconOnly [attr.aria-label]="labels().close"
+        [fyHaptic]="HapticImpact.Light" (click)="close()">
+        <i [class]="icons.close" aria-hidden="true"></i>
+      </button>
+    }
+  </div>
+
+  <div #track class="fy-slide-sheet__track fy-scrollbar-hidden" (scroll)="onScroll(track)">
+    @for (slide of slides(); track slide) {
+      <div class="fy-slide-sheet__slide">
+        <ng-container [ngTemplateOutlet]="slide.template" />
+      </div>
+    }
+  </div>
+
+  @if (slides().length > 1) {
+    <div class="fy-slide-sheet__dots" aria-hidden="true">
+      @for (slide of slides(); track slide) {
+        <span class="fy-slide-sheet__dot" [class.fy-slide-sheet__dot--active]="$index === index()"></span>
+      }
+    </div>
+  }
+
+  <button type="button" fyButton size="l" block class="fy-slide-sheet__next" [class.fy-slide-sheet__next--quiet]="isLast() && quietDone()"
+    [fyHaptic]="HapticImpact.Medium" (click)="next()">
+    {{ isLast() ? (doneLabel() ?? labels().slideDone) : labels().slideNext }}
+  </button>
+</section>

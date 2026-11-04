@@ -1,0 +1,68 @@
+:host {
+  display: block;
+}
+
+.fy-modal-panel {
+  /* Whatever `fy-modal` leaves between its paddings: the screen minus the safe areas and the gaps. */
+  --fy-modal-panel-max-height: calc(100vh - var(--fy-safe-top) - var(--fy-safe-bottom) - 2 * var(--fy-modal-gap-y, 15px));
+
+  width: 100%;
+  /* `none` lets the panel fill a wider `fy-modal` (see `--fy-modal-width`). */
+  max-width: var(--fy-modal-panel-max-width, 375px);
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: var(--fy-radius-xl);
+  background-color: var(--fy-primary-background);
+}
+
+.fy-modal-panel,
+.fy-modal-panel * {
+  box-sizing: border-box;
+}
+
+.fy-modal-panel--tall,
+.fy-modal-panel--full {
+  display: flex;
+  flex-direction: column;
+  max-height: var(--fy-modal-panel-max-height);
+  overflow: hidden;
+}
+
+.fy-modal-panel--tall {
+  height: min(90vh, var(--fy-modal-panel-max-height));
+}
+
+.fy-modal-panel--full {
+  height: var(--fy-modal-panel-max-height);
+}
+
+.fy-modal-panel__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  margin-bottom: var(--fy-space-l);
+}
+
+.fy-modal-panel__actions {
+  display: flex;
+  gap: var(--fy-space-s);
+}
+
+.fy-modal-panel--tall > .fy-modal-panel__body,
+.fy-modal-panel--full > .fy-modal-panel__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.fy-modal-panel__footer {
+  flex-shrink: 0;
+  padding-top: var(--fy-space-l);
+}
+
+.fy-modal-panel__footer:empty {
+  display: none;
+}

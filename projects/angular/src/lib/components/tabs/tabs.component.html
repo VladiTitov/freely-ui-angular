@@ -1,0 +1,21 @@
+<div class="fy-tabs-track" role="tablist" [attr.aria-label]="ariaLabel">
+  @for (tab of tabs; track $index; let i = $index) {
+    <button
+      #tabButton
+      type="button"
+      role="tab"
+      class="fy-tabs-tab"
+      [class.fy-tabs-tab--active]="i === activeIndex"
+      [attr.aria-selected]="i === activeIndex"
+      fyHaptic="selection"
+      [attr.aria-label]="shortLabel(tab) ? label(tab) : null"
+      (click)="select(i)"
+    >
+      <span class="fy-tabs-label">{{ label(tab) }}</span>
+      @if (shortLabel(tab); as short) {
+        <span class="fy-tabs-label fy-tabs-label--short" aria-hidden="true">{{ short }}</span>
+      }
+    </button>
+  }
+  <span class="fy-tabs-indicator" #indicator></span>
+</div>

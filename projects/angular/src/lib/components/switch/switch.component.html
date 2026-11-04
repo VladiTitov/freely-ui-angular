@@ -1,0 +1,10 @@
+<input
+  #box
+  type="checkbox"
+  role="switch"
+  class="fy-switch"
+  [checked]="checked()"
+  [disabled]="disabled() || formDisabled()"
+  [attr.aria-label]="ariaLabel() || null"
+  (change)="toggle(box.checked)"
+  (blur)="onTouched()" />

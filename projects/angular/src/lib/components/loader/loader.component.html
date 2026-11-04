@@ -1,0 +1,5 @@
+@if (component(); as type) {
+  <ng-container *ngComponentOutlet="type; inputs: inputs()" />
+} @else {
+  <span class="fy-ring"></span>
+}

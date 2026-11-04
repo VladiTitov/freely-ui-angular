@@ -1,0 +1,13 @@
+<div class="fy-nav-toolbar">
+  <button type="button" [routerLink]="backLink" [fyHaptic]="HapticImpact.Light" fyButton variant="secondary" iconOnly
+    [attr.aria-label]="backLabel ?? labels().back">
+    <i [class]="icons.back" aria-hidden="true"></i>
+  </button>
+  <ng-content select="[actions]"></ng-content>
+</div>
+
+@if (title) {
+  <span class="fy-label fy-nav-title">{{ title }}</span>
+}
+
+<ng-content></ng-content>

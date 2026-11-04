@@ -1,0 +1,40 @@
+:host {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:host(:focus-visible) {
+  outline: 2px solid var(--fy-radio-accent, var(--fy-accent));
+  outline-offset: 2px;
+}
+
+:host(.fy-radio--dot) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fy-radio-gap, 10px);
+  border-radius: var(--fy-radius-md);
+  color: var(--fy-radio-color, inherit);
+  font-family: var(--fy-font-family);
+  font-size: var(--fy-radio-font-size, var(--fy-font-size-m));
+}
+
+.fy-radio__dot {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: var(--fy-radio-size, 22px);
+  height: var(--fy-radio-size, 22px);
+  border: 1.5px solid var(--fy-radio-border-color, var(--fy-secondary-text));
+  border-radius: 50%;
+  transition:
+    border-color var(--fy-duration-fast) ease,
+    border-width var(--fy-duration-fast) ease;
+}
+
+:host(.fy-radio--checked) .fy-radio__dot {
+  border: 6px solid var(--fy-radio-accent, var(--fy-accent));
+}
+
+:host(.fy-radio--disabled) {
+  opacity: 0.5;
+  cursor: default;
+}

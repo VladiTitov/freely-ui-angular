@@ -1,0 +1,32 @@
+<fy-search-bar
+  class="fy-search-panel__field"
+  [(value)]="query"
+  [placeholder]="placeholder()"
+  [ariaLabel]="ariaLabel()"
+  [clearLabel]="clearLabel()"
+  [debounce]="debounce()">
+  @if (filterable()) {
+    <button
+      #toggleButton
+      fyFilterToggle
+      searchBarTrailing
+      type="button"
+      class="fy-search-panel__toggle"
+      aria-haspopup="dialog"
+      [count]="activeCount()"
+      [icon]="filtersIcon()"
+      [attr.aria-label]="toggleLabel()"
+      [attr.aria-expanded]="isOpen()"
+      [attr.aria-controls]="panelId"
+      [fyHaptic]="HapticImpact.Light"
+      (click)="toggle()"></button>
+  }
+</fy-search-bar>
+
+<div #panel class="fy-search-panel__panel" role="dialog" [id]="panelId" [attr.aria-label]="filtersText()"
+  [hidden]="!isOpen()">
+  <ng-content />
+  <button type="button" class="fy-search-panel__reset" [disabled]="activeCount() === 0" [fyHaptic]="HapticImpact.Light" (click)="reset()">
+    {{ resetLabel() ?? labels().resetFilters }}
+  </button>
+</div>

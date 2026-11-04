@@ -1,0 +1,59 @@
+:host {
+  display: block;
+}
+
+.fy-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fy-pagination-gap, var(--fy-space-xs));
+}
+
+.fy-pagination__pages {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--fy-pagination-gap, var(--fy-space-xs));
+  min-width: 0;
+}
+
+.fy-pagination__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex: none;
+  min-width: var(--fy-pagination-size, 32px);
+  height: var(--fy-pagination-size, 32px);
+  padding: 0 var(--fy-space-xs);
+  border: 0;
+  border-radius: var(--fy-radius-full);
+  background: var(--fy-pagination-background, var(--fy-secondary-background));
+  color: var(--fy-pagination-color, var(--fy-primary-text));
+  font-family: var(--fy-font-family);
+  font-size: var(--fy-font-size-s);
+  cursor: pointer;
+  transition: background-color var(--fy-duration-base) ease, color var(--fy-duration-base) ease;
+}
+
+.fy-pagination__btn--current {
+  background: var(--fy-pagination-current-background, var(--fy-primary-text));
+  color: var(--fy-pagination-current-color, var(--fy-primary-background));
+}
+
+.fy-pagination__btn[disabled] {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.fy-pagination__gap {
+  color: var(--fy-secondary-text);
+  font-size: var(--fy-font-size-s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fy-pagination__btn {
+    transition: none;
+  }
+}

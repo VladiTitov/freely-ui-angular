@@ -1,0 +1,39 @@
+<section class="fy-image-grid">
+  <button type="button" class="fy-row-button" [fyHaptic]="HapticImpact.Light"
+          [disabled]="disabled() || full()" (click)="pickFiles()">
+    <span class="fy-row-label">{{ label() }}</span>
+    @if (max(); as max) {
+      <span class="fy-counter">{{ count() }} / {{ max }}</span>
+    }
+    @if (!full()) {
+      <fy-chip iconOnly surface="secondary" aria-hidden="true"><i [class]="icons.add"></i></fy-chip>
+    }
+  </button>
+
+  @if (count() > 0) {
+    <div class="fy-strip">
+      @for (image of kept(); track image.id) {
+        <div class="fy-tile">
+          <img [src]="image.url" alt="" loading="lazy" />
+          <button type="button" fyButton variant="ghost" iconOnly class="fy-remove-btn" [attr.aria-label]="labels().removeImage"
+                  [fyHaptic]="HapticImpact.Light" [disabled]="disabled()" (click)="removeExisting(image.id)">
+            <i [class]="icons.close" aria-hidden="true"></i>
+          </button>
+        </div>
+      }
+      @for (image of pending(); track image.key) {
+        <div class="fy-tile">
+          <img [src]="image.previewUrl" alt="" />
+          <button type="button" fyButton variant="ghost" iconOnly class="fy-remove-btn" [attr.aria-label]="labels().removeImage"
+                  [fyHaptic]="HapticImpact.Light" [disabled]="disabled()" (click)="removePending(image.key)">
+            <i [class]="icons.close" aria-hidden="true"></i>
+          </button>
+        </div>
+      }
+    </div>
+  }
+
+  @if (error()) {
+    <p class="fy-error">{{ error() }}</p>
+  }
+</section>

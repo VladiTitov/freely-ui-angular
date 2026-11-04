@@ -1,0 +1,45 @@
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "paths": {
+      "@freely-ui/angular": [
+        "./projects/angular/src/public-api.ts"
+      ],
+      "@freely-ui/angular/telegram": [
+        "./projects/angular/telegram/src/public-api.ts"
+      ],
+      "@freely-ui/angular/navigation": [
+        "./projects/angular/navigation/src/public-api.ts"
+      ]
+    },
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "preserve",
+    "strictPropertyInitialization": false
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/angular/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/angular/tsconfig.spec.json"
+    }
+  ]
+}

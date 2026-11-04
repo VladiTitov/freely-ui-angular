@@ -1,0 +1,21 @@
+<div class="fy-avatar-header__avatar">
+  <fy-user-avatar [fullName]="fullName" [imageUrl]="imageUrl" [size]="avatarSize" [fontSize]="avatarFontSize" />
+  <div class="fy-avatar-header__action">
+    <ng-content select="[avatarAction]" />
+  </div>
+</div>
+
+<div class="fy-avatar-header__text">
+  <span class="fy-label fy-avatar-header__primary">{{ resolvedPrimaryLabel }}</span>
+  @if (secondaryLabel) {
+    <span class="fy-label fy-avatar-header__secondary">{{ secondaryLabel }}</span>
+  }
+</div>
+
+<div class="fy-avatar-header__end">
+  <ng-content select="[avatarHeaderEnd]" />
+</div>
+
+<div class="fy-avatar-header__below">
+  <ng-content select="[avatarHeaderBelow]" />
+</div>

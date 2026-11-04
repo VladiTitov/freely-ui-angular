@@ -1,0 +1,15 @@
+<div class="fy-avatar-stack" [style.--fy-avatar-stack-size.px]="size">
+  @if (count === 0) {
+    <span class="fy-avatar-stack__item fy-avatar-stack__badge fy-avatar-stack__empty"><i [class]="emptyIcon"></i></span>
+  } @else {
+    @for (person of visible; track $index) {
+      <span class="fy-avatar-stack__item">
+        <fy-user-avatar [size]="size" [fontSize]="fontSize" [fullName]="person.name" [icon]="person.icon"
+          [imageUrl]="person.avatar?.thumbUrl" />
+      </span>
+    }
+    @if (hiddenCount > 0) {
+      <span class="fy-avatar-stack__item fy-avatar-stack__badge fy-avatar-stack__more">+{{ hiddenCount }}</span>
+    }
+  }
+</div>

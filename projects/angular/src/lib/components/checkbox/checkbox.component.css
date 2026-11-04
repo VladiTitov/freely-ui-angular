@@ -1,0 +1,73 @@
+:host {
+  display: inline-flex;
+}
+
+.fy-checkbox__label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fy-checkbox-gap, 10px);
+  color: var(--fy-checkbox-color, inherit);
+  font-family: var(--fy-font-family);
+  font-size: var(--fy-checkbox-font-size, var(--fy-font-size-m));
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Over the box and invisible: the box draws the state, the input keeps the keyboard and the form. */
+.fy-checkbox__native {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: var(--fy-checkbox-size, 22px);
+  height: var(--fy-checkbox-size, 22px);
+  margin: 0;
+  opacity: 0;
+  transform: translateY(-50%);
+  cursor: inherit;
+}
+
+.fy-checkbox__box {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--fy-checkbox-size, 22px);
+  height: var(--fy-checkbox-size, 22px);
+  border: 1.5px solid var(--fy-checkbox-border-color, var(--fy-secondary-text));
+  border-radius: var(--fy-checkbox-radius, 7px);
+  color: var(--fy-on-accent);
+  font-size: var(--fy-font-size-l);
+  line-height: 1;
+  transition:
+    background-color var(--fy-duration-fast) ease,
+    border-color var(--fy-duration-fast) ease;
+}
+
+.fy-checkbox__native:checked + .fy-checkbox__box,
+.fy-checkbox__native:indeterminate + .fy-checkbox__box {
+  border-color: var(--fy-checkbox-accent, var(--fy-accent));
+  background: var(--fy-checkbox-accent, var(--fy-accent));
+}
+
+.fy-checkbox__native:focus-visible + .fy-checkbox__box {
+  outline: 2px solid var(--fy-checkbox-accent, var(--fy-accent));
+  outline-offset: 2px;
+}
+
+.fy-checkbox__dash {
+  width: 10px;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+}
+
+.fy-checkbox__text:empty {
+  display: none;
+}
+
+:host(.fy-checkbox--disabled) .fy-checkbox__label {
+  opacity: 0.5;
+  cursor: default;
+}

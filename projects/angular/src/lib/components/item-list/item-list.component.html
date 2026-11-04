@@ -1,0 +1,91 @@
+@if (showToolbar) {
+  <div class="fy-item-list__toolbar" [class.fy-item-list__toolbar--sticky]="stickyToolbar" [fyItemListAutoHide]="stickyToolbar">
+    @if (searchable) {
+      <fy-search-bar
+        class="fy-item-list__search"
+        [value]="query"
+        (valueChange)="onQueryChange($event)"
+        [placeholder]="searchPlaceholder"
+        [clearLabel]="searchClearLabel">
+        <ng-container ngProjectAs="[searchBarTrailing]"><ng-content select="[itemListSearchTrailing]" /></ng-container>
+      </fy-search-bar>
+    }
+    @if (summary || hasSort) {
+      <div class="fy-item-list__meta">
+        <p class="fy-item-list__summary" aria-live="polite">{{ summary }}</p>
+        @if (hasSort) {
+          <fy-sort-menu
+            class="fy-item-list__sort"
+            [options]="sortOptions"
+            [value]="sort"
+            (valueChange)="onSortChange($event)"
+            [label]="sortLabel"/>
+        }
+      </div>
+    }
+  </div>
+}
+
+@if (error) {
+  <fy-empty-state
+    class="fy-item-list__error"
+    role="alert"
+    [icon]="errorIcon"
+    [label]="errorText"
+    [description]="errorDescription">
+    <button type="button" class="fy-item-list__retry" (click)="retry.emit()">{{ retryText ?? labels().retry }}</button>
+  </fy-empty-state>
+} @else if (loading) {
+  @if (loadingDef) {
+    <ng-container [ngTemplateOutlet]="loadingDef.template" />
+  } @else {
+    <div class="fy-item-list__status" role="status" aria-live="polite">
+      <span class="fy-item-list__spinner" aria-hidden="true"></span>
+    </div>
+  }
+} @else if (!isEmpty) {
+  <div class="fy-item-list__items" role="list" [attr.aria-label]="ariaLabel" [fyItemListFlip]="animated ? 300 : 0">
+    @for (item of visibleItems(); track trackItem($index, item); let index = $index, count = $count) {
+      <div class="fy-item-list__item" role="listitem"
+        [animate.enter]="animated ? 'fy-item-list__row-enter' : ''" [animate.leave]="animated ? 'fy-item-list__row-leave' : ''">
+        <ng-container
+          [ngTemplateOutlet]="itemDef?.template ?? null"
+          [ngTemplateOutletContext]="context(item, index, count)"
+          [ngTemplateOutletInjector]="rowInjector"/>
+      </div>
+    }
+  </div>
+  @if (hasNoResults) {
+    @if (noResultsDef) {
+      <div class="fy-item-list__no-results"
+        [animate.enter]="animated ? 'fy-item-list__placeholder-enter' : ''" [animate.leave]="animated ? 'fy-item-list__row-leave' : ''">
+        <ng-container [ngTemplateOutlet]="noResultsDef.template" [ngTemplateOutletContext]="{ $implicit: activeQuery() }" />
+      </div>
+    } @else {
+      <fy-empty-state
+        class="fy-item-list__no-results"
+        role="status"
+        [animate.enter]="animated ? 'fy-item-list__placeholder-enter' : ''"
+        [animate.leave]="animated ? 'fy-item-list__row-leave' : ''"
+        [icon]="noResultsIcon"
+        [label]="noResultsText"
+        [description]="noResultsDescription"/>
+    }
+  }
+} @else if (emptyDef) {
+  <div class="fy-item-list__empty"
+    [animate.enter]="animated ? 'fy-item-list__placeholder-enter' : ''" [animate.leave]="animated ? 'fy-item-list__row-leave' : ''">
+    <ng-container [ngTemplateOutlet]="emptyDef.template" />
+  </div>
+} @else if (hasBuiltInEmpty) {
+  <fy-empty-state
+    class="fy-item-list__empty"
+    role="status"
+    [animate.enter]="animated ? 'fy-item-list__placeholder-enter' : ''"
+    [animate.leave]="animated ? 'fy-item-list__row-leave' : ''"
+    [icon]="emptyIcon"
+    [label]="emptyText"
+    [description]="emptyDescription">
+    <ng-content select="[emptyAction]" />
+  </fy-empty-state>
+}

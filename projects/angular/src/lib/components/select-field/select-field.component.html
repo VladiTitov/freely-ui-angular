@@ -1,0 +1,23 @@
+@if (label()) {
+  <span class="fy-select-field__label" aria-hidden="true">{{ label() }}</span>
+}
+<fy-dropdown-menu class="fy-select-field__menu" align="start" [direction]="direction()" [label]="name()">
+  <button
+    fyDropdownTrigger
+    type="button"
+    [fyHaptic]="HapticImpact.Light"
+    class="fy-select-field__toggle"
+    [disabled]="formDisabled()"
+    (blur)="onTouched()"
+    [attr.aria-label]="name() ? name() + ': ' + (current()?.label ?? '') : null">
+    <span class="fy-select-field__current">{{ current()?.label }}</span>
+    <i class="fy-select-field__icon" [class]="icons.expand" aria-hidden="true"></i>
+  </button>
+
+  @for (option of options(); track $index) {
+    <button fyDropdownItem type="button" [checked]="option === current()" fyHaptic="selection" (click)="pick(option.value)">
+      <span>{{ option.label }}</span>
+      <i class="fy-dropdown-menu__check" [class]="icons.check" aria-hidden="true"></i>
+    </button>
+  }
+</fy-dropdown-menu>

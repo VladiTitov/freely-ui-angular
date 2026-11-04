@@ -1,0 +1,17 @@
+<div class="fy-modal-panel" [class.fy-modal-panel--tall]="height === 'tall'" [class.fy-modal-panel--full]="height === 'full'">
+  <div class="fy-modal-panel__header">
+    <span class="fy-label fy-secondary-label">{{ title }}</span>
+    <div class="fy-modal-panel__actions">
+      <!-- Buttons next to the close button, e.g. "delete". -->
+      <ng-content select="[panelActions]"></ng-content>
+      <button type="button" fyButton variant="tertiary" iconOnly [attr.aria-label]="closeLabel ?? labels().close"
+        [fyHaptic]="HapticImpact.Light" (click)="close.emit()">
+        <i [class]="icons.close" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="fy-modal-panel__body"><ng-content></ng-content></div>
+
+  <div class="fy-modal-panel__footer"><ng-content select="[panelFooter]"></ng-content></div>
+</div>

@@ -1,0 +1,23 @@
+<div #scroller class="fy-page-scroll-container fy-scrollbar-hidden">
+  @if (!bare) {
+    <header class="fy-page-header fy-sticky-wrapper">
+      <div class="fy-page-title-row">
+        <div class="fy-page-title-group">
+          <span class="fy-label fy-page-title">{{ title }}</span>
+          <!-- Small control right after the title, e.g. a help button. -->
+          <ng-content select="[titleAddon]"></ng-content>
+        </div>
+        <!-- Page-level action on the right of the title, e.g. the "Add" button. -->
+        <ng-content select="[action]"></ng-content>
+      </div>
+      <!-- Stays pinned together with the title, e.g. tabs. -->
+      <ng-content select="[subheader]"></ng-content>
+    </header>
+  }
+
+  <div class="fy-page-body">
+    <ng-content></ng-content>
+  </div>
+
+  <div class="fy-page-bottom-spacer"></div>
+</div>

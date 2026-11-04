@@ -1,0 +1,99 @@
+.fy-dock {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: var(--fy-navigation-dock-z-index, var(--fy-z-dock));
+}
+
+/* Row along the top or bottom edge, centred horizontally. */
+.fy-dock--top,
+.fy-dock--bottom {
+  left: 0;
+  right: 0;
+  margin: 10px auto;
+  max-width: var(--fy-navigation-dock-max-width, 375px) !important;
+  padding-left: calc(10px + var(--fy-safe-left));
+  padding-right: calc(10px + var(--fy-safe-right));
+}
+
+.fy-dock--top {
+  top: 0;
+  padding-top: var(--fy-safe-top);
+}
+
+.fy-dock--bottom {
+  bottom: 0;
+  padding-bottom: var(--fy-safe-bottom);
+}
+
+/* Column along the left or right edge, centred vertically. */
+.fy-dock--left,
+.fy-dock--right {
+  top: 0;
+  bottom: 0;
+  margin: auto 10px;
+  max-height: var(--fy-navigation-dock-max-height, 375px);
+  padding-top: calc(10px + var(--fy-safe-top));
+  padding-bottom: calc(10px + var(--fy-safe-bottom));
+}
+
+.fy-dock--left {
+  left: 0;
+  padding-left: var(--fy-safe-left);
+}
+
+.fy-dock--right {
+  right: 0;
+  padding-right: var(--fy-safe-right);
+}
+
+/* A bottom drawer takes over the bottom of the screen. */
+:host-context(.fy-drawer-open) .fy-dock {
+  display: none;
+}
+
+.fy-dock-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--fy-navigation-dock-item-color, var(--fy-secondary-text)) !important;
+  transition: all var(--fy-duration-slow) ease;
+  text-decoration: none;
+
+  &.fy-active {
+    background: var(--fy-navigation-dock-active-background, var(--fy-accent)) !important;
+    color: var(--fy-navigation-dock-active-color, var(--fy-primary-text)) !important;
+    box-shadow: var(--fy-shadow-s);
+  }
+
+  i {
+    font-size: 18px;
+  }
+}
+
+/* Frosted glass: a translucent tint over a blurred view of the page beneath. */
+.fy-menu {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 60px;
+    padding: 5px;
+    border-radius: 40px;
+    color: var(--fy-secondary-text);
+    background-color: color-mix(in srgb, var(--fy-navigation-dock-background, var(--fy-tertiary-background)) 55%, transparent);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid color-mix(in srgb, var(--fy-primary-text) 8%, transparent);
+    box-shadow:
+        inset 0 1px 0 color-mix(in srgb, #fff 18%, transparent),
+        0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.fy-dock--left .fy-menu,
+.fy-dock--right .fy-menu {
+    flex-direction: column;
+    width: 60px;
+    height: auto;
+}

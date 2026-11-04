@@ -1,0 +1,129 @@
+:host {
+  display: block;
+  --fy-navigation-drawer-strip: calc(var(--fy-navigation-drawer-width, 72px) + var(--fy-safe-left));
+}
+
+/*
+ * Covers the screen under the page, so whatever the page leaves open shows the menu.
+ * Hidden while the page is in place: Safari tints its bars after fixed layers at the edges of the screen,
+ * and a black one would paint them black over a page of another colour. It goes once the page is back.
+ */
+.fy-underlay,
+.fy-menu {
+  position: fixed;
+  visibility: hidden;
+  transition: visibility 0s 0.35s;
+}
+
+:host(.fy-navigation-drawer--pushed) :is(.fy-underlay, .fy-menu) {
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.fy-underlay {
+  inset: 0;
+  background: var(--fy-navigation-drawer-background, #000);
+}
+
+.fy-menu {
+  inset: 0 auto 0 0;
+  width: var(--fy-navigation-drawer-strip);
+  display: flex;
+  flex-direction: column;
+  gap: var(--fy-space-s);
+  padding: calc(var(--fy-space-l) + var(--fy-safe-top)) 0 calc(var(--fy-space-l) + var(--fy-safe-bottom)) var(--fy-safe-left);
+  box-sizing: border-box;
+}
+
+/* The icons fade in as the page moves off them, rather than showing on top of it at once. */
+.fy-menu {
+  opacity: 0;
+  transition: visibility 0s 0.35s, opacity var(--fy-duration-base) ease;
+}
+
+/*
+ * Above the blurred page, so a popup opened from the strip (the account menu) isn't hidden behind it.
+ * Only while open: on the way back the page slides over the strip instead of under its icons.
+ */
+:host(.fy-navigation-drawer--pushed) .fy-menu {
+  z-index: 3;
+  opacity: 1;
+  transition: visibility 0s, opacity 0.25s ease 0.1s;
+}
+
+.fy-menu-footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--fy-space-s);
+  width: var(--fy-navigation-drawer-width, 72px);
+}
+
+.fy-menu-footer:empty {
+  display: none;
+}
+
+.fy-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Centred in the strip the page leaves open. */
+  margin-left: calc((var(--fy-navigation-drawer-width, 72px) - var(--fy-button-l)) / 2);
+  border-radius: 50%;
+  color: var(--fy-navigation-drawer-item-color, #fff) !important;
+  text-decoration: none;
+  transition: background-color var(--fy-duration-base) ease;
+
+  &.fy-active {
+    background: var(--fy-navigation-drawer-active-background, color-mix(in srgb, #fff 16%, transparent)) !important;
+  }
+
+  i {
+    font-size: 20px;
+  }
+}
+
+/*
+ * The pushed page sticks out past the right edge; without clipping the document grows wide,
+ * Safari scrolls it sideways and keeps that scroll once the page is back.
+ */
+:host(.fy-navigation-drawer--enabled) {
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+:host(.fy-navigation-drawer--enabled) .fy-page {
+  position: relative;
+  z-index: 1;
+  background-color: var(--fy-navigation-drawer-page-background, var(--fy-primary-background));
+  transform-origin: left center;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.35s ease, border-radius 0.35s ease;
+}
+
+/* The page steps aside and out of focus, leaving the menu the only thing to tap. */
+.fy-page--pushed {
+  overflow: hidden;
+  border-radius: 28px;
+  transform: translateX(calc(var(--fy-navigation-drawer-strip) + 8px)) scale(0.92);
+  filter: blur(var(--fy-navigation-drawer-blur, 4px));
+}
+
+.fy-backdrop {
+  position: fixed;
+  inset: 0 0 0 var(--fy-navigation-drawer-strip);
+  z-index: 2;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: default;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host(.fy-navigation-drawer--enabled) .fy-page,
+  .fy-underlay,
+  .fy-menu,
+  :host(.fy-navigation-drawer--pushed) .fy-menu {
+    transition: none;
+  }
+}

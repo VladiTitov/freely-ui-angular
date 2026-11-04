@@ -1,0 +1,121 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--fy-avatar-header-gap, 10px);
+}
+
+:host(.fy-avatar-header--collapsed) {
+  flex-direction: row;
+  align-items: center;
+  text-align: left;
+  gap: var(--fy-avatar-header-gap-collapsed, var(--fy-space-m));
+}
+
+/* Transitions are played from the component (FLIP), scaled from the top-left corner. */
+.fy-avatar-header__avatar {
+  position: relative;
+  flex: none;
+  display: block;
+  transform-origin: top left;
+}
+
+.fy-avatar-header__avatar fy-user-avatar {
+  display: block;
+}
+
+/* Optional control on the avatar's corner, e.g. an edit button; hidden while collapsed. */
+.fy-avatar-header__action {
+  position: absolute;
+  right: -4px;
+  bottom: -2px;
+}
+
+.fy-avatar-header__action:empty,
+:host(.fy-avatar-header--collapsed) .fy-avatar-header__action {
+  display: none;
+}
+
+:host(.fy-avatar-header--inline) {
+  flex-direction: row;
+  flex-wrap: wrap;
+  text-align: left;
+  gap: var(--fy-avatar-header-gap-inline, 14px);
+}
+
+:host(.fy-avatar-header--inline) .fy-avatar-header__text {
+  flex: 1 1 0;
+  align-items: flex-start;
+}
+
+/* Extra controls of the expanded header; the collapsed one keeps only the avatar and the name. */
+.fy-avatar-header__end {
+  flex: none;
+}
+
+.fy-avatar-header__below {
+  flex: 1 0 100%;
+  min-width: 0;
+  animation: avatar-header-below-enter 0.28s ease-out both;
+}
+
+.fy-avatar-header__end:empty,
+.fy-avatar-header__below:empty,
+:host(.fy-avatar-header--collapsed) .fy-avatar-header__end,
+:host(.fy-avatar-header--collapsed) .fy-avatar-header__below {
+  display: none;
+}
+
+@keyframes avatar-header-below-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fy-avatar-header__below {
+    animation: none;
+  }
+}
+
+.fy-avatar-header__text {
+  transform-origin: top left;
+  display: flex;
+  flex-direction: column;
+  gap: var(--fy-space-xs);
+  min-width: 0;
+  max-width: 100%;
+}
+
+:host(.fy-avatar-header--collapsed) .fy-avatar-header__text {
+  align-items: flex-start;
+}
+
+.fy-avatar-header__primary {
+  font-size: var(--fy-avatar-header-primary-size, var(--fy-font-size-xl));
+  font-weight: 500;
+  color: var(--fy-primary-text);
+  /* A name may take two lines, but one long word must not push past the edge. */
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.fy-avatar-header__secondary {
+  font-size: var(--fy-avatar-header-secondary-size, var(--fy-font-size-m));
+  font-weight: 400;
+  color: var(--fy-secondary-text);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:host(.fy-avatar-header--collapsed) .fy-avatar-header__primary {
+  font-size: var(--fy-avatar-header-primary-size-collapsed, var(--fy-font-size-l));
+}
+
+:host(.fy-avatar-header--collapsed) .fy-avatar-header__secondary {
+  font-size: var(--fy-avatar-header-secondary-size-collapsed, var(--fy-font-size-s));
+}

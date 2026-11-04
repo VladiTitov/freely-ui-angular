@@ -1,0 +1,17 @@
+<div class="fy-accordion-item__heading" role="heading" [attr.aria-level]="headingLevel()">
+  <button
+    type="button"
+    class="fy-accordion-item__trigger"
+    [id]="triggerId"
+    [attr.aria-expanded]="expanded()"
+    [attr.aria-controls]="panelId"
+    [disabled]="disabled()"
+    [fyHaptic]="HapticImpact.Light"
+    (click)="toggle()">
+    <span class="fy-accordion-item__title">{{ heading() }}<ng-content select="[accordionTitle]" /></span>
+    <i class="fy-accordion-item__chevron" [class]="icons.expand" aria-hidden="true"></i>
+  </button>
+</div>
+<div class="fy-accordion-item__panel" role="region" [id]="panelId" [attr.aria-labelledby]="triggerId" [hidden]="!expanded()">
+  <ng-content />
+</div>
