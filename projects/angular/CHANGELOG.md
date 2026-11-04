@@ -3,6 +3,13 @@
 All notable changes to `@freely-ui/angular` are listed here. The project follows
 [Semantic Versioning](https://semver.org); while the version is `0.x`, a minor release may break the API.
 
+## 0.1.1
+
+### Changed
+
+- Releases are published from GitHub Actions with npm provenance, so each version links back to the commit it
+  was built from. The library itself is the same as in 0.1.0.
+
 ## 0.1.0
 
 The first public release.

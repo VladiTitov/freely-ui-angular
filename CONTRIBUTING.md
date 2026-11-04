@@ -43,3 +43,21 @@ npm run test:watch
 Branch off `master`, keep one change per pull request and describe what it changes for the people using the
 library. CI builds the package and runs the tests on every pull request. Add a line to `projects/angular/CHANGELOG.md`
 under an "Unreleased" heading for anything a user would notice.
+
+## Releasing
+
+A version tag publishes the package: `.github/workflows/release.yml` builds it, runs the tests and publishes it to
+npm through Trusted Publishing, with provenance and without a token.
+
+1. In a pull request, raise `version` in `projects/angular/package.json` following [Semantic Versioning](https://semver.org)
+   and turn the "Unreleased" heading of `projects/angular/CHANGELOG.md` into that version.
+2. Merge it into `master`.
+3. Tag the merge commit with the same version and push the tag:
+
+   ```bash
+   git checkout master && git pull
+   git tag v0.1.2 && git push origin v0.1.2
+   ```
+
+The workflow stops if the tag does not match the version in `package.json`. A pre-release such as `v0.2.0-beta.1`
+goes out under the `next` dist-tag, so `npm install @freely-ui/angular` keeps giving the latest stable version.

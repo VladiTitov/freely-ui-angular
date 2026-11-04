@@ -1,0 +1,63 @@
+name: Release
+
+# Publishes @freely-ui/angular to npm when a version tag (v1.2.3, v1.2.3-beta.1) is pushed.
+# npm trusts this workflow through Trusted Publishing, so there is no token: the job proves who it is with an
+# OIDC token (id-token: write), and npm adds provenance, the link from the package back to this commit.
+# The tag must match the version in projects/angular/package.json; a pre-release goes out under the `next` tag.
+"on":
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      # Trusted Publishing needs npm 11.5.1 or newer.
+      - name: Update npm
+        run: npm install --global npm@latest
+
+      - name: Check that the tag matches the package version
+        run: |
+          version=$(node -p "require('./projects/angular/package.json').version")
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::The tag $GITHUB_REF_NAME does not match the package version $version."
+            exit 1
+          fi
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build the package
+        run: npm run build
+
+      - name: Run the unit tests
+        run: npm test
+
+      - name: Publish to npm
+        working-directory: dist/angular
+        run: |
+          version=$(node -p "require('./package.json').version")
+          case "$version" in
+            *-*) tag=next ;;
+            *) tag=latest ;;
+          esac
+          npm publish --provenance --access public --tag "$tag"
