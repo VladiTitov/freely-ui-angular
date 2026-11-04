@@ -1,0 +1,10 @@
+<fy-modal #modal (hidden)="onHidden()">
+  <fy-modal-panel [title]="title" (close)="cancel()">
+    <input fyTextField #input type="text" [(ngModel)]="value" [placeholder]="placeholder" [maxlength]="maxLength"
+      autocomplete="off" (keydown.enter)="$event.preventDefault(); confirm()">
+
+    <button panelFooter type="button" fyButton size="l" block [disabled]="!value.trim()" [fyHaptic]="HapticImpact.Medium" (click)="confirm()">
+      {{ confirmText }}
+    </button>
+  </fy-modal-panel>
+</fy-modal>

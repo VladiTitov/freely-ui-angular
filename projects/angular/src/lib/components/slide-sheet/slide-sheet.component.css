@@ -1,0 +1,150 @@
+.fy-slide-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--fy-z-sheet);
+  background: rgba(0, 0, 0, 0.5);
+  animation: slide-sheet-fade var(--fy-duration-base) ease;
+}
+
+.fy-slide-sheet {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  z-index: calc(var(--fy-z-sheet) + 1);
+  width: 100%;
+  max-width: 375px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--fy-space-l);
+  box-sizing: border-box;
+  padding: var(--fy-space-l) 0 calc(20px + var(--fy-safe-bottom));
+  background: var(--fy-primary-background);
+  border-radius: var(--fy-radius-xl) var(--fy-radius-xl) 0 0;
+  color: var(--fy-primary-text);
+  animation: slide-sheet-up 0.25s ease;
+}
+
+.fy-slide-sheet--full {
+  top: 0;
+  max-width: none;
+  padding-top: calc(20px + var(--fy-safe-top));
+  border-radius: 0;
+  animation: slide-sheet-fade 0.25s ease;
+}
+
+.fy-slide-sheet__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--fy-button-m);
+  padding: 0 var(--fy-space-l);
+}
+
+/* Stays in the flow and keeps its height when "skip" goes away on the last slide, so nothing below moves. */
+.fy-slide-sheet--full .fy-slide-sheet__top {
+  justify-content: flex-end;
+}
+
+.fy-slide-sheet__caption {
+  font-size: var(--fy-font-size-l);
+  color: var(--fy-secondary-text);
+}
+
+.fy-slide-sheet__skip {
+  background: none;
+  color: var(--fy-secondary-text);
+  font-size: var(--fy-font-size-m);
+  cursor: pointer;
+}
+
+.fy-slide-sheet__track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+}
+
+.fy-slide-sheet__slide {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--fy-space-m);
+  box-sizing: border-box;
+  padding: 0 var(--fy-space-xl);
+  text-align: center;
+}
+
+/* The track takes all the room between the top and the footer, so the dots and the button stay at the bottom. */
+.fy-slide-sheet--full .fy-slide-sheet__track {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Full width keeps the scroll math simple; the content itself stays phone-wide. */
+.fy-slide-sheet--full .fy-slide-sheet__slide {
+  justify-content: center;
+  overflow-y: auto;
+  padding: 0 max(var(--fy-space-xl), calc(50% - 164px));
+}
+
+.fy-slide-sheet__dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.fy-slide-sheet__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--fy-radius-full);
+  background: var(--fy-tertiary-background);
+  transition: width var(--fy-duration-base) ease, background-color var(--fy-duration-base) ease;
+}
+
+.fy-slide-sheet__dot--active {
+  width: 18px;
+  background: var(--fy-accent);
+}
+
+/* The look is the app's `main-action-btn`; this only places it. The sheet's padding already clears the safe area. */
+.fy-slide-sheet__next {
+  align-self: stretch;
+  width: auto;
+  margin: 0 var(--fy-space-l);
+  cursor: pointer;
+  transition: transform var(--fy-duration-base) ease;
+}
+
+.fy-slide-sheet__next--quiet {
+  background: var(--fy-tertiary-background);
+  color: var(--fy-primary-text);
+}
+
+.fy-slide-sheet--full .fy-slide-sheet__next {
+  align-self: center;
+  width: calc(100% - 32px);
+  max-width: 343px;
+  margin: 0;
+}
+
+.fy-slide-sheet__next:active {
+  transform: scale(0.97);
+}
+
+@keyframes slide-sheet-fade {
+  from { opacity: 0; }
+}
+
+@keyframes slide-sheet-up {
+  from { transform: translate(-50%, 100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fy-slide-sheet-backdrop,
+  .fy-slide-sheet {
+    animation: none;
+  }
+}

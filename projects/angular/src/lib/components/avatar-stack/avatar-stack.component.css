@@ -1,0 +1,38 @@
+:host {
+  display: inline-block;
+}
+
+.fy-avatar-stack {
+  display: flex;
+  align-items: center;
+}
+
+/* Ring in the surface colour separates overlapping avatars. */
+.fy-avatar-stack__item {
+  display: flex;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--fy-avatar-stack-ring, var(--fy-secondary-background));
+}
+
+.fy-avatar-stack__item + .fy-avatar-stack__item {
+  margin-left: calc(var(--fy-avatar-stack-size) * -0.28);
+}
+
+.fy-avatar-stack__badge {
+  width: var(--fy-avatar-stack-size);
+  height: var(--fy-avatar-stack-size);
+  align-items: center;
+  justify-content: center;
+  background: var(--fy-tertiary-background);
+}
+
+.fy-avatar-stack__empty {
+  color: var(--fy-secondary-text);
+  font-size: var(--fy-font-size-l);
+}
+
+.fy-avatar-stack__more {
+  color: var(--fy-accent);
+  font-size: var(--fy-font-size-s);
+  font-weight: 600;
+}

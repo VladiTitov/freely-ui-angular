@@ -1,0 +1,39 @@
+<ng-template #figure>
+  @if (loading()) {
+    <fy-skeleton class="fy-card__value-skeleton" />
+  } @else if (hasValue()) {
+    <span class="fy-card__value-row">
+      <span class="fy-card__value">{{ value() }}</span>
+      <ng-content select="[cardBadge]" />
+    </span>
+  }
+</ng-template>
+
+<div class="fy-card__head">
+  @if (label(); as text) {
+    <span class="fy-card__label" role="heading" [attr.aria-level]="headingLevel()" [id]="labelId">{{ text }}</span>
+  } @else {
+    <ng-container [ngTemplateOutlet]="figure" />
+  }
+  <ng-content select="[cardAction]" />
+</div>
+
+@if (label()) {
+  <div class="fy-card__figure">
+    <ng-container [ngTemplateOutlet]="figure" />
+  </div>
+}
+
+@if (loading()) {
+  <div class="fy-card__lines-skeleton" aria-busy="true" [attr.aria-label]="labels().loading">
+    <fy-skeleton class="fy-card__line-skeleton" />
+    <fy-skeleton class="fy-card__line-skeleton fy-card__line-skeleton--short" />
+  </div>
+} @else {
+  @if (caption(); as text) {
+    <span class="fy-card__caption">{{ text }}</span>
+  }
+  <div class="fy-card__body"><ng-content /></div>
+}
+
+<div class="fy-card__footer"><ng-content select="[cardFooter]" /></div>

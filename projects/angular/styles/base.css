@@ -1,0 +1,292 @@
+.fy-label {
+  font-family: var(--fy-font-family);
+}
+
+.fy-secondary-label {
+  font-size: var(--fy-font-size-xxl);
+}
+
+.fy-primary-label {
+  font-size: var(--fy-font-size-xxl);
+  color: var(--fy-primary-text);
+}
+
+.fy-gradient-text {
+  background: var(--fy-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  display: inline-block;
+}
+
+/* Page-level scrollable containers */
+.fy-page-scroll-container {
+  height: 100%;
+  overflow-y: auto;
+  /* Without it the X axis computes to auto too, and a transient overflow (a FLIP animation) scrolls sideways. */
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  -webkit-overflow-scrolling: touch;
+}
+
+.fy-scrollbar-hidden {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+.fy-scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.fy-scroll-area {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: var(--fy-space-xs);
+}
+
+.fy-scroll-area::-webkit-scrollbar {
+  width: 6px;
+}
+
+.fy-scroll-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.fy-scroll-area::-webkit-scrollbar-thumb {
+  background-color: var(--fy-tertiary-background);
+  border-radius: 4px;
+}
+
+.fy-sticky-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: var(--fy-z-sticky);
+  background-color: var(--fy-primary-background);
+}
+
+/* Flex-centred: an inline photo avatar sits on the text baseline by its bottom edge, unlike initials. */
+.fy-avatar-wrapper {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.fy-avatar-wrapper > span {
+  margin-left: 15px;
+  font-size: var(--fy-font-size-xs) !important;
+  color: var(--fy-secondary-text);
+}
+
+fy-search-bar {
+  --fy-search-bar-bg: var(--fy-secondary-background);
+  --fy-search-bar-color: var(--fy-primary-text);
+  --fy-search-bar-muted-color: var(--fy-secondary-text);
+  --fy-search-bar-focus-color: var(--fy-accent);
+  --fy-search-bar-clear-bg: var(--fy-tertiary-background);
+  --fy-search-bar-border-color: var(--fy-tertiary-background);
+  --fy-search-bar-radius: var(--fy-radius-full);
+  --fy-search-bar-placeholder-opacity: 1;
+}
+
+fy-search-panel {
+  --fy-search-panel-bg: var(--fy-secondary-background);
+  --fy-search-panel-color: var(--fy-primary-text);
+  --fy-search-panel-border-color: var(--fy-tertiary-background);
+  --fy-search-panel-accent: var(--fy-accent);
+  --fy-search-panel-toggle-hover-bg: var(--fy-tertiary-background);
+}
+
+.fy-filter-toggle {
+  --fy-filter-toggle-accent: var(--fy-accent);
+  --fy-filter-toggle-hover-bg: var(--fy-tertiary-background);
+}
+
+fy-select-field {
+  --fy-select-field-bg: var(--fy-primary-background);
+  --fy-select-field-color: var(--fy-primary-text);
+  --fy-select-field-label-color: var(--fy-secondary-text);
+  --fy-select-field-muted-color: var(--fy-secondary-text);
+  --fy-select-field-border-color: var(--fy-tertiary-background);
+  --fy-select-field-focus-color: var(--fy-accent);
+}
+
+fy-sort-menu {
+  --fy-sort-menu-accent: var(--fy-accent);
+}
+
+fy-dropdown-menu {
+  --fy-dropdown-menu-color: var(--fy-primary-text);
+  --fy-dropdown-menu-accent: var(--fy-accent);
+  --fy-dropdown-menu-panel-bg: var(--fy-tertiary-background);
+  --fy-dropdown-menu-item-hover-bg: var(--fy-secondary-background);
+  --fy-dropdown-menu-divider-color: var(--fy-secondary-background);
+}
+
+fy-item-list {
+  --fy-item-list-summary-color: var(--fy-secondary-text);
+  --fy-item-list-toolbar-bg: var(--fy-primary-background);
+  --fy-item-list-toolbar-top: var(--fy-page-sticky-height, 0px);
+}
+
+fy-item-list-highlight {
+  --fy-item-list-highlight-bg: color-mix(in srgb, var(--fy-accent) 35%, transparent);
+}
+
+fy-empty-state {
+  --fy-empty-state-icon-bg: var(--fy-tertiary-background);
+  --fy-empty-state-icon-color: var(--fy-accent);
+  --fy-empty-state-label-color: var(--fy-primary-text);
+  --fy-empty-state-description-color: var(--fy-secondary-text);
+  --fy-empty-state-description-opacity: 1;
+}
+
+/* Loading placeholder; size it with a local class. */
+.fy-skeleton {
+  display: block;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background-color: var(--fy-tertiary-background);
+  animation: fy-skeleton-pulse 1.2s ease-in-out infinite;
+}
+
+.fy-skeleton--circle {
+  border-radius: 50%;
+}
+
+.fy-skeleton--pill {
+  height: 32px;
+  border-radius: var(--fy-radius-lg);
+}
+
+@keyframes fy-skeleton-pulse {
+  50% { opacity: 0.5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fy-skeleton {
+    animation: none;
+  }
+}
+
+/* Set on <html> by the Overlay helper while a modal, drawer, popup or image viewer is open. */
+.fy-overlay-open {
+  overflow: hidden;
+}
+
+/*
+ * Text fields: `input[fyTextField]` and `textarea[fyTextarea]`. `--plain` drops the box for a row inside a card the
+ * page draws itself. Tune with the `--fy-text-field-*` custom properties.
+ */
+.fy-text-field {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--fy-text-field-height, 44px);
+  padding: var(--fy-text-field-padding, 0 14px);
+  border: 1px solid var(--fy-text-field-border-color, var(--fy-tertiary-background));
+  border-radius: var(--fy-text-field-radius, var(--fy-radius-md));
+  background: var(--fy-text-field-background, var(--fy-primary-background));
+  color: var(--fy-primary-text);
+  font-family: var(--fy-font-family);
+  font-size: var(--fy-font-size-m);
+  outline: none;
+  transition: border-color var(--fy-duration-base) ease;
+}
+
+.fy-text-field::placeholder {
+  color: var(--fy-secondary-text);
+}
+
+.fy-text-field:focus-visible {
+  outline: none;
+  border-color: var(--fy-text-field-focus-color, var(--fy-accent));
+}
+
+.fy-text-field[aria-invalid='true'] {
+  border-color: var(--fy-danger);
+}
+
+.fy-text-field:disabled {
+  opacity: 0.5;
+}
+
+.fy-textarea {
+  padding: var(--fy-text-field-padding, 12px 14px);
+  line-height: 1.4;
+  resize: none;
+}
+
+/* Grows with the text; browsers without `field-sizing` get the height from `TextareaDirective`. */
+.fy-textarea--autosize {
+  field-sizing: content;
+  max-height: var(--fy-textarea-max-height, 200px);
+  overflow-y: auto;
+}
+
+.fy-text-field--plain {
+  min-height: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  line-height: 1.4;
+}
+
+/* Shown by `[fyTooltip]` on `<body>`, over everything, modals included. */
+.fy-tooltip {
+  position: fixed;
+  z-index: var(--fy-z-tooltip);
+  max-width: min(280px, calc(100vw - 16px));
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: var(--fy-tooltip-background, var(--fy-primary-text));
+  color: var(--fy-tooltip-color, var(--fy-primary-background));
+  font-family: var(--fy-font-family);
+  font-size: var(--fy-font-size-s);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  pointer-events: none;
+  animation: fy-tooltip-in var(--fy-duration-fast) ease-out;
+}
+
+@keyframes fy-tooltip-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fy-tooltip {
+    animation: none;
+  }
+}
+
+/*
+ * Set by `FyTheme` for the moment the colour scheme changes, so the colours fade over instead of blinking.
+ * `!important` puts every element on the same clock, whatever transition it has of its own.
+ */
+.fy-theme-transition,
+.fy-theme-transition *,
+.fy-theme-transition *::before,
+.fy-theme-transition *::after {
+  transition:
+    background-color var(--fy-duration-slow) ease,
+    color var(--fy-duration-slow) ease,
+    border-color var(--fy-duration-slow) ease,
+    box-shadow var(--fy-duration-slow) ease,
+    fill var(--fy-duration-slow) ease,
+    stroke var(--fy-duration-slow) ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fy-theme-transition,
+  .fy-theme-transition *,
+  .fy-theme-transition *::before,
+  .fy-theme-transition *::after {
+    transition: none !important;
+  }
+}

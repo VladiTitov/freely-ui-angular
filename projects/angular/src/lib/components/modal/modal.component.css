@@ -1,0 +1,64 @@
+.fy-modal {
+  /* Distance from the dialog to the safe area; `fy-modal-panel` reads the vertical one to size itself. */
+  --fy-modal-gap-y: 15px;
+  --fy-modal-gap-x: 15px;
+
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: var(--fy-z-modal);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding:
+    calc(var(--fy-modal-gap-y) + var(--fy-safe-top))
+    calc(var(--fy-modal-gap-x) + var(--fy-safe-right))
+    calc(var(--fy-modal-gap-y) + var(--fy-safe-bottom))
+    calc(var(--fy-modal-gap-x) + var(--fy-safe-left));
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: opacity var(--fy-duration-fast) linear;
+}
+
+.fy-modal.is-visible {
+  display: flex;
+}
+
+.fy-modal.is-open {
+  opacity: 1;
+}
+
+.fy-modal__dialog {
+  display: flow-root;
+  position: relative;
+  box-sizing: border-box;
+  /* Set `--fy-modal-width` on `<fy-modal>` for a wider dialog. */
+  width: var(--fy-modal-width, 600px);
+  max-width: 100%;
+  /* Centered on both axes; auto margins collapse to zero when the dialog is taller than the screen, so it scrolls. */
+  margin: auto;
+  opacity: 0;
+  transform: translateY(-100px);
+  transition: opacity var(--fy-duration-slow) linear, transform var(--fy-duration-slow) linear;
+}
+
+.fy-modal.is-open > .fy-modal__dialog {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fy-modal__dialog > ::ng-deep :last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 640px) {
+  .fy-modal {
+    --fy-modal-gap-y: 50px;
+    --fy-modal-gap-x: 30px;
+  }
+}
+
+@media (min-width: 960px) {
+  .fy-modal {
+    --fy-modal-gap-x: 40px;
+  }
+}

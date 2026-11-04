@@ -1,0 +1,90 @@
+.fy-image-grid {
+  color: var(--fy-primary-text);
+}
+
+.fy-row-button {
+  display: flex;
+  align-items: center;
+  gap: var(--fy-space-m);
+  width: 100%;
+  min-height: 52px;
+  margin: 0;
+  padding: 6px 20px 6px 30px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.fy-row-label {
+  flex: 1;
+  font-size: var(--fy-font-size-m);
+  color: var(--fy-secondary-text);
+}
+
+.fy-counter {
+  font-size: var(--fy-font-size-s);
+  color: var(--fy-secondary-text);
+}
+
+.fy-strip {
+  display: flex;
+  gap: var(--fy-space-s);
+  overflow-x: auto;
+  padding: 0 18px 14px 30px;
+  scrollbar-width: none;
+}
+
+.fy-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.fy-tile {
+  position: relative;
+  flex: 0 0 auto;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--fy-secondary-background);
+}
+
+.fy-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.fy-remove-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+}
+
+.fy-remove-btn i {
+  font-size: var(--fy-font-size-m);
+}
+
+.fy-tile .fy-remove-btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* A full gallery keeps the row readable: only the "+" disappears. */
+.fy-row-button:disabled {
+  cursor: default;
+}
+
+.fy-error {
+  margin: 0 18px var(--fy-space-m) 30px;
+  font-size: var(--fy-font-size-s);
+  color: var(--fy-danger);
+}

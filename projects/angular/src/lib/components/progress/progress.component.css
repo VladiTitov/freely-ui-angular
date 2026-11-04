@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  height: var(--fy-progress-height, 4px);
+  overflow: hidden;
+  border-radius: var(--fy-progress-radius, 2px);
+  background: var(--fy-progress-track, var(--fy-tertiary-background));
+}
+
+.fy-progress__fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--fy-progress-color, var(--fy-accent));
+  transition: width 0.4s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fy-progress__fill {
+    transition: none;
+  }
+}

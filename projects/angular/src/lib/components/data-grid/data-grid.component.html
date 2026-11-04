@@ -1,0 +1,185 @@
+<div class="fy-data-grid__toolbar">
+  @if (hasActions) {
+    <div class="fy-data-grid__actions">
+      @if (selectable) {
+        <button type="button" class="fy-data-grid__action" [class.fy-data-grid__action--active]="allSelected()"
+          [disabled]="!rows().length" [attr.aria-pressed]="allSelected()"
+          [attr.aria-label]="allSelected() ? texts().clearSelection : texts().selectAll" fyHaptic="selection"
+          (click)="toggleAll()">
+          <i [class]="icons.selectAll" aria-hidden="true"></i>
+          <span class="fy-data-grid__action-label">{{ allSelected() ? texts().clearSelection : texts().selectAll }}</span>
+        </button>
+      }
+      <div class="fy-data-grid__action-group">
+        @if (canAdd) {
+          <button type="button" class="fy-data-grid__action" [attr.aria-label]="texts().add" [fyHaptic]="HapticImpact.Light" (click)="add.emit()">
+            <i [class]="icons.add" aria-hidden="true"></i>
+            <span class="fy-data-grid__action-label">{{ texts().add }}</span>
+          </button>
+        }
+        @if (canEdit) {
+          <button type="button" class="fy-data-grid__action" [disabled]="selectedRows().length !== 1"
+            [attr.aria-label]="texts().edit" [fyHaptic]="HapticImpact.Light" (click)="editSelected()">
+            <i [class]="icons.edit" aria-hidden="true"></i>
+            <span class="fy-data-grid__action-label">{{ texts().edit }}</span>
+          </button>
+        }
+        @if (canRemove) {
+          <button type="button" class="fy-data-grid__action fy-data-grid__action--danger" [disabled]="!selectedRows().length"
+            [attr.aria-label]="texts().remove" [fyHaptic]="HapticImpact.Light" (click)="removeSelected()">
+            <i [class]="icons.delete" aria-hidden="true"></i>
+            <span class="fy-data-grid__action-label">{{ texts().remove }}</span>
+            @if (selectedRows().length > 1) {
+              <span class="fy-data-grid__action-count">{{ selectedRows().length }}</span>
+            }
+          </button>
+        }
+      </div>
+    </div>
+  }
+  @if (hasSearch() || sortOptions().length) {
+    <div class="fy-data-grid__action-group fy-data-grid__tools">
+      @if (hasSearch()) {
+        <button type="button" class="fy-data-grid__action" [class.fy-data-grid__action--active]="searchOpen()"
+          [attr.aria-expanded]="searchOpen()" [attr.aria-label]="texts().search" [fyHaptic]="HapticImpact.Light"
+          (click)="toggleSearch()">
+          <i [class]="icons.search" aria-hidden="true"></i>
+          @if (searchApplied()) {
+            <span class="fy-data-grid__action-dot" aria-hidden="true"></span>
+          }
+        </button>
+      }
+      @if (sortOptions().length) {
+        <fy-dropdown-menu [label]="texts().sort">
+          <button fyDropdownTrigger type="button" class="fy-data-grid__action" [attr.aria-label]="texts().sort"
+            [fyHaptic]="HapticImpact.Light">
+            <i [class]="icons.sortMenu" aria-hidden="true"></i>
+          </button>
+          @for (option of sortOptions(); track option.id) {
+            <button fyDropdownItem type="button" [checked]="option.id === sortValue()" fyHaptic="selection"
+              (click)="pickSort(option.id)">
+              <span>{{ option.label }}</span>
+              <i class="fy-dropdown-menu__check" [class]="icons.check" aria-hidden="true"></i>
+            </button>
+          }
+        </fy-dropdown-menu>
+      }
+    </div>
+  }
+  <div class="fy-data-grid__search" [class.fy-data-grid__search--open]="searchOpen()">
+    <ng-content select="[fyDataGridSearch]" />
+  </div>
+  <div class="fy-data-grid__meta">
+    <div class="fy-data-grid__summary" aria-live="polite">
+      @if (selectionSummary()) {
+        {{ selectionSummary() }}
+      } @else {
+        <ng-content select="[dataGridSummary]" />
+      }
+    </div>
+  </div>
+</div>
+
+<div class="fy-data-grid__table" role="table" [attr.aria-label]="label() || null" [attr.aria-busy]="loading()"
+  [class.fy-data-grid__table--refreshing]="loading() && rows().length">
+  <div class="fy-data-grid__row fy-data-grid__row--head" role="row">
+    @if (selectable) {
+      <div class="fy-data-grid__head fy-data-grid__select" role="columnheader">
+        <input type="checkbox" class="fy-data-grid__checkbox" [checked]="allSelected()"
+          [indeterminate]="!allSelected() && selectedRows().length > 0" [disabled]="!rows().length"
+          [attr.aria-label]="texts().selectAll" fyHaptic="selection" (change)="toggleAll()" />
+      </div>
+    }
+    @for (column of columns(); track column.id) {
+      <div class="fy-data-grid__head" role="columnheader" [attr.aria-sort]="ariaSort(column)">
+        @if (column.sortable) {
+          <button type="button" class="fy-data-grid__sort-btn"
+            [class.fy-data-grid__sort-btn--active]="sort()?.column === column.id" fyHaptic="selection" (click)="toggleSort(column)">
+            {{ column.label }}
+            <i [class]="sortIcon(column)" aria-hidden="true"></i>
+          </button>
+        } @else {
+          {{ column.label }}
+        }
+      </div>
+    }
+    @if (hasRowActions) {
+      <div class="fy-data-grid__head" role="columnheader" [attr.aria-label]="texts().actions"></div>
+    }
+  </div>
+
+  <div #body class="fy-data-grid__body" role="rowgroup">
+    @for (row of rows(); track trackBy()(row)) {
+      <div class="fy-data-grid__row" role="row" [class.fy-data-grid__row--selected]="selectable && isSelected(row)"
+        [attr.aria-selected]="selectable ? isSelected(row) : null">
+        @if (selectable) {
+          <div class="fy-data-grid__cell fy-data-grid__select" role="cell">
+            <input type="checkbox" class="fy-data-grid__checkbox" [checked]="isSelected(row)"
+              [attr.aria-label]="texts().selectRow" fyHaptic="selection" (change)="toggleRow(row)" />
+          </div>
+        }
+        @for (column of columns(); track column.id) {
+          <div class="fy-data-grid__cell" role="cell" [attr.data-label]="column.label">
+            @if (templates().get(column.id); as template) {
+              <ng-container [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{ $implicit: row }" />
+            } @else {
+              {{ text(column, row) }}
+            }
+          </div>
+        }
+        @if (hasRowActions) {
+          <div class="fy-data-grid__cell fy-data-grid__row-actions" role="cell" [attr.data-label]="texts().actions">
+            @if (canView) {
+              <button type="button" class="fy-data-grid__row-action" [attr.aria-label]="texts().view" [fyHaptic]="HapticImpact.Light"
+                (click)="view.emit(row)">
+                <i [class]="icons.view" aria-hidden="true"></i>
+              </button>
+            }
+            @if (canEdit) {
+              <button type="button" class="fy-data-grid__row-action" [attr.aria-label]="texts().edit" [fyHaptic]="HapticImpact.Light"
+                (click)="edit.emit(row)">
+                <i [class]="icons.edit" aria-hidden="true"></i>
+              </button>
+            }
+            @if (canRemove) {
+              <button type="button" class="fy-data-grid__row-action fy-data-grid__row-action--danger"
+                [attr.aria-label]="texts().remove" [fyHaptic]="HapticImpact.Light" (click)="remove.emit([row])">
+                <i [class]="icons.delete" aria-hidden="true"></i>
+              </button>
+            }
+          </div>
+        }
+      </div>
+    } @empty {
+      @if (loading()) {
+        @for (placeholder of placeholders(); track $index) {
+          <div class="fy-data-grid__row fy-data-grid__row--placeholder" aria-hidden="true">
+            <fy-skeleton class="fy-data-grid__skeleton" />
+          </div>
+        }
+      } @else {
+        <ng-content select="[dataGridEmpty]" />
+      }
+    }
+  </div>
+</div>
+
+<div class="fy-data-grid__footer">
+  @if (pageSizeChoices().length) {
+    <div class="fy-data-grid__page-size">
+      <span class="fy-data-grid__page-size-label" aria-hidden="true">{{ texts().rowsPerPage }}</span>
+      @if (texts().rowsPerPageShort) {
+        <span class="fy-data-grid__page-size-label fy-data-grid__page-size-label--short" aria-hidden="true">
+          {{ texts().rowsPerPageShort }}
+        </span>
+      }
+      <fy-select-field class="fy-data-grid__page-size-field" direction="up" [options]="pageSizeChoices()"
+        [value]="pageSize()" (valueChange)="pickPageSize($event)" [ariaLabel]="texts().rowsPerPage" />
+    </div>
+  }
+  @if (range()) {
+    <span class="fy-data-grid__range">{{ range() }}</span>
+  }
+  <fy-pagination class="fy-data-grid__pagination" [(page)]="page" [pageCount]="pages()" [label]="texts().pagination"
+    [previousLabel]="texts().previousPage" [nextLabel]="texts().nextPage" />
+</div>

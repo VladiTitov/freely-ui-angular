@@ -1,0 +1,25 @@
+<!-- The native input lies invisibly over the chip, so a tap opens the system picker. -->
+<fy-chip class="fy-date-picker__chip" [surface]="surface()" [iconOnly]="!text() && !placeholder()">
+  @if (text(); as date) {
+    {{ date }}
+  } @else if (placeholder(); as hint) {
+    <span class="fy-date-picker__placeholder">{{ hint }}</span>
+  } @else {
+    <i [class]="icons.add" aria-hidden="true"></i>
+  }
+  <input
+    #native
+    type="date"
+    class="fy-date-picker__native"
+    [id]="id()"
+    [value]="value()"
+    [attr.min]="min() || null"
+    [attr.max]="max() || null"
+    [disabled]="isDisabled()"
+    [attr.aria-label]="accessibleName()"
+    [attr.aria-describedby]="field?.describedBy() || null"
+    [attr.aria-invalid]="isInvalid() ? 'true' : null"
+    [attr.aria-required]="field?.required() ? 'true' : null"
+    (change)="onPick(native)"
+    (blur)="onTouched()" />
+</fy-chip>

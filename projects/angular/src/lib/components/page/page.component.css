@@ -1,0 +1,44 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.fy-page-header {
+  padding: var(--fy-space-xs) 0 var(--fy-space-m);
+}
+
+.fy-page-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fy-space-m);
+}
+
+.fy-page-title-group {
+  display: flex;
+  align-items: center;
+  gap: var(--fy-space-s);
+  min-width: 0;
+}
+
+.fy-page-title {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--fy-font-family);
+  font-size: var(--fy-font-size-xxl);
+  color: var(--fy-primary-text);
+}
+
+/* Separates the title from projected [subheader] content; no extra space when the title is alone. */
+.fy-page-title-row:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.fy-page-bottom-spacer {
+  flex: 0 0 auto;
+  height: 100px;
+  margin-bottom: var(--fy-safe-bottom);
+}

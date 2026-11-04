@@ -1,0 +1,136 @@
+/*
+ * Global (ViewEncapsulation.None) and one class per selector, so any class of the page overrides them.
+ * Size and shape only set custom properties, which the base rule reads.
+ */
+.fy-button {
+  --_size: var(--fy-button-m);
+  --_padding: 0 var(--fy-space-l);
+  --_font-size: var(--fy-font-size-m);
+  --_icon-size: var(--fy-font-size-xl);
+  --_radius: var(--fy-radius-full);
+  --_gap: 6px;
+
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--fy-button-gap, var(--_gap));
+  flex-shrink: 0;
+  min-height: var(--_min-height, var(--_size));
+  padding: var(--_padding);
+  border: none;
+  border-radius: var(--fy-button-radius, var(--_radius));
+  font-family: var(--fy-font-family);
+  font-size: var(--_font-size);
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform var(--fy-duration-base) ease,
+    background-color var(--fy-duration-base) ease,
+    opacity var(--fy-duration-base) ease;
+}
+
+.fy-button:active {
+  transform: scale(0.96);
+}
+
+.fy-button i {
+  font-size: var(--_icon-size);
+  line-height: 1;
+}
+
+.fy-button[disabled],
+.fy-button[aria-disabled='true'] {
+  opacity: var(--fy-button-disabled-opacity, 0.5);
+  cursor: default;
+  pointer-events: none;
+}
+
+/* A loading button keeps its colours: the loader says it is busy. */
+.fy-button--loading[disabled],
+.fy-button--loading[aria-disabled='true'] {
+  opacity: 1;
+}
+
+.fy-button--primary {
+  background: var(--fy-button-primary-background, var(--fy-accent));
+  color: var(--fy-button-primary-color, var(--fy-on-accent));
+}
+
+.fy-button--secondary {
+  background: var(--fy-button-secondary-background, var(--fy-secondary-background));
+  color: var(--fy-button-secondary-color, var(--fy-secondary-text));
+}
+
+.fy-button--tertiary {
+  background: var(--fy-button-tertiary-background, var(--fy-tertiary-background));
+  color: var(--fy-button-tertiary-color, var(--fy-secondary-text));
+}
+
+.fy-button--ghost {
+  background: transparent;
+  color: var(--fy-button-ghost-color, var(--fy-secondary-text));
+}
+
+.fy-button--s {
+  --_size: var(--fy-button-s);
+  --_padding: 0 var(--fy-space-m) 0 10px;
+  --_font-size: var(--fy-font-size-s);
+  --_icon-size: var(--fy-font-size-m);
+  --_gap: var(--fy-space-xs);
+  letter-spacing: 0.01em;
+}
+
+.fy-button--l {
+  --_size: var(--fy-button-l);
+  --_min-height: 0;
+  --_padding: var(--fy-space-l);
+  --_font-size: var(--fy-font-size-l);
+  --_radius: var(--fy-radius-md);
+}
+
+/* Round, a square of the button size; the small one keeps a smaller icon. */
+.fy-button--icon {
+  --_padding: 0;
+  --_min-height: 0;
+  --_radius: 50%;
+  width: var(--_size);
+  height: var(--_size);
+}
+
+.fy-button--icon.fy-button--s {
+  --_icon-size: var(--fy-font-size-l);
+}
+
+.fy-button--icon.fy-button--l {
+  --_icon-size: var(--fy-font-size-xl);
+}
+
+.fy-button--block {
+  width: 100%;
+  margin-bottom: var(--fy-safe-bottom);
+}
+
+/* Centered modals sit clear of the safe areas already. */
+.fy-modal .fy-button--block {
+  margin-bottom: 0;
+}
+
+.fy-button--appear {
+  animation: fy-button-appear 0.35s var(--fy-ease-out) backwards;
+}
+
+@keyframes fy-button-appear {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.92);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fy-button--appear {
+    animation: none;
+  }
+}

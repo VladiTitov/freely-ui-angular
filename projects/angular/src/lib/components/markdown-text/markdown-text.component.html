@@ -1,0 +1,30 @@
+<!-- Every inline node is an element of its own, so the template adds no spaces between them. -->
+<ng-template #inlines let-nodes>
+  @for (node of nodes; track $index) {
+    @if (node.type === 'strong') {
+      <strong><ng-container *ngTemplateOutlet="inlines; context: { $implicit: node.children }" /></strong>
+    } @else if (node.type === 'link') {
+      <a [href]="node.href" target="_blank" rel="noopener noreferrer">{{ node.text }}</a>
+    } @else {
+      <span>{{ node.text }}</span>
+    }
+  }
+</ng-template>
+
+@for (block of blocks(); track $index) {
+  @if (block.type === 'heading') {
+    @if (block.level === 2) {
+      <h2 class="fy-markdown-heading"><ng-container *ngTemplateOutlet="inlines; context: { $implicit: block.content }" /></h2>
+    } @else {
+      <h3 class="fy-markdown-heading"><ng-container *ngTemplateOutlet="inlines; context: { $implicit: block.content }" /></h3>
+    }
+  } @else if (block.type === 'list') {
+    <ul>
+      @for (item of block.items; track $index) {
+        <li><ng-container *ngTemplateOutlet="inlines; context: { $implicit: item }" /></li>
+      }
+    </ul>
+  } @else {
+    <p><ng-container *ngTemplateOutlet="inlines; context: { $implicit: block.content }" /></p>
+  }
+}

@@ -1,0 +1,88 @@
+:host {
+  display: block;
+}
+
+.fy-stg-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px 6px;
+  padding: var(--fy-space-m) 0;
+}
+
+.fy-stg-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--fy-font-family);
+}
+
+.fy-stg-ring {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 2px solid transparent;
+  box-sizing: border-box;
+}
+
+.fy-stg-item--selected .fy-stg-ring {
+  border-color: var(--fy-accent);
+}
+
+.fy-stg-check {
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--fy-accent);
+  border: 2px solid var(--fy-primary-background);
+  color: var(--fy-on-accent);
+  font-size: var(--fy-font-size-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity var(--fy-duration-fast) ease, transform var(--fy-duration-fast) ease;
+}
+
+.fy-stg-item--selected .fy-stg-check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.fy-stg-label {
+  font-size: var(--fy-font-size-s);
+  color: var(--fy-secondary-text);
+  max-width: 70px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.fy-stg-item--selected .fy-stg-label {
+  color: var(--fy-primary-text);
+}
+
+.fy-stg-sublabel {
+  font-size: var(--fy-font-size-xs);
+  color: var(--fy-secondary-text);
+  opacity: 0.7;
+  max-width: 70px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+  margin-top: -4px;
+}

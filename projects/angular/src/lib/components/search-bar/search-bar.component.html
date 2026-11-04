@@ -1,0 +1,22 @@
+@if (iconClass()) {
+  <i class="fy-search-bar__icon" [class]="iconClass()" aria-hidden="true"></i>
+}
+<input
+  #field
+  class="fy-search-bar__input"
+  type="search"
+  enterkeyhint="search"
+  autocomplete="off"
+  [value]="text()"
+  [disabled]="formDisabled()"
+  [placeholder]="placeholder()"
+  [attr.aria-label]="ariaLabel() || placeholder() || null"
+  (input)="onInput(field.value)"
+  (keydown.escape)="clear()"
+  (blur)="onTouched()"/>
+@if (text()) {
+  <button type="button" class="fy-search-bar__clear" [attr.aria-label]="clearLabel() ?? labels().clear" [fyHaptic]="HapticImpact.Light" (click)="clear()">
+    <i [class]="icons.close" aria-hidden="true"></i>
+  </button>
+}
+<ng-content select="[searchBarTrailing]" />

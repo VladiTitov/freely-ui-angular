@@ -1,0 +1,13 @@
+<div class="fy-avatar-circle fy-label" [style.width]="getSizePx(size)" [style.height]="getSizePx(size)"
+  [style.font-size]="getSizePx(fontSize)" [style.background]="color.background" [style.color]="color.text">
+  @if (image() && !imageFailed()) {
+    <img class="fy-avatar-image" [src]="image()" alt="" loading="lazy" decoding="async" (error)="imageFailed.set(true)" />
+  } @else if (icon) {
+    <i [class]="icon"></i>
+  } @else {
+    {{ initials }}
+  }
+  @if (badgeText; as text) {
+    <span class="fy-avatar-badge" role="img" [attr.aria-label]="badgeLabel || text">{{ text }}</span>
+  }
+</div>

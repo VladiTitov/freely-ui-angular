@@ -1,0 +1,20 @@
+<label class="fy-checkbox__label">
+  <input
+    #box
+    type="checkbox"
+    class="fy-checkbox__native"
+    [checked]="checked()"
+    [indeterminate]="indeterminate()"
+    [disabled]="isDisabled()"
+    [attr.aria-label]="ariaLabel() || null"
+    (change)="toggle(box.checked)"
+    (blur)="onTouched()" />
+  <span class="fy-checkbox__box" aria-hidden="true">
+    @if (indeterminate()) {
+      <span class="fy-checkbox__dash"></span>
+    } @else if (checked()) {
+      <i [class]="icons.selected"></i>
+    }
+  </span>
+  <span class="fy-checkbox__text"><ng-content /></span>
+</label>

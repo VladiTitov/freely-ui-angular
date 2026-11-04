@@ -1,0 +1,47 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fy-form-field-gap, 6px);
+}
+
+.fy-form-field__label {
+  padding-left: var(--fy-form-field-inset, 14px);
+  color: var(--fy-form-field-label-color, var(--fy-secondary-text));
+  font-family: var(--fy-font-family);
+  font-size: var(--fy-form-field-label-size, var(--fy-font-size-s));
+}
+
+.fy-form-field__required {
+  margin-left: 2px;
+  color: var(--fy-danger);
+}
+
+.fy-form-field__footer {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--fy-space-s);
+  padding: 0 var(--fy-form-field-inset, 14px);
+  font-family: var(--fy-font-family);
+  font-size: var(--fy-font-size-s);
+}
+
+.fy-form-field__hint,
+.fy-form-field__error {
+  flex: 1;
+  margin: 0;
+}
+
+.fy-form-field__hint {
+  color: var(--fy-secondary-text);
+}
+
+.fy-form-field__error {
+  color: var(--fy-danger);
+}
+
+.fy-form-field__counter {
+  margin-left: auto;
+  color: var(--fy-secondary-text);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}

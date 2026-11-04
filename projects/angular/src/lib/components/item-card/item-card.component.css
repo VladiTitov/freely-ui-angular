@@ -1,0 +1,68 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.fy-item-card {
+  display: flex;
+  align-items: center;
+  gap: var(--fy-space-m);
+  min-height: 50px;
+  padding: 13px;
+  background: var(--fy-secondary-background);
+  border: 1.5px solid transparent;
+  border-radius: var(--fy-radius-xl);
+}
+
+.fy-item-card--accent {
+  border-color: var(--fy-accent);
+}
+
+.fy-item-card__leading,
+.fy-item-card__trailing {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.fy-item-card__leading:empty,
+.fy-item-card__trailing:empty {
+  display: none;
+}
+
+/* Without a leading slot the text gets the inset the avatar would have given. */
+.fy-item-card__leading:empty + .fy-item-card__body {
+  padding-left: 9px;
+}
+
+/* Default lines a trailing action up with the 30px inset of settings menu rows. */
+.fy-item-card__trailing {
+  margin-right: var(--fy-item-card-trailing-inset, 17px);
+}
+
+.fy-item-card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.fy-item-card__title {
+  font-size: var(--fy-font-size-l);
+  font-weight: 400;
+  color: var(--fy-primary-text);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.fy-item-card__subtitle {
+  font-size: var(--fy-font-size-m);
+  font-weight: 400;
+  color: var(--fy-secondary-text);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.fy-item-card--accent .fy-item-card__subtitle {
+  color: var(--fy-accent);
+}

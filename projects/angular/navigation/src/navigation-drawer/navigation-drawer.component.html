@@ -1,0 +1,32 @@
+@if (enabled()) {
+  <div class="fy-underlay"></div>
+
+  <nav class="fy-menu" [attr.aria-label]="label() ?? labels().navigation" [attr.inert]="pushed() ? null : ''">
+    @for (item of items(); track item.link) {
+      <a
+        fyButton variant="ghost" size="l" iconOnly class="fy-menu-item"
+        [routerLink]="item.link"
+        routerLinkActive="fy-active"
+        [routerLinkActiveOptions]="{ exact: !!item.exact }"
+        ariaCurrentWhenActive="page"
+        [fyHaptic]="haptic()"
+        [attr.aria-label]="item.label"
+        [title]="item.label">
+        <i [class]="item.icon" aria-hidden="true"></i>
+      </a>
+    }
+
+    <div class="fy-menu-footer">
+      <ng-content select="[drawerFooter]" />
+    </div>
+  </nav>
+}
+
+<div class="fy-page" [class.fy-page--pushed]="pushed()" [attr.inert]="pushed() ? '' : null">
+  <ng-content />
+</div>
+
+@if (pushed()) {
+  <!-- The blurred page is only a way back, so a tap meant for the menu can't land on it. -->
+  <button type="button" class="fy-backdrop" [attr.aria-label]="labels().close" (click)="close()"></button>
+}

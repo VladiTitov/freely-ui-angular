@@ -1,0 +1,18 @@
+@if (label(); as text) {
+  <label class="fy-form-field__label" [attr.for]="control()?.id()">
+    {{ text }}@if (required()) {<span class="fy-form-field__required" aria-hidden="true">*</span>}
+  </label>
+}
+<ng-content />
+@if (error() || hint() || count()) {
+  <div class="fy-form-field__footer">
+    @if (error(); as text) {
+      <p class="fy-form-field__error" [id]="errorId" aria-live="polite">{{ text }}</p>
+    } @else if (hint(); as text) {
+      <p class="fy-form-field__hint" [id]="hintId">{{ text }}</p>
+    }
+    @if (count(); as text) {
+      <span class="fy-form-field__counter" aria-hidden="true">{{ text }}</span>
+    }
+  </div>
+}

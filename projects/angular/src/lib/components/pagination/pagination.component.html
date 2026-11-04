@@ -1,0 +1,24 @@
+<nav class="fy-pagination" [attr.aria-label]="label() ?? labels().pagination">
+  <button type="button" class="fy-pagination__btn" [attr.aria-label]="previousLabel() ?? labels().previousPage" [disabled]="page() <= 1"
+    fyHaptic="selection" (click)="go(page() - 1)">
+    <i [class]="icons.previous" aria-hidden="true"></i>
+  </button>
+
+  <div class="fy-pagination__pages">
+    @for (item of items(); track $index) {
+      @if (item === null) {
+        <span class="fy-pagination__gap" aria-hidden="true">…</span>
+      } @else {
+        <button type="button" class="fy-pagination__btn" [class.fy-pagination__btn--current]="item === page()"
+          [attr.aria-current]="item === page() ? 'page' : null" fyHaptic="selection" (click)="go(item)">
+          {{ item }}
+        </button>
+      }
+    }
+  </div>
+
+  <button type="button" class="fy-pagination__btn" [attr.aria-label]="nextLabel() ?? labels().nextPage" [disabled]="page() >= pageCount()"
+    fyHaptic="selection" (click)="go(page() + 1)">
+    <i [class]="icons.next" aria-hidden="true"></i>
+  </button>
+</nav>

@@ -1,0 +1,24 @@
+# Build output
+/dist/
+/out-tsc/
+/tmp/
+/coverage/
+/.angular/
+
+# Dependencies
+/node_modules/
+
+# Environment
+/.env
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Logs
+npm-debug.log*
+
+# Editors and OS
+/.idea/
+/.vscode/*
+!/.vscode/extensions.json
+.DS_Store

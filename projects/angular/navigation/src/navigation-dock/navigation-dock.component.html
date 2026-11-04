@@ -1,0 +1,17 @@
+<nav class="fy-dock" [class]="'fy-dock--' + position()" [attr.aria-label]="label() ?? labels().navigation">
+  <div class="fy-menu">
+    @for (item of items(); track item.link) {
+      <button
+        type="button"
+        fyButton variant="ghost" size="l" iconOnly class="fy-dock-item"
+        [routerLink]="item.link"
+        routerLinkActive="fy-active"
+        [routerLinkActiveOptions]="{ exact: !!item.exact }"
+        ariaCurrentWhenActive="page"
+        [fyHaptic]="haptic()"
+        [attr.aria-label]="item.label">
+        <i [class]="item.icon" aria-hidden="true"></i>
+      </button>
+    }
+  </div>
+</nav>

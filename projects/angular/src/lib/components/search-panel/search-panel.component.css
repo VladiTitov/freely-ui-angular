@@ -1,0 +1,74 @@
+:host {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  width: var(--fy-search-panel-width, var(--_search-panel-width));
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* The toggle keeps the same gap to the end edge as to the top and bottom. */
+:host(.fy-search-panel--filterable) .fy-search-panel__field {
+  --fy-search-bar-padding-end: calc((var(--fy-search-bar-height, 40px) - 2px - var(--fy-filter-toggle-size, 30px)) / 2);
+}
+
+.fy-search-panel__toggle {
+  --fy-filter-toggle-color: var(--fy-search-panel-toggle-color, inherit);
+  --fy-filter-toggle-hover-bg: var(--fy-search-panel-toggle-hover-bg, rgba(127, 127, 127, 0.14));
+  --fy-filter-toggle-accent: var(--fy-search-panel-accent, currentColor);
+  --fy-filter-toggle-badge-color: var(--fy-search-panel-badge-color, var(--fy-on-accent));
+}
+
+.fy-search-panel__panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: var(--fy-search-panel-z-index, var(--fy-z-popover));
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-sizing: border-box;
+  width: var(--fy-search-panel-panel-width, 280px);
+  max-width: 100%;
+  padding: 14px;
+  border: 1px solid var(--fy-search-panel-border-color, rgba(127, 127, 127, 0.18));
+  border-radius: var(--fy-search-panel-radius, 18px);
+  background: var(--fy-search-panel-bg, var(--fy-secondary-background));
+  color: var(--fy-search-panel-color, inherit);
+  box-shadow: var(--fy-search-panel-shadow, var(--fy-shadow-m));
+  transform-origin: top right;
+  animation: search-panel-in var(--fy-duration-fast) ease-out;
+}
+
+.fy-search-panel__panel[hidden] {
+  display: none;
+}
+
+.fy-search-panel__reset {
+  align-self: flex-start;
+  padding: 2px 0;
+  border: 0;
+  background: none;
+  color: var(--fy-search-panel-accent, currentColor);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.fy-search-panel__reset[disabled] {
+  opacity: 0.4;
+  cursor: default;
+}
+
+@keyframes search-panel-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fy-search-panel__panel {
+    animation: none;
+  }
+}

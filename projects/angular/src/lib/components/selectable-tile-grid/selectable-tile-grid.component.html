@@ -1,0 +1,15 @@
+<div class="fy-stg-grid">
+  @for (tile of tiles; track tile.id) {
+    <button type="button" class="fy-stg-item" [class.fy-stg-item--selected]="isSelected(tile.id)"
+      [disabled]="formDisabled()" fyHaptic="selection" (click)="onToggle(tile.id)">
+      <span class="fy-stg-ring">
+        <fy-user-avatar [size]="48" [fontSize]="15" [fullName]="tile.label" [icon]="tile.icon" [imageUrl]="tile.imageUrl"/>
+        <span class="fy-stg-check"><i [class]="icons.selected"></i></span>
+      </span>
+      <span class="fy-stg-label">{{ tile.label }}</span>
+      @if (tile.sublabel) {
+        <span class="fy-stg-sublabel">{{ tile.sublabel }}</span>
+      }
+    </button>
+  }
+</div>

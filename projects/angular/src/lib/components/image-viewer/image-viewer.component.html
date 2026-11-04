@@ -1,0 +1,17 @@
+@if (opened()) {
+  <div #track class="fy-track" (scroll)="onScroll(track)">
+    @for (image of images(); track image.url) {
+      <div class="fy-slide">
+        <img [src]="image.url" alt="" />
+      </div>
+    }
+  </div>
+
+  @if (images().length > 1) {
+    <div class="fy-counter">{{ active() + 1 }} / {{ images().length }}</div>
+  }
+}
+
+<button type="button" fyButton variant="ghost" iconOnly class="fy-close" [attr.aria-label]="labels().close" [fyHaptic]="HapticImpact.Light" (click)="close()">
+  <i [class]="icons.closeLarge" aria-hidden="true"></i>
+</button>

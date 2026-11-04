@@ -1,0 +1,85 @@
+:host {
+  --fy-tabs-track-background: var(--fy-secondary-background);
+  --fy-tabs-border-color: var(--fy-tertiary-background);
+  --fy-tabs-label-color: var(--fy-secondary-text);
+  --fy-tabs-active-label-color: var(--fy-primary-background);
+  --fy-tabs-indicator-color: var(--fy-primary-text);
+  --fy-tabs-padding: 4px;
+  display: block;
+}
+
+.fy-tabs-track {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: var(--fy-control-height, 46px);
+  box-sizing: border-box;
+  padding: var(--fy-tabs-padding);
+  background: var(--fy-tabs-track-background);
+  border: 1px solid var(--fy-tabs-border-color);
+  border-radius: var(--fy-radius-full);
+}
+
+.fy-tabs-tab {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 0%;
+  min-width: 0;
+  text-align: center;
+  background: none;
+  border: none;
+  border-radius: var(--fy-radius-full);
+  padding: 0 var(--fy-space-m);
+  font-family: var(--fy-font-family);
+  font-size: var(--fy-font-size-m);
+  font-weight: 500;
+  color: var(--fy-tabs-label-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: color var(--fy-duration-base) ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fy-tabs-label {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fy-tabs-label--short,
+:host(.fy-tabs--compact) .fy-tabs-label:has(+ .fy-tabs-label--short) {
+  display: none;
+}
+
+:host(.fy-tabs--compact) .fy-tabs-label--short {
+  display: block;
+}
+
+:host(.fy-tabs--compact) .fy-tabs-tab {
+  padding-inline: 6px;
+}
+
+.fy-tabs-tab--active {
+  color: var(--fy-tabs-active-label-color);
+  font-weight: 600;
+}
+
+.fy-tabs-indicator {
+  position: absolute;
+  top: var(--fy-tabs-padding);
+  bottom: var(--fy-tabs-padding);
+  left: 0;
+  width: 0;
+  background: var(--fy-tabs-indicator-color);
+  border-radius: var(--fy-radius-full);
+  transition: left var(--fy-duration-slow) cubic-bezier(0.3, 1.3, 0.5, 1), width var(--fy-duration-slow) cubic-bezier(0.3, 1.3, 0.5, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fy-tabs-tab,
+  .fy-tabs-indicator {
+    transition: none;
+  }
+}

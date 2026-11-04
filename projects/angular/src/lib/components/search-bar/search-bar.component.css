@@ -1,0 +1,91 @@
+:host {
+  display: flex;
+  align-items: center;
+  gap: var(--fy-search-bar-gap, var(--fy-space-s));
+  box-sizing: border-box;
+  height: var(--fy-search-bar-height, 40px);
+  padding: 0 var(--fy-search-bar-padding-end, var(--fy-search-bar-padding-x, 14px)) 0 var(--fy-search-bar-padding-x, 14px);
+  border: 1px solid var(--fy-search-bar-border-color, rgba(127, 127, 127, 0.18));
+  border-radius: var(--fy-search-bar-radius, 9999px);
+  background: var(--fy-search-bar-bg, rgba(127, 127, 127, 0.14));
+  color: var(--fy-search-bar-color, inherit);
+  transition:
+    border-color var(--fy-duration-base) ease,
+    box-shadow var(--fy-duration-base) ease;
+}
+
+:host(:focus-within) {
+  border-color: var(--fy-search-bar-focus-color, currentColor);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--fy-search-bar-focus-color, currentColor) 18%, transparent);
+}
+
+.fy-search-bar__icon {
+  flex: none;
+  display: flex;
+  font-size: var(--fy-search-bar-icon-size, 16px);
+  color: var(--fy-search-bar-muted-color, inherit);
+  transition: color var(--fy-duration-base) ease;
+}
+
+:host(:focus-within) .fy-search-bar__icon {
+  color: var(--fy-search-bar-focus-color, currentColor);
+}
+
+.fy-search-bar__input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: var(--fy-search-bar-font-size, 15px);
+  appearance: none;
+}
+
+.fy-search-bar__input::placeholder {
+  color: var(--fy-search-bar-muted-color, inherit);
+  opacity: var(--fy-search-bar-placeholder-opacity, 0.6);
+}
+
+/* Native WebKit clear button duplicates ours. */
+.fy-search-bar__input::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.fy-search-bar__clear {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--fy-search-bar-clear-size, 20px);
+  height: var(--fy-search-bar-clear-size, 20px);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--fy-search-bar-clear-bg, rgba(127, 127, 127, 0.2));
+  color: var(--fy-search-bar-muted-color, inherit);
+  font-size: 14px;
+  cursor: pointer;
+  animation: search-bar-clear-in var(--fy-duration-fast) ease-out;
+}
+
+@keyframes search-bar-clear-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host,
+  .fy-search-bar__icon {
+    transition: none;
+  }
+
+  .fy-search-bar__clear {
+    animation: none;
+  }
+}

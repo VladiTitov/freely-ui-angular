@@ -1,0 +1,476 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fy-data-grid-gap, 14px);
+  min-height: 0;
+  container-type: inline-size;
+}
+
+/* Wide: the actions and the summary on the left, the search on the right; the header row carries the sort. */
+.fy-data-grid__toolbar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--fy-space-m);
+}
+
+.fy-data-grid__search {
+  order: 2;
+  flex: none;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.fy-data-grid__search:empty {
+  display: none;
+}
+
+.fy-data-grid__meta {
+  order: 1;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fy-space-m);
+  min-width: 0;
+}
+
+.fy-data-grid__summary {
+  min-width: 0;
+  font-size: var(--fy-font-size-m);
+  color: var(--fy-secondary-text);
+}
+
+.fy-data-grid__actions {
+  order: 0;
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--fy-space-s);
+}
+
+.fy-data-grid__action-group {
+  display: flex;
+}
+
+.fy-data-grid__action-group:empty {
+  display: none;
+}
+
+/* The search and sort buttons are for a narrow container; a wide one shows the search and sorts by the headers. */
+.fy-data-grid__tools {
+  display: none;
+}
+
+.fy-data-grid__action {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: var(--fy-data-grid-action-height, 36px);
+  padding: 0 14px;
+  border: 1px solid var(--fy-data-grid-border-color, var(--fy-tertiary-background));
+  border-radius: var(--fy-data-grid-action-radius, var(--fy-radius-md));
+  background: none;
+  color: var(--fy-primary-text);
+  font: inherit;
+  font-size: var(--fy-font-size-s);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--fy-duration-fast) ease, color var(--fy-duration-fast) ease;
+}
+
+/* The buttons of a group share their borders and only the outer corners are round. */
+.fy-data-grid__action-group > .fy-data-grid__action:not(:first-child) {
+  margin-left: -1px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.fy-data-grid__action-group > fy-dropdown-menu:not(:first-child) {
+  margin-left: -1px;
+}
+
+.fy-data-grid__action-group > fy-dropdown-menu:not(:first-child) > .fy-data-grid__action {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.fy-data-grid__action-group > .fy-data-grid__action:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.fy-data-grid__action:hover:not(:disabled) {
+  background: var(--fy-secondary-background);
+}
+
+.fy-data-grid__action:disabled {
+  color: var(--fy-secondary-text);
+  opacity: 0.5;
+  cursor: default;
+}
+
+.fy-data-grid__action--active {
+  color: var(--fy-accent);
+}
+
+.fy-data-grid__action--danger:not(:disabled) {
+  color: var(--fy-danger);
+}
+
+.fy-data-grid__action-count {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--fy-radius-full);
+  background: var(--fy-danger);
+  color: var(--fy-primary-background);
+  font-size: 11px;
+  line-height: 18px;
+  text-align: center;
+}
+
+/* Marks the search button while the hidden search is applied. */
+.fy-data-grid__action-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--fy-radius-full);
+  background: var(--fy-accent);
+}
+
+.fy-data-grid__checkbox {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--fy-accent);
+  cursor: pointer;
+}
+
+.fy-data-grid__checkbox:disabled {
+  cursor: default;
+}
+
+.fy-data-grid__row .fy-data-grid__select {
+  display: flex;
+  align-items: center;
+  overflow: visible;
+}
+
+.fy-data-grid__row.data-grid__row--selected {
+  background: var(--fy-data-grid-row-selected-background,
+    color-mix(in srgb, var(--fy-accent) 12%, var(--fy-data-grid-row-background, var(--fy-secondary-background))));
+}
+
+.fy-data-grid__row .fy-data-grid__row-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--fy-space-xs);
+  overflow: visible;
+}
+
+.fy-data-grid__row-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--fy-radius-full);
+  background: none;
+  color: var(--fy-secondary-text);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color var(--fy-duration-fast) ease, color var(--fy-duration-fast) ease;
+}
+
+.fy-data-grid__row-action:hover {
+  background: var(--fy-tertiary-background);
+  color: var(--fy-primary-text);
+}
+
+.fy-data-grid__row-action--danger:hover {
+  color: var(--fy-danger);
+}
+
+.fy-data-grid__table {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--fy-space-s);
+  border: 1px solid var(--fy-data-grid-border-color, var(--fy-tertiary-background));
+  border-radius: var(--fy-data-grid-radius, var(--fy-radius-md));
+  transition: opacity var(--fy-duration-base) ease;
+}
+
+/* Only the rows scroll; the gutter keeps the header columns over their cells. */
+.fy-data-grid__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+/* A row card clips its content, which would otherwise let the column squeeze it. */
+.fy-data-grid__body > * {
+  flex-shrink: 0;
+}
+
+.fy-data-grid__table--refreshing {
+  opacity: 0.6;
+}
+
+.fy-data-grid__row {
+  display: grid;
+  grid-template-columns: var(--_data-grid-columns);
+  align-items: center;
+  gap: var(--fy-space-m);
+  padding: var(--fy-space-m) 14px;
+  border-radius: var(--fy-data-grid-row-radius, 16px);
+  background: var(--fy-data-grid-row-background, var(--fy-secondary-background));
+  font-size: var(--fy-data-grid-font-size, var(--fy-font-size-m));
+}
+
+.fy-data-grid__row--head {
+  flex: none;
+  overflow-y: hidden;
+  scrollbar-gutter: stable;
+  padding-block: var(--fy-space-s);
+  background: none;
+  font-size: var(--fy-font-size-s);
+  color: var(--fy-secondary-text);
+}
+
+.fy-data-grid__row--placeholder {
+  display: block;
+}
+
+.fy-data-grid__skeleton {
+  width: 100%;
+  height: 1.5em;
+}
+
+.fy-data-grid__head,
+.fy-data-grid__cell {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fy-data-grid__sort-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fy-space-xs);
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.fy-data-grid__sort-btn--active {
+  color: var(--fy-primary-text);
+}
+
+.fy-data-grid__footer {
+  flex: none;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--fy-space-s) var(--fy-space-l);
+}
+
+.fy-data-grid__page-size {
+  display: flex;
+  align-items: center;
+  gap: var(--fy-space-s);
+  font-size: var(--fy-font-size-s);
+  color: var(--fy-secondary-text);
+}
+
+.fy-data-grid__page-size-label--short {
+  display: none;
+}
+
+.fy-data-grid__page-size-field {
+  width: 80px;
+  --fy-select-field-height: 32px;
+  --fy-select-field-padding-x: 12px;
+  --fy-select-field-radius: var(--fy-radius-full);
+  --fy-select-field-font-size: var(--fy-font-size-s);
+}
+
+.fy-data-grid__range {
+  font-size: var(--fy-font-size-s);
+  color: var(--fy-secondary-text);
+}
+
+.fy-data-grid__pagination {
+  margin-left: auto;
+}
+
+/*
+ * Narrow: the select-all button, the action group and the search and sort buttons
+ * share one row of icons; the opened search spans the width under it, the summary
+ * comes last.
+ */
+@container (max-width: 640px) {
+  .fy-data-grid__toolbar {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--fy-space-s);
+  }
+
+  .fy-data-grid__actions {
+    display: contents;
+  }
+
+  .fy-data-grid__actions > .fy-data-grid__action {
+    order: 0;
+  }
+
+  .fy-data-grid__action-group {
+    order: 1;
+  }
+
+  .fy-data-grid__tools {
+    order: 2;
+    display: flex;
+  }
+
+  /* Without actions the search and sort buttons still keep to the right. */
+  .fy-data-grid__tools:first-child {
+    margin-left: auto;
+  }
+
+  .fy-data-grid__action {
+    width: var(--fy-data-grid-action-height, 36px);
+    padding: 0;
+    font-size: 16px;
+  }
+
+  .fy-data-grid__action-label {
+    display: none;
+  }
+
+  .fy-data-grid__action-count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+  }
+
+  .fy-data-grid__search {
+    order: 3;
+    flex-basis: 100%;
+    --fy-search-panel-width: 100%;
+  }
+
+  .fy-data-grid__search:not(.fy-data-grid__search--open) {
+    display: none;
+  }
+
+  .fy-data-grid__meta {
+    order: 4;
+    flex-basis: 100%;
+    padding: 0 var(--fy-space-xs);
+  }
+
+  .fy-data-grid__summary {
+    font-size: var(--fy-font-size-s);
+  }
+
+  .fy-data-grid__range {
+    display: none;
+  }
+
+  .fy-data-grid__page-size-label:has(+ .fy-data-grid__page-size-label--short) {
+    display: none;
+  }
+
+  .fy-data-grid__page-size-label--short {
+    display: inline;
+  }
+
+  .fy-data-grid__page-size-field {
+    width: 72px;
+  }
+
+  .fy-data-grid__row--head {
+    display: none;
+  }
+
+  .fy-data-grid__row:not(.fy-data-grid__row--placeholder, .fy-data-grid__row--head) {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .fy-data-grid__cell {
+    display: flex;
+    gap: 10px;
+    padding: 10px 14px;
+    border-top: 1px solid var(--fy-data-grid-border-color, var(--fy-tertiary-background));
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .fy-data-grid__cell:first-child {
+    border-top: 0;
+  }
+
+  .fy-data-grid__cell::before {
+    content: attr(data-label);
+    flex: none;
+    width: var(--fy-data-grid-label-width, 88px);
+    color: var(--fy-secondary-text);
+  }
+
+  /* The checkbox sits in the card's corner, next to the first value. */
+  .fy-data-grid__cell.data-grid__select {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px 14px;
+    border-top: 0;
+  }
+
+  .fy-data-grid__cell.data-grid__select::before {
+    content: none;
+  }
+
+  .fy-data-grid__select + .fy-data-grid__cell {
+    padding-right: 46px;
+    border-top: 0;
+  }
+
+  .fy-data-grid__row .fy-data-grid__row-actions {
+    justify-content: flex-start;
+    align-items: center;
+    padding-block: var(--fy-space-xs);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fy-data-grid__table {
+    transition: none;
+  }
+}

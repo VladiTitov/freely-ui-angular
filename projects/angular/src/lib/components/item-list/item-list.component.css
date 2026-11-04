@@ -1,0 +1,174 @@
+:host {
+  display: block;
+}
+
+.fy-item-list__toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fy-item-list-toolbar-gap, 10px);
+  margin-bottom: var(--fy-item-list-search-gap, var(--fy-space-m));
+}
+
+/* Padding instead of margin so rows scrolling underneath stay covered. */
+.fy-item-list__toolbar--sticky {
+  position: sticky;
+  top: var(--fy-item-list-toolbar-top, 0px);
+  z-index: var(--fy-item-list-toolbar-z-index, 9);
+  margin-bottom: 0;
+  padding-bottom: var(--fy-item-list-search-gap, var(--fy-space-m));
+  background: var(--fy-item-list-toolbar-bg, transparent);
+  transition:
+    transform 0.25s var(--fy-ease-standard),
+    opacity var(--fy-duration-base) ease,
+    visibility 0s linear 0s;
+}
+
+/* Slides up under the page header (which sits above it in z-order). */
+.fy-item-list__toolbar--hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 0.25s var(--fy-ease-standard),
+    opacity var(--fy-duration-base) ease,
+    visibility 0s linear 0.25s;
+}
+
+/* Same height as the tabs above the list. */
+.fy-item-list__search {
+  --fy-search-bar-height: var(--fy-control-height, 40px);
+}
+
+/* A filter toggle at the end of the field keeps the same gap to the end edge as to the top and bottom. */
+.fy-item-list__search:has(.fy-filter-toggle) {
+  --fy-search-bar-padding-end: calc((var(--fy-search-bar-height) - 2px - var(--fy-filter-toggle-size, 30px)) / 2);
+}
+
+.fy-item-list__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fy-space-m);
+  min-height: 28px;
+  padding: 0 var(--fy-space-xs);
+}
+
+.fy-item-list__summary {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: var(--fy-item-list-summary-size, 12px);
+  color: var(--fy-item-list-summary-color, inherit);
+}
+
+.fy-item-list__sort {
+  min-width: 0;
+}
+
+.fy-item-list__items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fy-item-list-gap, 10px);
+}
+
+.fy-item-list__item {
+  display: block;
+  will-change: transform, opacity;
+}
+
+/*
+ * Rows and placeholders come and go with `animate.enter` / `animate.leave`. Where the browser can animate to
+ * `auto`, a row also opens and closes its height, so the rows below slide instead of jumping.
+ */
+.fy-item-list__row-enter {
+  animation: item-list-row var(--fy-duration-slow) ease-out;
+}
+
+.fy-item-list__row-leave {
+  /* Reversed, so `ease-out` plays as the `ease-in` of a closing row. */
+  animation: item-list-row var(--fy-duration-slow) ease-out reverse forwards;
+}
+
+.fy-item-list__placeholder-enter {
+  animation: item-list-placeholder-in 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes item-list-row {
+  from {
+    height: var(--_row-from-height, auto);
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+@keyframes item-list-placeholder-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+@supports (interpolate-size: allow-keywords) {
+  .fy-item-list__row-enter,
+  .fy-item-list__row-leave {
+    --_row-from-height: 0;
+    interpolate-size: allow-keywords;
+    overflow: clip;
+  }
+}
+
+.fy-item-list__retry {
+  margin-top: var(--fy-space-xs);
+  padding: var(--fy-space-s) 18px;
+  border: 0;
+  border-radius: var(--fy-radius-full);
+  background: var(--fy-tertiary-background);
+  color: var(--fy-accent);
+  font-family: var(--fy-font-family);
+  font-size: var(--fy-font-size-m);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.fy-item-list__status {
+  display: flex;
+  justify-content: center;
+  padding: var(--fy-item-list-status-padding, 40px 0);
+}
+
+.fy-item-list__spinner {
+  display: block;
+  width: var(--fy-item-list-spinner-size, 32px);
+  height: var(--fy-item-list-spinner-size, 32px);
+  border-radius: 50%;
+  border: 2px solid var(--fy-item-list-spinner-track, rgba(127, 127, 127, 0.25));
+  border-top-color: var(--fy-item-list-spinner-color, currentColor);
+  animation: item-list-spin 0.8s linear infinite;
+}
+
+@keyframes item-list-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fy-item-list__toolbar--sticky,
+  .fy-item-list__toolbar--hidden {
+    transition: none;
+  }
+
+  .fy-item-list__row-enter,
+  .fy-item-list__row-leave,
+  .fy-item-list__placeholder-enter {
+    animation: none;
+  }
+
+  .fy-item-list__spinner {
+    animation-duration: 1.6s;
+  }
+}

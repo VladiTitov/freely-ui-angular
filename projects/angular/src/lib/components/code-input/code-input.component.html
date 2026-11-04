@@ -1,0 +1,27 @@
+<input
+  #native
+  class="fy-code-input__native"
+  type="text"
+  autocomplete="one-time-code"
+  autocapitalize="characters"
+  spellcheck="false"
+  [id]="id()"
+  [attr.inputmode]="kind() === 'numeric' ? 'numeric' : 'text'"
+  [attr.pattern]="kind() === 'numeric' ? '[0-9]*' : null"
+  [attr.aria-label]="ariaLabel() || null"
+  [attr.aria-describedby]="field?.describedBy() || null"
+  [attr.aria-invalid]="field?.invalid() ? 'true' : null"
+  [attr.aria-required]="field?.required() ? 'true' : null"
+  [autofocus]="autofocus()"
+  [disabled]="isDisabled()"
+  [value]="value()"
+  (input)="onInput(native)"
+  (focus)="focused.set(true); keepCaretAtEnd(native)"
+  (click)="keepCaretAtEnd(native)"
+  (blur)="focused.set(false); onTouched()" />
+<div class="fy-code-input__cells" aria-hidden="true">
+  @for (cell of cells(); track $index) {
+    <span class="fy-code-input__cell" [class.fy-code-input__cell--filled]="cell"
+      [class.fy-code-input__cell--active]="focused() && $index === activeCell()">{{ cell }}</span>
+  }
+</div>

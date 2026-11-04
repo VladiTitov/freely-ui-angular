@@ -1,0 +1,6 @@
+@if (loading()) {
+  <fy-loader class="fy-button__loader" [size]="loaderSize()" [label]="null" />
+} @else if (icon()) {
+  <i class="fy-button__icon" [class]="icon()" aria-hidden="true"></i>
+}
+<ng-content />

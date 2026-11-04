@@ -1,0 +1,97 @@
+:host {
+  --_pad-block: var(--fy-chip-padding-block, 8px);
+  --_pad-inline: var(--fy-chip-padding-inline, 14px);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--fy-chip-gap, var(--fy-space-s));
+  box-sizing: border-box;
+  max-width: 100%;
+  margin: 0;
+  padding: var(--_pad-block) var(--_pad-inline);
+  border: none;
+  border-radius: var(--fy-radius-full);
+  background: var(--fy-chip-background, var(--fy-tertiary-background));
+  color: var(--fy-chip-color, inherit);
+  font-family: var(--fy-font-family);
+  font-size: var(--fy-chip-font-size, var(--fy-font-size-s));
+  white-space: nowrap;
+}
+
+:host(.fy-chip--s) {
+  --_pad-block: var(--fy-chip-padding-block, 4px);
+  --_pad-inline: var(--fy-chip-padding-inline, 12px);
+}
+
+:host(.fy-chip--l) {
+  --_pad-block: var(--fy-chip-padding-block, 10px);
+  --_pad-inline: var(--fy-chip-padding-inline, 16px);
+}
+
+:host(.fy-chip--secondary) {
+  background: var(--fy-chip-background, var(--fy-secondary-background));
+}
+
+:host(.fy-chip--muted) {
+  color: var(--fy-chip-color, var(--fy-secondary-text));
+}
+
+:host(button) {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--fy-duration-base) ease, color var(--fy-duration-base) ease;
+}
+
+:host(.fy-chip--selected) {
+  background: var(--fy-chip-selected-background, var(--fy-accent));
+  color: var(--fy-chip-selected-color, var(--fy-on-accent));
+}
+
+:host(.fy-chip--icon) {
+  flex-shrink: 0;
+  width: var(--fy-chip-icon-size, 36px);
+  height: var(--fy-chip-icon-size, 36px);
+  padding: 0;
+  font-size: var(--fy-font-size-l);
+}
+
+/* The avatar hugs the rounded edge: its gap to the border equals the vertical padding. */
+.fy-chip__avatar {
+  display: inline-flex;
+  flex-shrink: 0;
+  margin-left: calc(var(--_pad-block) - var(--_pad-inline));
+}
+
+.fy-chip__avatar:empty {
+  display: none;
+}
+
+.fy-chip__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fy-chip__label:empty,
+:host(.fy-chip--icon) .fy-chip__label {
+  display: contents;
+}
+
+.fy-chip__remove {
+  display: inline-flex;
+  flex-shrink: 0;
+  margin: 0 -4px 0 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--fy-chip-remove-color, var(--fy-secondary-text));
+  font-size: var(--fy-font-size-l);
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host(button) {
+    transition: none;
+  }
+}

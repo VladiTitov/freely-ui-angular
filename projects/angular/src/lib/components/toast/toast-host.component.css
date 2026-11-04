@@ -1,0 +1,66 @@
+.fy-toast-region {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: var(--fy-toast-bottom, calc(72px + var(--fy-safe-bottom, 0px)));
+  z-index: var(--fy-z-toast);
+  display: flex;
+  justify-content: center;
+  padding: 0 14px;
+  pointer-events: none;
+}
+
+.fy-toast {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 420px;
+  padding: var(--fy-space-m) 14px;
+  border-radius: var(--fy-radius-xl);
+  background: var(--fy-tertiary-background);
+  color: var(--fy-primary-text);
+  font-family: var(--fy-font-family);
+  font-size: var(--fy-font-size-m);
+  box-shadow: var(--fy-shadow-l);
+  pointer-events: auto;
+  cursor: default;
+  animation: toast-in var(--fy-duration-base) ease-out;
+}
+
+.fy-toast__icon {
+  flex: none;
+  color: var(--fy-danger);
+  font-size: 1.1em;
+}
+
+.fy-toast__message {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.fy-toast__action {
+  flex: none;
+  padding: var(--fy-space-xs) 6px;
+  border: 0;
+  background: none;
+  color: var(--fy-accent);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fy-toast {
+    animation: none;
+  }
+}

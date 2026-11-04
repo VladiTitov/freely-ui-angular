@@ -1,0 +1,67 @@
+.fy-drawer-content {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 375px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  user-select: none;
+}
+
+:host {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: var(--fy-z-dock);
+  touch-action: none;
+}
+
+:host(.fy-is-visible) {
+  display: block;
+}
+
+:host::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transition: opacity var(--fy-duration-fast) linear;
+  pointer-events: none;
+}
+
+:host(.fy-is-open)::before {
+  opacity: 1;
+}
+
+.fy-drawer-bar {
+  width: 100%;
+  height: min(85vh, calc(100vh - var(--fy-safe-top) - 12px));
+  bottom: 0;
+  top: auto;
+  left: 0;
+  right: 0;
+  transform: translateY(100%);
+  transition: transform var(--fy-duration-slow) ease-in-out;
+  position: fixed;
+  border-radius: var(--fy-radius-lg) var(--fy-radius-lg) 0 0;
+  box-sizing: border-box;
+  color: var(--fy-primary-text);
+  background-color: var(--fy-secondary-background);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow-y: auto;
+}
+
+:host(.fy-is-open) > .fy-drawer-bar {
+  transform: translateY(0);
+}
+
+/* The projected form fills the whole drawer height. */
+.fy-drawer-content > ::ng-deep * {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

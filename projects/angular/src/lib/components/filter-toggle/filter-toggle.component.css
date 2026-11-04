@@ -1,0 +1,70 @@
+:host {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--fy-filter-toggle-size, 30px);
+  height: var(--fy-filter-toggle-size, 30px);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--fy-filter-toggle-color, inherit);
+  font-size: 17px;
+  cursor: pointer;
+  transition:
+    background-color var(--fy-duration-base) ease,
+    color var(--fy-duration-base) ease;
+}
+
+:host(:hover),
+:host([aria-expanded='true']) {
+  background: var(--fy-filter-toggle-hover-bg, rgba(127, 127, 127, 0.14));
+}
+
+/* Dimmed while no filter is in effect, so it does not compete with the query. */
+:host i {
+  opacity: var(--fy-filter-toggle-idle-opacity, 0.6);
+  transition: opacity var(--fy-duration-base) ease;
+}
+
+:host(.fy-filter-toggle--active) {
+  color: var(--fy-filter-toggle-accent, currentColor);
+}
+
+:host(.fy-filter-toggle--active) i,
+:host([aria-expanded='true']) i {
+  opacity: 1;
+}
+
+:host(:focus-visible) {
+  outline: 2px solid var(--fy-filter-toggle-accent, currentColor);
+  outline-offset: 1px;
+}
+
+.fy-filter-toggle__badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 var(--fy-space-xs);
+  border-radius: 8px;
+  background: var(--fy-filter-toggle-accent, currentColor);
+  color: var(--fy-filter-toggle-badge-color, var(--fy-on-accent));
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host,
+  :host i {
+    transition: none;
+  }
+}

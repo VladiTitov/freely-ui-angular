@@ -1,0 +1,15 @@
+@if (icon) {
+  <span class="fy-empty-state__icon" aria-hidden="true">
+    <i [class]="icon"></i>
+  </span>
+}
+@if (label) {
+  <p class="fy-empty-state__label">{{ label }}</p>
+}
+@if (description) {
+  <p class="fy-empty-state__description">{{ description }}</p>
+}
+<!-- Optional call to action under the text, e.g. the page's "Add" button. -->
+<div class="fy-empty-state__action">
+  <ng-content></ng-content>
+</div>

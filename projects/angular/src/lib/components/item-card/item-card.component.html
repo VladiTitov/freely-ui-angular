@@ -1,0 +1,12 @@
+<div class="fy-item-card" [class.fy-item-card--accent]="accent">
+  <div class="fy-item-card__leading"><ng-content select="[leading]"></ng-content></div>
+
+  <div class="fy-item-card__body">
+    <div class="fy-label fy-item-card__title"><fy-item-list-highlight [text]="title" /></div>
+    @if (subtitle) {
+      <div class="fy-label fy-item-card__subtitle"><fy-item-list-highlight [text]="subtitle" /></div>
+    }
+  </div>
+
+  <div class="fy-item-card__trailing"><ng-content select="[trailing]"></ng-content></div>
+</div>

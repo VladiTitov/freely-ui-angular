@@ -1,0 +1,62 @@
+{
+  "name": "@freely-ui/angular",
+  "version": "0.1.0",
+  "description": "Free, open-source Angular UI kit for mobile-first web apps and Telegram Mini Apps: signal-based components, light and dark themes, haptics.",
+  "keywords": [
+    "angular",
+    "ui-kit",
+    "angular-components",
+    "component-library",
+    "design-system",
+    "free",
+    "open-source",
+    "mobile-first",
+    "telegram-mini-app",
+    "angular-signals",
+    "dark-mode"
+  ],
+  "license": "MIT",
+  "author": "Uladzislau Tsitou",
+  "homepage": "https://github.com/VladiTitov/freely-ui-angular#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VladiTitov/freely-ui-angular.git"
+  },
+  "bugs": {
+    "url": "https://github.com/VladiTitov/freely-ui-angular/issues"
+  },
+  "peerDependencies": {
+    "@angular/common": "^21.1.0",
+    "@angular/core": "^21.1.0",
+    "@angular/forms": "^21.1.0",
+    "@angular/router": "^21.1.0",
+    "bootstrap-icons": "^1.13.0",
+    "rxjs": "^7.8.0",
+    "@fontsource/montserrat": "^5.3.0"
+  },
+  "peerDependenciesMeta": {
+    "@angular/router": {
+      "optional": true
+    },
+    "bootstrap-icons": {
+      "optional": true
+    },
+    "@fontsource/montserrat": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "exports": {
+    "./styles/*": {
+      "default": "./styles/*"
+    },
+    "./telegram/styles/*": {
+      "default": "./telegram/styles/*"
+    }
+  },
+  "sideEffects": [
+    "*.css"
+  ]
+}

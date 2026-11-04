@@ -1,0 +1,34 @@
+<div #modalPopup id="modalPopup" class="fy-modal fy-popup-modal" role="dialog" aria-modal="true"
+  (click)="onBackdropClick($event)">
+  <div class="fy-popup-sheet">
+    <button *ngIf="showClose" fyButton variant="ghost" iconOnly class="fy-close-button" type="button" [attr.aria-label]="labels().close"
+      [fyHaptic]="HapticImpact.Light" (click)="onDismiss()"><i [class]="icons.closeLarge" aria-hidden="true"></i></button>
+
+    <div class="fy-sheet-inner">
+      <div class="fy-container-wrapper">
+        <ng-container [ngSwitch]="contentMode">
+          <ng-container *ngSwitchCase="'template'">
+            <div *ngIf="title" class="fy-label fy-label-title">{{ title }}</div>
+            <ng-container *ngIf="contentTemplate as tpl">
+              <ng-container *ngTemplateOutlet="tpl; context: contentContext"></ng-container>
+            </ng-container>
+          </ng-container>
+
+          <ng-container *ngSwitchDefault>
+            <div *ngIf="title" class="fy-label fy-label-title" [class.fy-text-break]="isBreakEnabled">{{ title }}</div>
+            <div *ngIf="message" class="fy-label fy-label-message-text" [class.fy-text-break]="isBreakEnabled">{{ message }}</div>
+          </ng-container>
+        </ng-container>
+      </div>
+
+      <div class="fy-sheet-actions">
+        <button *ngFor="let button of buttons" type="button"
+          class="fy-sheet-btn"
+          [class.fy-sheet-btn--accept]="(button.style ?? 'muted') === 'accent'"
+          [class.fy-sheet-btn--cancel]="(button.style ?? 'muted') === 'muted'"
+          [fyHaptic]="button.haptic ?? HapticImpact.Light"
+          (click)="onButton(button)">{{ button.text }}</button>
+      </div>
+    </div>
+  </div>
+</div>

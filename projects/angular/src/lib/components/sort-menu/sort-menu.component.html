@@ -1,0 +1,18 @@
+<fy-dropdown-menu [label]="text()">
+  <button
+    fyDropdownTrigger
+    type="button"
+    [fyHaptic]="HapticImpact.Light"
+    class="fy-sort-menu__toggle"
+    [attr.aria-label]="text() + ': ' + currentLabel()">
+    <span class="fy-sort-menu__current">{{ currentLabel() }}</span>
+    <i class="fy-sort-menu__icon" [class]="icon() ?? icons.sort" aria-hidden="true"></i>
+  </button>
+
+  @for (option of options(); track option.id) {
+    <button fyDropdownItem type="button" [checked]="option.id === current()" fyHaptic="selection" (click)="value.set(option.id)">
+      <span>{{ option.label }}</span>
+      <i class="fy-dropdown-menu__check" [class]="icons.check" aria-hidden="true"></i>
+    </button>
+  }
+</fy-dropdown-menu>

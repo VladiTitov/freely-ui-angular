@@ -1,0 +1,19 @@
+:host {
+  display: block;
+  padding-top: var(--fy-space-xs);
+  padding-bottom: var(--fy-space-m);
+}
+
+.fy-nav-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--fy-space-m);
+}
+
+.fy-nav-title {
+  display: block;
+  font-size: var(--fy-font-size-xxl);
+  color: var(--fy-primary-text);
+  margin-bottom: var(--fy-space-m);
+}

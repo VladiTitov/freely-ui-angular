@@ -1,0 +1,43 @@
+:host {
+  display: block;
+  line-height: var(--fy-markdown-line-height, 1.5);
+  overflow-wrap: anywhere;
+}
+
+/* `color` too: an app may colour headings globally, and these take the colour of the text around them. */
+.fy-markdown-heading {
+  color: inherit;
+  margin: var(--fy-markdown-heading-gap, var(--fy-space-xl)) 0 var(--fy-space-s);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+h2.markdown-heading {
+  font-size: var(--fy-markdown-h2-size, 1.15em);
+}
+
+h3.markdown-heading {
+  font-size: var(--fy-markdown-h3-size, 1em);
+}
+
+.fy-markdown-heading:first-child {
+  margin-top: 0;
+}
+
+p,
+ul {
+  margin: 0 0 var(--fy-markdown-block-gap, var(--fy-space-s));
+}
+
+ul {
+  padding-left: 20px;
+}
+
+li + li {
+  margin-top: var(--fy-space-xs);
+}
+
+a {
+  color: var(--fy-markdown-link-color, inherit);
+  text-decoration: underline;
+}

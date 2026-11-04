@@ -1,0 +1,93 @@
+/*
+ * Design tokens. The palette is a neutral default: an app sets its own colours in a preset loaded after this file,
+ * by overriding the colour tokens under `[data-theme='light']` and `[data-theme='dark']`.
+ */
+:root {
+  --fy-font-family-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* `fonts.css` switches it to Montserrat. */
+  --fy-font-family: var(--fy-font-family-system);
+
+  /* Text and icons drawn over the accent, e.g. a selected chip or the knob of a switch. */
+  --fy-on-accent: #FFFFFF;
+
+  --fy-danger: #ff453a;
+  --fy-success: #30d158;
+  --fy-warning: #ef9f27;
+  --fy-info: #5aa9f0;
+
+  --fy-radius-full: 9999px;
+  --fy-radius-xl: 35px;
+  --fy-radius-lg: 30px;
+  --fy-radius-md: 24px;
+
+  --fy-font-size-xs: 10px;
+  --fy-font-size-s: 12px;
+  --fy-font-size-m: 14px;
+  --fy-font-size-l: 16px;
+  --fy-font-size-xl: 20px;
+  --fy-font-size-xxl: 24px;
+  --fy-font-size-xxxl: 32px;
+
+  --fy-space-xs: 4px;
+  --fy-space-s: 8px;
+  --fy-space-m: 12px;
+  --fy-space-l: 16px;
+  --fy-space-xl: 24px;
+  --fy-space-xxl: 32px;
+
+  --fy-shadow-s: 0 2px 6px rgba(0, 0, 0, 0.18), 0 0 0 0.5px rgba(0, 0, 0, 0.04);
+  --fy-shadow-m: 0 8px 24px rgba(0, 0, 0, 0.18);
+  --fy-shadow-l: 0 16px 48px rgba(0, 0, 0, 0.28);
+
+  /* Stacking layers, lowest first. */
+  --fy-z-sticky: 10;
+  --fy-z-popover: 20;
+  --fy-z-dock: 1000;
+  --fy-z-toast: 1005;
+  --fy-z-modal: 1010;
+  --fy-z-sheet: 1100;
+  --fy-z-tooltip: 1200;
+
+  --fy-duration-fast: 0.15s;
+  --fy-duration-base: 0.2s;
+  --fy-duration-slow: 0.3s;
+  --fy-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --fy-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --fy-button-s: 32px;
+  --fy-button-m: 44px;
+  --fy-button-l: 60px;
+
+  /* Height of the tabs track and of the list search field, so they line up. */
+  --fy-control-height: 46px;
+
+  /* Insets the content must keep clear of; an app inside a host shell (e.g. Telegram) overrides them. */
+  --fy-safe-top: env(safe-area-inset-top, 0px);
+  --fy-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --fy-safe-left: env(safe-area-inset-left, 0px);
+  --fy-safe-right: env(safe-area-inset-right, 0px);
+}
+
+/* Light is also the palette of a page with no `data-theme` set yet. */
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+  --fy-primary-background: #EDEDED;
+  --fy-secondary-background: #FFFFFF;
+  --fy-tertiary-background: #D6D6D6;
+  --fy-primary-text: #000000;
+  --fy-secondary-text: #3B3B3B;
+  --fy-accent: #3B82F6;
+  --fy-gradient: linear-gradient(to bottom right, #3B82F6, 55%, #6366F1);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  --fy-primary-background: #121212;
+  --fy-secondary-background: #1C1C1E;
+  --fy-tertiary-background: #2C2C2E;
+  --fy-primary-text: #F9F9F9;
+  --fy-secondary-text: #A1A1A6;
+  --fy-accent: #3B82F6;
+  --fy-gradient: linear-gradient(to bottom right, #3B82F6, 55%, #6366F1);
+}
