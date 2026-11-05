@@ -18,7 +18,7 @@ export class PageComponent {
     afterNextRender(() => {
       const scroller = this.scroller().nativeElement;
       const headers = scroller.querySelectorAll<HTMLElement>(
-        ':scope > .fy-sticky-wrapper, :scope > .page-body > .fy-sticky-wrapper',
+        ':scope > .fy-sticky-wrapper, :scope > .fy-page-body > .fy-sticky-wrapper',
       );
       if (!headers.length) return;
       const update = () => {

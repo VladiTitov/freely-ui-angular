@@ -46,7 +46,7 @@ export class SelectFieldComponent<T = string> implements ControlValueAccessor {
   /** Names the field for assistive tech when it has no visible `label`. */
   readonly ariaLabel = input('');
   /** Which side of the field the menu opens on. */
-  readonly direction = input<'down' | 'up'>('down');
+  readonly direction = input<'auto' | 'down' | 'up'>('auto');
 
   /** The option in effect. */
   protected readonly current = computed<SelectFieldOption<T> | undefined>(() => {

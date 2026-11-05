@@ -3,7 +3,7 @@
   #panel
   class="fy-dropdown-menu__panel"
   [class.fy-dropdown-menu__panel--start]="align() === 'start'"
-  [class.fy-dropdown-menu__panel--up]="direction() === 'up'"
+  [class.fy-dropdown-menu__panel--up]="opensUp()"
   role="menu"
   [attr.aria-label]="label() || null"
   [hidden]="!isOpen()"

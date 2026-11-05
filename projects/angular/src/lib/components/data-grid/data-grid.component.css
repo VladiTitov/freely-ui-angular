@@ -161,7 +161,7 @@
   overflow: visible;
 }
 
-.fy-data-grid__row.data-grid__row--selected {
+.fy-data-grid__row.fy-data-grid__row--selected {
   background: var(--fy-data-grid-row-selected-background,
     color-mix(in srgb, var(--fy-accent) 12%, var(--fy-data-grid-row-background, var(--fy-secondary-background))));
 }
@@ -445,7 +445,7 @@
   }
 
   /* The checkbox sits in the card's corner, next to the first value. */
-  .fy-data-grid__cell.data-grid__select {
+  .fy-data-grid__cell.fy-data-grid__select {
     position: absolute;
     top: 0;
     right: 0;
@@ -453,7 +453,7 @@
     border-top: 0;
   }
 
-  .fy-data-grid__cell.data-grid__select::before {
+  .fy-data-grid__cell.fy-data-grid__select::before {
     content: none;
   }
 

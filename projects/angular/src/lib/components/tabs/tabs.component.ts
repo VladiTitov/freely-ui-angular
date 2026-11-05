@@ -84,12 +84,12 @@ export class TabsComponent implements AfterViewInit, OnChanges, OnDestroy {
     const host = this.host.nativeElement;
     const buttons = this.tabButtonRefs?.map(ref => ref.nativeElement) ?? [];
     if (this.tabs.some(tab => this.shortLabel(tab))) {
-      host.classList.remove('tabs--compact');
+      host.classList.remove('fy-tabs--compact');
       const overflows = buttons.some(button => {
-        const label = button.querySelector<HTMLElement>('.tabs-label');
+        const label = button.querySelector<HTMLElement>('.fy-tabs-label');
         return !!label && label.scrollWidth > label.clientWidth;
       });
-      host.classList.toggle('tabs--compact', overflows);
+      host.classList.toggle('fy-tabs--compact', overflows);
     }
     this.moveIndicator(false);
   }

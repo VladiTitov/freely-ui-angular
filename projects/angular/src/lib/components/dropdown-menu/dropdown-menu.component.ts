@@ -53,8 +53,12 @@ export class DropdownMenuComponent {
   readonly label = input('');
   /** Which edge of the trigger the panel lines up with. */
   readonly align = input<'start' | 'end'>('end');
-  /** Which side of the trigger the panel opens on; `up` suits a trigger at the bottom of a view. */
-  readonly direction = input<'down' | 'up'>('down');
+  /**
+   * Which side of the trigger the panel opens on. `auto` opens it down, or up when it does not fit below and there
+   * is more room above; the room is the viewport minus `--fy-dropdown-menu-viewport-inset-top|bottom`, e.g. the height
+   * of a bottom navigation dock.
+   */
+  readonly direction = input<'auto' | 'down' | 'up'>('auto');
   /** Keep the panel open after an item is clicked. */
   readonly keepOpen = input(false, { transform: booleanAttribute });
 
@@ -62,6 +66,8 @@ export class DropdownMenuComponent {
   readonly closed = output<void>();
 
   readonly isOpen = signal(false);
+  /** Side the open panel is on: `direction`, with `auto` resolved when the panel opens. */
+  protected readonly opensUp = signal(false);
 
   private readonly panel = viewChild.required<ElementRef<HTMLElement>>('panel');
   private trigger?: HTMLElement;
@@ -78,9 +84,13 @@ export class DropdownMenuComponent {
 
   open(): void {
     if (this.isOpen()) return;
+    this.opensUp.set(this.direction() === 'up');
     this.isOpen.set(true);
     this.opened.emit();
-    afterNextRender(() => (this.selectedItem() ?? this.items()[0])?.focus(), { injector: this.injector });
+    afterNextRender(() => {
+      if (this.direction() === 'auto') this.opensUp.set(this.fitsBetterAbove());
+      (this.selectedItem() ?? this.items()[0])?.focus();
+    }, { injector: this.injector });
   }
 
   /** Closes the panel; `restoreFocus` moves focus back to the trigger. */
@@ -128,6 +138,21 @@ export class DropdownMenuComponent {
     if (this.isOpen() && !this.host.nativeElement.contains(event.target as Node)) {
       this.close();
     }
+  }
+
+  /**
+   * Measured while the panel is open below the trigger. The insets come through the panel's `scroll-margin-*`,
+   * which the CSS sets from the custom properties, so they arrive resolved to pixels.
+   */
+  private fitsBetterAbove(): boolean {
+    const panel = this.panel().nativeElement;
+    const trigger = this.host.nativeElement.getBoundingClientRect();
+    const style = getComputedStyle(panel);
+    const offset = panel.getBoundingClientRect().top - trigger.bottom;
+    const needed = panel.offsetHeight + offset;
+    const below = window.innerHeight - (parseFloat(style.scrollMarginBottom) || 0) - trigger.bottom;
+    const above = trigger.top - (parseFloat(style.scrollMarginTop) || 0);
+    return needed > below && above > below;
   }
 
   private items(): HTMLElement[] {

@@ -17,6 +17,21 @@ class HostComponent {
   readonly size = new FormControl<string | null>(null);
 }
 
+@Component({
+  imports: [RADIO_GROUP, ReactiveFormsModule],
+  template: `
+    <fy-radio-group [formControl]="size" aria-label="Size">
+      @for (option of options; track option) {
+        <fy-radio [value]="option">{{ option }}</fy-radio>
+      }
+    </fy-radio-group>
+  `
+})
+class ForHostComponent {
+  readonly options = ['s', 'm', 'l'];
+  readonly size = new FormControl<string | null>('m');
+}
+
 describe('RadioGroupComponent', () => {
   async function render() {
     const fixture = TestBed.createComponent(HostComponent);
@@ -81,5 +96,14 @@ describe('RadioGroupComponent', () => {
 
     expect(radios[0].getAttribute('aria-checked')).toBe('true');
     expect(fixture.componentInstance.size.value).toBe('s');
+  });
+
+  it('renders options from @for without reading a value before it is set', async () => {
+    const fixture = TestBed.createComponent(ForHostComponent);
+    await fixture.whenStable();
+    const radios = Array.from((fixture.nativeElement as HTMLElement).querySelectorAll<HTMLElement>('fy-radio'));
+
+    expect(radios.map(radio => radio.getAttribute('aria-checked'))).toEqual(['false', 'true', 'false']);
+    expect(radios.map(radio => radio.getAttribute('tabindex'))).toEqual(['-1', '0', '-1']);
   });
 });

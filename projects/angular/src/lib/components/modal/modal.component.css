@@ -19,11 +19,11 @@
   transition: opacity var(--fy-duration-fast) linear;
 }
 
-.fy-modal.is-visible {
+.fy-modal.fy-is-visible {
   display: flex;
 }
 
-.fy-modal.is-open {
+.fy-modal.fy-is-open {
   opacity: 1;
 }
 
@@ -41,7 +41,7 @@
   transition: opacity var(--fy-duration-slow) linear, transform var(--fy-duration-slow) linear;
 }
 
-.fy-modal.is-open > .fy-modal__dialog {
+.fy-modal.fy-is-open > .fy-modal__dialog {
   opacity: 1;
   transform: translateY(0);
 }

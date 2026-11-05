@@ -302,7 +302,7 @@ export class DataGridComponent<T> {
     this.searchOpen.update(open => !open);
     if (!this.searchOpen()) return;
     afterNextRender(
-      () => this.host.nativeElement.querySelector<HTMLElement>('.data-grid__search input')?.focus(),
+      () => this.host.nativeElement.querySelector<HTMLElement>('.fy-data-grid__search input')?.focus(),
       { injector: this.injector },
     );
   }
