@@ -14,11 +14,11 @@
   transition: opacity var(--fy-duration-fast) linear;
 }
 
-.fy-popup-modal.is-visible {
+.fy-popup-modal.fy-is-visible {
   display: flex;
 }
 
-.fy-popup-modal.is-open {
+.fy-popup-modal.fy-is-open {
   opacity: 1;
 }
 
@@ -36,7 +36,7 @@
   transition: transform var(--fy-duration-fast) ease, opacity var(--fy-duration-fast) ease;
 }
 
-.fy-popup-modal.is-open .fy-popup-sheet {
+.fy-popup-modal.fy-is-open .fy-popup-sheet {
   transform: translateY(0);
   opacity: 1;
 }

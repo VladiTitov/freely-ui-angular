@@ -9,6 +9,7 @@ import {
   inject,
   input,
   model,
+  OnInit,
   signal
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -45,16 +46,24 @@ export type RadioGroupAppearance = 'dot' | 'plain';
     '(keydown.enter)': 'pick(); $event.preventDefault()',
   },
 })
-export class RadioComponent {
+export class RadioComponent implements OnInit {
   readonly value = input.required<unknown>();
   readonly disabled = input(false, { transform: booleanAttribute });
 
   protected readonly group = inject(RadioGroupComponent);
   readonly element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
 
-  readonly checked = computed(() => this.group.value() === this.value());
+  // Radios rendered by `@for` get their inputs one view at a time, while the first one already asks the group
+  // for its tab stop, which reads `checked` of all of them; reading `value` before it is set throws NG0950.
+  private readonly ready = signal(false);
+
+  readonly checked = computed(() => this.ready() && this.group.value() === this.value());
   readonly isDisabled = computed(() => this.disabled() || this.group.isDisabled());
   protected readonly tabStop = computed(() => this.group.isTabStop(this));
+
+  ngOnInit(): void {
+    this.ready.set(true);
+  }
 
   protected pick(): void {
     if (!this.isDisabled()) this.group.select(this.value());

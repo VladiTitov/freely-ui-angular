@@ -46,7 +46,7 @@ export function splitHighlight(text: string | null | undefined, query: string | 
   selector: 'fy-item-list-highlight',
   template: `@for (part of parts(); track $index) {@if (part.match) {<mark class="fy-item-list-highlight__match">{{ part.text }}</mark>} @else {<ng-container>{{ part.text }}</ng-container>}}`,
   styles: `
-    .item-list-highlight__match {
+    .fy-item-list-highlight__match {
       padding: 0;
       border-radius: 3px;
       background: var(--fy-item-list-highlight-bg, rgba(255, 214, 0, 0.4));

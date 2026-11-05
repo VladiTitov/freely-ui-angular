@@ -12,11 +12,11 @@
   line-height: 1.3;
 }
 
-h2.markdown-heading {
+h2.fy-markdown-heading {
   font-size: var(--fy-markdown-h2-size, 1.15em);
 }
 
-h3.markdown-heading {
+h3.fy-markdown-heading {
   font-size: var(--fy-markdown-h3-size, 1em);
 }
 

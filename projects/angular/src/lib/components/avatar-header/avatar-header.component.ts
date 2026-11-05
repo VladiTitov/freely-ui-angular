@@ -79,7 +79,7 @@ export class AvatarHeaderComponent implements AfterViewInit, OnDestroy {
   }
   private _collapsed: boolean | null = null;
 
-  /** Scroll element to watch. Defaults to the nearest `.page-scroll-container`. */
+  /** Scroll element to watch. Defaults to the nearest `.fy-page-scroll-container`. */
   @Input() scrollRoot?: HTMLElement | null;
 
   /** Emits whenever the auto-detected mode flips. Enables `[(collapsed)]`. */
@@ -227,9 +227,9 @@ export class AvatarHeaderComponent implements AfterViewInit, OnDestroy {
   private parts() {
     const host = this.host.nativeElement;
     return {
-      avatarEl: host.querySelector<HTMLElement>('.avatar-header__avatar')!,
-      textEl: host.querySelector<HTMLElement>('.avatar-header__text')!,
-      circleEl: host.querySelector<HTMLElement>('.avatar-circle'),
+      avatarEl: host.querySelector<HTMLElement>('.fy-avatar-header__avatar')!,
+      textEl: host.querySelector<HTMLElement>('.fy-avatar-header__text')!,
+      circleEl: host.querySelector<HTMLElement>('.fy-avatar-circle'),
     };
   }
 
