@@ -1,0 +1,59 @@
+@if (doc(); as doc) {
+  <article class="page">
+    <p class="page__eyebrow">{{ doc.group }}</p>
+    <h1 class="page__title">{{ doc.title }}</h1>
+    <p class="page__lead">{{ doc.summary }}</p>
+
+    <docs-code [code]="doc.imports" language="ts" />
+    <p class="page__selectors">
+      @for (selector of doc.selectors; track selector) {
+        <code>{{ selector }}</code>
+      }
+    </p>
+
+    <h2 class="page__section">Examples</h2>
+    @for (example of doc.examples; track example.title; let i = $index) {
+      <docs-example [example]="example" [id]="doc.slug + '-example-' + i" />
+    }
+
+    @if (doc.inputs?.length) {
+      <h2 class="page__section">Inputs</h2>
+      <docs-api-table [rows]="doc.inputs!" />
+    }
+    @if (doc.outputs?.length) {
+      <h2 class="page__section">Outputs</h2>
+      <docs-api-table [rows]="doc.outputs!" />
+    }
+    @if (doc.cssVars?.length) {
+      <h2 class="page__section">CSS custom properties</h2>
+      <docs-api-table [rows]="doc.cssVars!" [withType]="false" />
+    }
+    @if (doc.accessibility?.length) {
+      <h2 class="page__section">Accessibility</h2>
+      <ul class="page__list">
+        @for (note of doc.accessibility; track note) {
+          <li>{{ note }}</li>
+        }
+      </ul>
+    }
+
+    <nav class="page__pager" aria-label="Other components">
+      @if (neighbours().previous; as previous) {
+        <a class="page__pager-link" [routerLink]="['/components', previous.slug]">
+          <span class="page__pager-hint">Previous</span>{{ previous.title }}
+        </a>
+      } @else {
+        <span></span>
+      }
+      @if (neighbours().next; as next) {
+        <a class="page__pager-link page__pager-link--next" [routerLink]="['/components', next.slug]">
+          <span class="page__pager-hint">Next</span>{{ next.title }}
+        </a>
+      }
+    </nav>
+  </article>
+} @else {
+  <fy-empty-state icon="bi bi-question-circle" label="No such component" description="It may have been renamed.">
+    <a routerLink="/components">See all components</a>
+  </fy-empty-state>
+}

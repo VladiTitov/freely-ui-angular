@@ -3,6 +3,12 @@
 All notable changes to `@freely-ui/angular` are listed here. The project follows
 [Semantic Versioning](https://semver.org); while the version is `0.x`, a minor release may break the API.
 
+## Unreleased
+
+### Changed
+
+- The package homepage is the documentation site, https://vladititov.github.io/freely-ui-angular/.
+
 ## 0.1.2
 
 ### Fixed

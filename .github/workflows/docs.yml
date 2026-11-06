@@ -1,0 +1,61 @@
+name: Docs
+
+# Builds the documentation site from master and publishes it on GitHub Pages:
+# https://vladititov.github.io/freely-ui-angular/
+# The site lives under /freely-ui-angular/, hence the base href; with a custom domain it becomes "/".
+"on":
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build the site
+        run: npx ng build docs --base-href /freely-ui-angular/
+
+      # GitHub Pages knows nothing of the app's routes: it answers an unknown path with 404.html,
+      # so a copy of the app there opens deep links such as /components/button.
+      - name: Serve every path from the app
+        run: cp dist/docs/browser/index.html dist/docs/browser/404.html
+
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/docs/browser
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
