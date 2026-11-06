@@ -1,0 +1,59 @@
+<a class="skip" href="#content">Skip to content</a>
+
+<header class="header">
+  <button fyButton type="button" variant="ghost" iconOnly class="header__menu" [attr.aria-expanded]="menuOpen()"
+    aria-controls="menu" aria-label="Menu" (click)="menuOpen.set(!menuOpen())">
+    <i [class]="menuOpen() ? 'bi bi-x-lg' : 'bi bi-list'" aria-hidden="true"></i>
+  </button>
+  <a class="header__logo" routerLink="/">
+    <span class="header__mark" aria-hidden="true">F</span>Freely UI
+  </a>
+  <span class="header__version">0.1</span>
+  <div class="header__actions">
+    <button fyButton type="button" variant="ghost" iconOnly [attr.aria-label]="scheme().label" [fyTooltip]="scheme().label"
+      fyTooltipPosition="bottom" (click)="nextScheme()">
+      <i [class]="scheme().icon" aria-hidden="true"></i>
+    </button>
+    <a fyButton variant="ghost" iconOnly href="https://www.npmjs.com/package/@freely-ui/angular" aria-label="npm"
+      fyTooltip="npm" fyTooltipPosition="bottom">
+      <i class="bi bi-box-seam" aria-hidden="true"></i>
+    </a>
+    <a fyButton variant="ghost" iconOnly href="https://github.com/VladiTitov/freely-ui-angular" aria-label="GitHub"
+      fyTooltip="GitHub" fyTooltipPosition="bottom">
+      <i class="bi bi-github" aria-hidden="true"></i>
+    </a>
+  </div>
+</header>
+
+<div class="layout">
+  <nav id="menu" class="menu" [class.menu--open]="menuOpen()" aria-label="Documentation">
+    <p class="menu__group">Getting started</p>
+    <ul class="menu__list">
+      @for (guide of guides; track guide.path) {
+        <li>
+          <a class="menu__link" [routerLink]="guide.path" routerLinkActive="menu__link--active"
+            [routerLinkActiveOptions]="{ exact: guide.exact }" ariaCurrentWhenActive="page">{{ guide.label }}</a>
+        </li>
+      }
+    </ul>
+    @for (section of groups; track section.group) {
+      <p class="menu__group">{{ section.group }}</p>
+      <ul class="menu__list">
+        @for (doc of section.docs; track doc.slug) {
+          <li>
+            <a class="menu__link" [routerLink]="['/components', doc.slug]" routerLinkActive="menu__link--active"
+              ariaCurrentWhenActive="page">{{ doc.title }}</a>
+          </li>
+        }
+      </ul>
+    }
+  </nav>
+
+  <main id="content" class="content" tabindex="-1">
+    <router-outlet />
+    <footer class="footer">
+      MIT licensed · <a href="https://github.com/VladiTitov/freely-ui-angular">GitHub</a> ·
+      <a href="https://www.npmjs.com/package/@freely-ui/angular">npm</a>
+    </footer>
+  </main>
+</div>

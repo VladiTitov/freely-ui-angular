@@ -5,6 +5,8 @@ components, light and dark themes, haptics and safe areas, forms support and acc
 
 Бесплатный UI kit для Angular с открытым исходным кодом: мобильные веб-приложения и Telegram Mini Apps.
 
+**Documentation and examples: [vladititov.github.io/freely-ui-angular](https://vladititov.github.io/freely-ui-angular/)**
+
 > The API may still change while the version is `0.x`.
 
 ## Installation

@@ -6,7 +6,9 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
+    "start": "ng serve docs",
     "build": "ng build angular",
+    "build:docs": "ng build docs",
     "watch": "ng build angular --configuration development --watch",
     "test": "ng test angular --watch=false",
     "test:watch": "ng test angular"

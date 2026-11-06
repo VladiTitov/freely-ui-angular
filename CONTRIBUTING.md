@@ -22,10 +22,18 @@ The library is the `angular` project in `projects/angular`:
 - `styles/` — the design tokens and the global classes the components rely on.
 
 ```bash
+npm start       # the documentation site with the examples, at http://localhost:4200
 npm run build   # packages the library into dist/angular
 npm test        # runs the unit tests once
 npm run test:watch
 ```
+
+## The documentation site
+
+The site is the `docs` application in `projects/docs`. It uses the library from its sources, so it always shows the
+current code. A component page is an entry of `projects/docs/src/app/docs/*.docs.ts`: its examples are small
+components whose template is a constant, shown both rendered and as code. Add the page of a new component there.
+Every merge into `master` publishes the site on GitHub Pages (`.github/workflows/docs.yml`).
 
 ## Conventions
 

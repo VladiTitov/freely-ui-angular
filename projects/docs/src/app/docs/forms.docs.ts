@@ -1,0 +1,374 @@
+import { Component, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+  CheckboxComponent,
+  CodeInputComponent,
+  DatePickerComponent,
+  FormFieldComponent,
+  RADIO_GROUP,
+  SelectFieldComponent,
+  SelectFieldOption,
+  SwitchComponent,
+  TextareaDirective,
+  TextFieldDirective
+} from '@freely-ui/angular';
+import { ComponentDoc } from './doc.model';
+import { COLUMN, ROW } from './example-styles';
+
+const textField = `
+<fy-form-field label="Name" hint="As your friends know you." required>
+  <input fyTextField type="text" autocomplete="name" [(ngModel)]="name" />
+</fy-form-field>
+
+<fy-form-field label="Email" [error]="email.includes('@') ? null : 'Enter an email address.'">
+  <input fyTextField type="email" autocomplete="email" [(ngModel)]="email" />
+</fy-form-field>
+`;
+
+@Component({ selector: 'docs-text-field', imports: [FormFieldComponent, TextFieldDirective, FormsModule], template: textField, styles: COLUMN })
+class TextFieldExample {
+  protected name = '';
+  protected email = 'ada';
+}
+
+const textFieldPlain = `
+<div class="card">
+  <input fyTextField appearance="plain" placeholder="Wish title" />
+</div>
+`;
+
+@Component({
+  selector: 'docs-text-field-plain',
+  imports: [TextFieldDirective],
+  template: textFieldPlain,
+  styles: `${COLUMN} .card { padding: 14px 18px; border-radius: var(--fy-radius-lg); background: var(--fy-tertiary-background); }`,
+})
+class TextFieldPlainExample {}
+
+const textarea = `
+<fy-form-field label="Note" hint="Up to 120 characters." counter>
+  <textarea fyTextarea rows="2" maxlength="120" [(ngModel)]="note"></textarea>
+</fy-form-field>
+`;
+
+@Component({ selector: 'docs-textarea', imports: [FormFieldComponent, TextareaDirective, FormsModule], template: textarea, styles: COLUMN })
+class TextareaExample {
+  protected note = 'The text grows the field as you type.';
+}
+
+const codeInput = `
+<fy-form-field label="Code from the app">
+  <fy-code-input [(ngModel)]="code" (completed)="done.set($event)" />
+</fy-form-field>
+@if (done(); as code) {
+  <p>Completed: {{ code }}</p>
+}
+`;
+
+@Component({ selector: 'docs-code-input', imports: [FormFieldComponent, CodeInputComponent, FormsModule], template: codeInput, styles: COLUMN })
+class CodeInputExample {
+  protected code = '';
+  protected readonly done = signal<string | null>(null);
+}
+
+const checkbox = `
+<fy-checkbox [(checked)]="terms">I accept the terms</fy-checkbox>
+<fy-checkbox [checked]="false" [indeterminate]="true">Some of the items</fy-checkbox>
+<fy-checkbox [checked]="true" disabled>Disabled</fy-checkbox>
+`;
+
+@Component({ selector: 'docs-checkbox', imports: [CheckboxComponent], template: checkbox, styles: COLUMN })
+class CheckboxExample {
+  protected readonly terms = signal(false);
+}
+
+const switchTemplate = `
+<label class="row">
+  Notifications
+  <fy-switch [(checked)]="notifications" />
+</label>
+<label class="row">
+  Disabled
+  <fy-switch [checked]="true" [disabled]="true" />
+</label>
+`;
+
+@Component({
+  selector: 'docs-switch',
+  imports: [SwitchComponent],
+  template: switchTemplate,
+  styles: `${COLUMN} .row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }`,
+})
+class SwitchExample {
+  protected readonly notifications = signal(true);
+}
+
+const radioDot = `
+<fy-radio-group [(value)]="size" aria-label="Size">
+  <fy-radio value="s">Small</fy-radio>
+  <fy-radio value="m">Medium</fy-radio>
+  <fy-radio value="l" [disabled]="true">Large (sold out)</fy-radio>
+</fy-radio-group>
+`;
+
+@Component({ selector: 'docs-radio-dot', imports: [RADIO_GROUP], template: radioDot })
+class RadioDotExample {
+  protected readonly size = signal<unknown>('m');
+}
+
+const radioPlain = `
+<fy-radio-group class="tiles" appearance="plain" [(value)]="theme" aria-label="Theme">
+  @for (option of themes; track option.value) {
+    <fy-radio class="tile" [value]="option.value">
+      <i [class]="option.icon" aria-hidden="true"></i>{{ option.label }}
+    </fy-radio>
+  }
+</fy-radio-group>
+`;
+
+@Component({
+  selector: 'docs-radio-plain',
+  imports: [RADIO_GROUP],
+  template: radioPlain,
+  styles: `
+    .tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 120px)); gap: 8px; }
+    .tile { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px;
+      border: 1.5px solid transparent; border-radius: var(--fy-radius-md); background: var(--fy-tertiary-background); }
+    .tile.fy-radio--checked { border-color: var(--fy-accent); color: var(--fy-accent); }
+  `,
+})
+class RadioPlainExample {
+  protected readonly themes = [
+    { value: 'light', label: 'Light', icon: 'bi bi-sun' },
+    { value: 'dark', label: 'Dark', icon: 'bi bi-moon' },
+    { value: 'system', label: 'System', icon: 'bi bi-circle-half' },
+  ];
+  protected readonly theme = signal<unknown>('system');
+}
+
+const selectField = `
+<fy-select-field label="Sort by" [options]="sorts" [(value)]="sort" />
+<p>Picked: {{ sort() }}</p>
+`;
+
+@Component({ selector: 'docs-select-field', imports: [SelectFieldComponent], template: selectField, styles: COLUMN })
+class SelectFieldExample {
+  protected readonly sorts: SelectFieldOption[] = [
+    { value: 'newest', label: 'Newest first' },
+    { value: 'oldest', label: 'Oldest first' },
+    { value: 'name', label: 'By name' },
+  ];
+  protected readonly sort = signal<string | null>('newest');
+}
+
+const datePicker = `
+<fy-date-picker [(value)]="date" placeholder="Pick a date" />
+<fy-date-picker [(value)]="birthday" format="d MMMM y" max="2026-12-31" />
+`;
+
+@Component({ selector: 'docs-date-picker', imports: [DatePickerComponent], template: datePicker, styles: ROW })
+class DatePickerExample {
+  protected readonly date = signal('');
+  protected readonly birthday = signal('1990-05-17');
+}
+
+const FORMS_NOTE = 'Works with ngModel and reactive forms and takes its disabled state from the form.';
+
+export const FORM_DOCS: ComponentDoc[] = [
+  {
+    slug: 'text-field',
+    title: 'Text field',
+    group: 'Forms',
+    summary: 'A text field on the native input, and the form field that labels it and shows a hint, an error and a counter.',
+    imports: `import { FormFieldComponent, TextFieldDirective } from '@freely-ui/angular';`,
+    selectors: ['input[fyTextField]', 'fy-form-field'],
+    examples: [
+      { title: 'With a label, a hint and an error', description: 'The form field points its label at the field and describes the field by the hint or the error.', component: TextFieldExample, code: textField },
+      { title: 'Plain', description: 'No box of its own, for a row inside a card the page draws.', component: TextFieldPlainExample, code: textFieldPlain },
+    ],
+    inputs: [
+      { name: 'appearance', type: "'outline' | 'plain'", default: "'outline'", description: 'fyTextField: a bordered box, or no border and fill.' },
+      { name: 'label', type: 'string', description: 'fy-form-field: the label above the control.' },
+      { name: 'hint', type: 'string | null', description: 'fy-form-field: a line under the control.' },
+      { name: 'error', type: 'string | null', description: 'fy-form-field: replaces the hint while set and marks the control invalid.' },
+      { name: 'required', type: 'boolean', default: 'false', description: 'fy-form-field: marks the label and the control; validation stays with the form.' },
+      { name: 'counter', type: 'boolean', default: 'false', description: 'fy-form-field: shows the length, against maxlength when there is one.' },
+    ],
+    cssVars: [
+      { name: '--fy-text-field-height', default: '44px', description: 'Least height of the field.' },
+      { name: '--fy-text-field-background', default: 'var(--fy-primary-background)', description: 'Fill of the field.' },
+      { name: '--fy-text-field-border-color', default: 'var(--fy-tertiary-background)', description: 'Border of the field.' },
+      { name: '--fy-text-field-focus-color', default: 'var(--fy-accent)', description: 'Border while focused.' },
+      { name: '--fy-form-field-label-color', default: 'var(--fy-secondary-text)', description: 'Colour of the label.' },
+    ],
+    accessibility: [
+      'The label gets for, the control aria-describedby, aria-invalid and aria-required; no ids to write by hand.',
+      'Outside a form field the aria attributes the page sets stay as they are.',
+      'It stays a native input, so autocomplete, the keyboard and the password manager work as usual.',
+    ],
+  },
+  {
+    slug: 'textarea',
+    title: 'Textarea',
+    group: 'Forms',
+    summary: 'A multi-line text field that grows with its text and counts it against maxlength.',
+    imports: `import { FormFieldComponent, TextareaDirective } from '@freely-ui/angular';`,
+    selectors: ['textarea[fyTextarea]'],
+    examples: [
+      { title: 'Growing, with a counter', component: TextareaExample, code: textarea },
+    ],
+    inputs: [
+      { name: 'appearance', type: "'outline' | 'plain'", default: "'outline'", description: 'A bordered box, or no border and fill.' },
+      { name: 'autosize', type: 'boolean', default: 'true', description: 'Grows with the text up to --fy-textarea-max-height; false keeps the height the page gives it.' },
+    ],
+    cssVars: [
+      { name: '--fy-textarea-max-height', default: '200px', description: 'Height it grows to before it scrolls.' },
+      { name: '--fy-text-field-padding', default: '12px 14px', description: 'Padding inside the field.' },
+    ],
+    accessibility: ['The counter is hidden from screen readers; maxlength itself stops the typing.'],
+  },
+  {
+    slug: 'code-input',
+    title: 'Code input',
+    group: 'Forms',
+    summary: 'A one-time code drawn as a row of cells over one native input, so suggested codes, paste and backspace just work.',
+    imports: `import { CodeInputComponent } from '@freely-ui/angular';`,
+    selectors: ['fy-code-input'],
+    examples: [
+      { title: 'A six-digit code', description: `Spaces and dashes in a pasted code are dropped. ${FORMS_NOTE}`, component: CodeInputExample, code: codeInput },
+    ],
+    inputs: [
+      { name: 'length', type: 'number', default: '6', description: 'Number of cells.' },
+      { name: 'kind', type: "'numeric' | 'alphanumeric'", default: "'numeric'", description: 'Digits only, or letters and digits in upper case.' },
+      { name: 'value', type: 'string', default: "''", description: 'The code, also as [(value)].' },
+      { name: 'autofocus', type: 'boolean', default: 'false', description: 'Focuses the input when it appears.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the input.' },
+      { name: 'ariaLabel', type: 'string', description: 'Name of the input when no form field labels it.' },
+    ],
+    outputs: [{ name: 'completed', type: 'string', description: 'Every cell is filled.' }],
+    cssVars: [
+      { name: '--fy-code-input-cell-width', default: '44px', description: 'Width of a cell.' },
+      { name: '--fy-code-input-cell-height', default: '52px', description: 'Height of a cell.' },
+      { name: '--fy-code-input-gap', default: 'var(--fy-space-s)', description: 'Space between the cells.' },
+      { name: '--fy-code-input-focus-color', default: 'var(--fy-accent)', description: 'Border of the active cell.' },
+    ],
+    accessibility: ['One input with autocomplete="one-time-code" takes the code; the cells are hidden from screen readers.'],
+  },
+  {
+    slug: 'checkbox',
+    title: 'Checkbox',
+    group: 'Forms',
+    summary: 'A checkbox with its label on the native input, with an indeterminate state.',
+    imports: `import { CheckboxComponent } from '@freely-ui/angular';`,
+    selectors: ['fy-checkbox'],
+    examples: [{ title: 'States', description: FORMS_NOTE, component: CheckboxExample, code: checkbox }],
+    inputs: [
+      { name: 'checked', type: 'boolean', default: 'false', description: 'Ticked, also as [(checked)].' },
+      { name: 'indeterminate', type: 'boolean', default: 'false', description: 'Neither on nor off; cleared by the next tap.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the checkbox.' },
+      { name: 'ariaLabel', type: 'string', description: 'Name when the checkbox has no label text.' },
+      { name: 'haptic', type: 'HapticFeedback | null', default: "'selection'", description: 'Tactile feedback on a tap; null turns it off.' },
+    ],
+    cssVars: [
+      { name: '--fy-checkbox-size', default: '22px', description: 'Size of the box.' },
+      { name: '--fy-checkbox-accent', default: 'var(--fy-accent)', description: 'Fill of a ticked box.' },
+      { name: '--fy-checkbox-radius', default: '7px', description: 'Corner radius of the box.' },
+    ],
+    accessibility: ['The native checkbox stays under the drawn box, inside the label, so the label, Space and the form behave as usual.'],
+  },
+  {
+    slug: 'switch',
+    title: 'Switch',
+    group: 'Forms',
+    summary: 'An on and off switch on the native checkbox with role="switch".',
+    imports: `import { SwitchComponent } from '@freely-ui/angular';`,
+    selectors: ['fy-switch'],
+    examples: [{ title: 'In a row with its label', description: FORMS_NOTE, component: SwitchExample, code: switchTemplate }],
+    inputs: [
+      { name: 'checked', type: 'boolean', default: 'false', description: 'On, also as [(checked)].' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the switch.' },
+      { name: 'ariaLabel', type: 'string', description: 'Name when there is no wrapping label.' },
+      { name: 'haptic', type: 'HapticFeedback | null', default: "'selection'", description: 'Tactile feedback on a flip; null turns it off.' },
+    ],
+    cssVars: [
+      { name: '--fy-switch-width', default: '63px', description: 'Width of the track.' },
+      { name: '--fy-switch-height', default: '28px', description: 'Height of the track.' },
+      { name: '--fy-switch-on-background', default: 'var(--fy-accent)', description: 'Track while on.' },
+      { name: '--fy-switch-off-background', default: 'var(--fy-tertiary-background)', description: 'Track while off.' },
+    ],
+  },
+  {
+    slug: 'radio-group',
+    title: 'Radio group',
+    group: 'Forms',
+    summary: 'A choice of one option out of a few, with one tab stop and the arrow keys moving the choice.',
+    imports: `import { RADIO_GROUP } from '@freely-ui/angular';`,
+    selectors: ['fy-radio-group', 'fy-radio'],
+    examples: [
+      { title: 'With marks', description: FORMS_NOTE, component: RadioDotExample, code: radioDot },
+      { title: 'Plain', description: 'The page draws the options; the checked one carries .fy-radio--checked and aria-checked.', component: RadioPlainExample, code: radioPlain },
+    ],
+    inputs: [
+      { name: 'value', type: 'unknown', default: 'null', description: 'fy-radio-group: the picked value, also as [(value)].' },
+      { name: 'appearance', type: "'dot' | 'plain'", default: "'dot'", description: 'fy-radio-group: a round mark before each option, or the options only.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the group, or one fy-radio.' },
+      { name: 'haptic', type: 'HapticFeedback | null', default: "'selection'", description: 'fy-radio-group: tactile feedback on a change.' },
+      { name: 'value (fy-radio)', type: 'unknown', description: 'fy-radio: the value it picks; required.' },
+    ],
+    cssVars: [
+      { name: '--fy-radio-group-gap', default: 'var(--fy-space-m)', description: 'Space between the options.' },
+      { name: '--fy-radio-size', default: '22px', description: 'Size of the mark.' },
+      { name: '--fy-radio-accent', default: 'var(--fy-accent)', description: 'Colour of the checked mark and the focus ring.' },
+    ],
+    accessibility: [
+      'role="radiogroup" with role="radio" options and aria-checked; name the group with aria-label or aria-labelledby.',
+      'One tab stop: the checked option, else the first one that can be picked.',
+      'Arrow keys, Home and End move the choice and skip disabled options; Space and Enter pick the focused one.',
+    ],
+  },
+  {
+    slug: 'select-field',
+    title: 'Select field',
+    group: 'Forms',
+    summary: 'A field that shows the picked option and opens a menu of all of them.',
+    imports: `import { SelectFieldComponent, SelectFieldOption } from '@freely-ui/angular';`,
+    selectors: ['fy-select-field'],
+    examples: [{ title: 'Sorting', description: `The first option is the default. ${FORMS_NOTE}`, component: SelectFieldExample, code: selectField }],
+    inputs: [
+      { name: 'options', type: 'SelectFieldOption<T>[]', default: '[]', description: 'The options, as { value, label }.' },
+      { name: 'value', type: 'T | null', default: 'null', description: 'The picked value, also as [(value)]; a value missing from the options means the first one.' },
+      { name: 'label', type: 'string', default: "''", description: 'Caption above the field and the name of the menu.' },
+      { name: 'ariaLabel', type: 'string', default: "''", description: 'Name when there is no visible label.' },
+      { name: 'direction', type: "'down' | 'up'", default: "'down'", description: 'Which side the menu opens on.' },
+    ],
+    cssVars: [
+      { name: '--fy-select-field-height', description: 'Height of the field.' },
+      { name: '--fy-select-field-bg', description: 'Fill of the field.' },
+      { name: '--fy-select-field-radius', description: 'Corner radius.' },
+    ],
+  },
+  {
+    slug: 'date-picker',
+    title: 'Date picker',
+    group: 'Forms',
+    summary: 'A date shown as a chip; a tap opens the date picker of the system.',
+    imports: `import { DatePickerComponent } from '@freely-ui/angular';`,
+    selectors: ['fy-date-picker'],
+    examples: [{ title: 'Empty and picked', description: `The value is an ISO date such as 2027-03-12, or an empty string. ${FORMS_NOTE}`, component: DatePickerExample, code: datePicker }],
+    inputs: [
+      { name: 'value', type: 'string', default: "''", description: 'The ISO date, also as [(value)].' },
+      { name: 'min', type: 'string', description: 'Earliest date offered, as an ISO date.' },
+      { name: 'max', type: 'string', description: 'Latest date offered, as an ISO date.' },
+      { name: 'format', type: 'string', default: "'longDate'", description: 'formatDate format of the shown date.' },
+      { name: 'locale', type: 'string', description: 'Locale of the shown date; LOCALE_ID by default.' },
+      { name: 'placeholder', type: 'string', description: 'Shown while empty; the add icon without it.' },
+      { name: 'invalid', type: 'boolean', default: 'false', description: 'Marks the chip invalid.' },
+      { name: 'pickLabel / changeLabel', type: 'string', description: 'Name of the input while empty and once picked.' },
+    ],
+    cssVars: [
+      { name: '--fy-date-picker-height', default: '36px', description: 'Least height of the chip.' },
+      { name: '--fy-date-picker-font-size', default: 'var(--fy-font-size-m)', description: 'Size of the date.' },
+    ],
+    accessibility: ['The native date input lies over the chip, so the keyboard and the system picker work as usual.'],
+  },
+];

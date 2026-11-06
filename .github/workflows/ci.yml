@@ -1,6 +1,6 @@
 name: CI
 
-# Builds the package and runs the unit tests on every push to master and every pull request.
+# Builds the package and the documentation site and runs the unit tests on every push to master and every pull request.
 "on":
   push:
     branches:
@@ -35,6 +35,9 @@ jobs:
 
       - name: Run the unit tests
         run: npm test
+
+      - name: Build the documentation site
+        run: npm run build:docs
 
       - name: Check the package contents
         run: npm pack --dry-run

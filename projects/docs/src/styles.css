@@ -1,0 +1,26 @@
+/* The site itself is drawn with the library's tokens, so the theme switch changes it together with the examples. */
+html,
+body {
+  margin: 0;
+  background: var(--fy-secondary-background);
+  color: var(--fy-primary-text);
+  font-family: var(--fy-font-family);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-size: var(--fy-font-size-m);
+}
+
+h1,
+h2,
+h3 {
+  color: var(--fy-primary-text);
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
