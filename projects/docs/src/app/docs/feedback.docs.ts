@@ -10,7 +10,7 @@ const badge = `
 <fy-badge size="m" color="#ef9f27">Warnings: 18</fy-badge>
 `;
 
-@Component({ selector: 'docs-badge', imports: [BadgeComponent], template: badge, styles: ROW })
+@Component({ selector: 'docs-badge', imports: [BadgeComponent], template: badge, host: ROW })
 class BadgeExample {}
 
 const progress = `
@@ -18,7 +18,8 @@ const progress = `
 <button fyButton type="button" variant="tertiary" size="s" (click)="level.set((level() + 2) % 12)">Add two</button>
 `;
 
-@Component({ selector: 'docs-progress', imports: [ProgressComponent, ButtonComponent], template: progress, styles: `${COLUMN} button { align-self: flex-start; }` })
+@Component({ selector: 'docs-progress', imports: [ProgressComponent, ButtonComponent], template: progress, host: COLUMN,
+  styles: `button { align-self: flex-start; }` })
 class ProgressExample {
   protected readonly level = signal(7);
 }
@@ -48,7 +49,7 @@ const loader = `
 <button fyButton type="button" disabled><fy-loader [size]="18" [label]="null" /> Saving</button>
 `;
 
-@Component({ selector: 'docs-loader', imports: [LoaderComponent, ButtonComponent], template: loader, styles: ROW })
+@Component({ selector: 'docs-loader', imports: [LoaderComponent, ButtonComponent], template: loader, host: ROW })
 class LoaderExample {}
 
 const tooltip = `
@@ -63,7 +64,8 @@ const tooltip = `
   selector: 'docs-tooltip',
   imports: [TooltipDirective, ButtonComponent],
   template: tooltip,
-  styles: `${ROW} .name { border-bottom: 1px dashed var(--fy-secondary-text); }`,
+  host: ROW,
+  styles: `.name { border-bottom: 1px dashed var(--fy-secondary-text); }`,
 })
 class TooltipExample {}
 

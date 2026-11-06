@@ -10,7 +10,7 @@ const buttonVariants = `
 <button fyButton type="button" variant="ghost">Ghost</button>
 `;
 
-@Component({ selector: 'docs-button-variants', imports: [ButtonComponent], template: buttonVariants, styles: ROW })
+@Component({ selector: 'docs-button-variants', imports: [ButtonComponent], template: buttonVariants, host: ROW })
 class ButtonVariantsExample {}
 
 const buttonSizes = `
@@ -19,7 +19,7 @@ const buttonSizes = `
 <button fyButton type="button" size="l">Large</button>
 `;
 
-@Component({ selector: 'docs-button-sizes', imports: [ButtonComponent], template: buttonSizes, styles: ROW })
+@Component({ selector: 'docs-button-sizes', imports: [ButtonComponent], template: buttonSizes, host: ROW })
 class ButtonSizesExample {}
 
 const buttonIcons = `
@@ -34,7 +34,7 @@ const buttonIcons = `
 </button>
 `;
 
-@Component({ selector: 'docs-button-icons', imports: [ButtonComponent], template: buttonIcons, styles: ROW })
+@Component({ selector: 'docs-button-icons', imports: [ButtonComponent], template: buttonIcons, host: ROW })
 class ButtonIconsExample {}
 
 const buttonStates = `
@@ -45,7 +45,7 @@ const buttonStates = `
 <a fyButton variant="ghost" href="https://github.com/VladiTitov/freely-ui-angular">A link</a>
 `;
 
-@Component({ selector: 'docs-button-states', imports: [ButtonComponent], template: buttonStates, styles: ROW })
+@Component({ selector: 'docs-button-states', imports: [ButtonComponent], template: buttonStates, host: ROW })
 class ButtonStatesExample {
   protected readonly saving = signal(false);
 
@@ -72,7 +72,7 @@ const chipStatic = `
 }
 `;
 
-@Component({ selector: 'docs-chip-static', imports: [ChipComponent], template: chipStatic, styles: ROW })
+@Component({ selector: 'docs-chip-static', imports: [ChipComponent], template: chipStatic, host: ROW })
 class ChipStaticExample {
   protected readonly removed = signal(false);
 }
@@ -85,7 +85,7 @@ const chipToggle = `
 }
 `;
 
-@Component({ selector: 'docs-chip-toggle', imports: [ChipComponent], template: chipToggle, styles: ROW })
+@Component({ selector: 'docs-chip-toggle', imports: [ChipComponent], template: chipToggle, host: ROW })
 class ChipToggleExample {
   protected readonly tags = ['Books', 'Games', 'Travel', 'Music'];
   protected readonly picked = signal(new Set(['Books']));

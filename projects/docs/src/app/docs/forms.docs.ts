@@ -25,7 +25,7 @@ const textField = `
 </fy-form-field>
 `;
 
-@Component({ selector: 'docs-text-field', imports: [FormFieldComponent, TextFieldDirective, FormsModule], template: textField, styles: COLUMN })
+@Component({ selector: 'docs-text-field', imports: [FormFieldComponent, TextFieldDirective, FormsModule], template: textField, host: COLUMN })
 class TextFieldExample {
   protected name = '';
   protected email = 'ada';
@@ -41,7 +41,8 @@ const textFieldPlain = `
   selector: 'docs-text-field-plain',
   imports: [TextFieldDirective],
   template: textFieldPlain,
-  styles: `${COLUMN} .card { padding: 14px 18px; border-radius: var(--fy-radius-lg); background: var(--fy-tertiary-background); }`,
+  host: COLUMN,
+  styles: `.card { padding: 14px 18px; border-radius: var(--fy-radius-lg); background: var(--fy-tertiary-background); }`,
 })
 class TextFieldPlainExample {}
 
@@ -51,7 +52,7 @@ const textarea = `
 </fy-form-field>
 `;
 
-@Component({ selector: 'docs-textarea', imports: [FormFieldComponent, TextareaDirective, FormsModule], template: textarea, styles: COLUMN })
+@Component({ selector: 'docs-textarea', imports: [FormFieldComponent, TextareaDirective, FormsModule], template: textarea, host: COLUMN })
 class TextareaExample {
   protected note = 'The text grows the field as you type.';
 }
@@ -65,7 +66,7 @@ const codeInput = `
 }
 `;
 
-@Component({ selector: 'docs-code-input', imports: [FormFieldComponent, CodeInputComponent, FormsModule], template: codeInput, styles: COLUMN })
+@Component({ selector: 'docs-code-input', imports: [FormFieldComponent, CodeInputComponent, FormsModule], template: codeInput, host: COLUMN })
 class CodeInputExample {
   protected code = '';
   protected readonly done = signal<string | null>(null);
@@ -77,7 +78,7 @@ const checkbox = `
 <fy-checkbox [checked]="true" disabled>Disabled</fy-checkbox>
 `;
 
-@Component({ selector: 'docs-checkbox', imports: [CheckboxComponent], template: checkbox, styles: COLUMN })
+@Component({ selector: 'docs-checkbox', imports: [CheckboxComponent], template: checkbox, host: COLUMN })
 class CheckboxExample {
   protected readonly terms = signal(false);
 }
@@ -97,7 +98,8 @@ const switchTemplate = `
   selector: 'docs-switch',
   imports: [SwitchComponent],
   template: switchTemplate,
-  styles: `${COLUMN} .row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }`,
+  host: COLUMN,
+  styles: `.row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }`,
 })
 class SwitchExample {
   protected readonly notifications = signal(true);
@@ -151,7 +153,7 @@ const selectField = `
 <p>Picked: {{ sort() }}</p>
 `;
 
-@Component({ selector: 'docs-select-field', imports: [SelectFieldComponent], template: selectField, styles: COLUMN })
+@Component({ selector: 'docs-select-field', imports: [SelectFieldComponent], template: selectField, host: COLUMN })
 class SelectFieldExample {
   protected readonly sorts: SelectFieldOption[] = [
     { value: 'newest', label: 'Newest first' },
@@ -166,7 +168,7 @@ const datePicker = `
 <fy-date-picker [(value)]="birthday" format="d MMMM y" max="2026-12-31" />
 `;
 
-@Component({ selector: 'docs-date-picker', imports: [DatePickerComponent], template: datePicker, styles: ROW })
+@Component({ selector: 'docs-date-picker', imports: [DatePickerComponent], template: datePicker, host: ROW })
 class DatePickerExample {
   protected readonly date = signal('');
   protected readonly birthday = signal('1990-05-17');

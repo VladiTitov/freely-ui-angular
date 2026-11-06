@@ -24,3 +24,18 @@ textarea,
 select {
   font-family: inherit;
 }
+
+/* Layouts of the examples (see app/docs/example-styles.ts). */
+.docs-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.docs-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 420px;
+}

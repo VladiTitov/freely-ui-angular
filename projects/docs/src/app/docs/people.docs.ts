@@ -9,7 +9,7 @@ const avatar = `
 <fy-user-avatar fullName="Book club" icon="bi bi-people-fill" [size]="44" [fontSize]="18" />
 `;
 
-@Component({ selector: 'docs-avatar', imports: [UserAvatarComponent], template: avatar, styles: ROW })
+@Component({ selector: 'docs-avatar', imports: [UserAvatarComponent], template: avatar, host: ROW })
 class AvatarExample {}
 
 const avatarStack = `
@@ -17,7 +17,7 @@ const avatarStack = `
 <fy-avatar-stack [people]="[]" />
 `;
 
-@Component({ selector: 'docs-avatar-stack', imports: [AvatarStackComponent], template: avatarStack, styles: ROW })
+@Component({ selector: 'docs-avatar-stack', imports: [AvatarStackComponent], template: avatarStack, host: ROW })
 class AvatarStackExample {
   protected readonly people: AvatarStackItem[] = [
     { name: 'Ada Lovelace' },

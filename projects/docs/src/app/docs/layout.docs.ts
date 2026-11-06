@@ -37,7 +37,7 @@ const accordion = `
 </fy-accordion>
 `;
 
-@Component({ selector: 'docs-accordion', imports: [ACCORDION], template: accordion, styles: COLUMN })
+@Component({ selector: 'docs-accordion', imports: [ACCORDION], template: accordion, host: COLUMN })
 class AccordionExample {}
 
 const tabs = `
@@ -45,7 +45,7 @@ const tabs = `
 <p>Showing tab {{ tab + 1 }}</p>
 `;
 
-@Component({ selector: 'docs-tabs', imports: [TabsComponent], template: tabs, styles: COLUMN })
+@Component({ selector: 'docs-tabs', imports: [TabsComponent], template: tabs, host: COLUMN })
 class TabsExample {
   protected tab = 0;
 }
