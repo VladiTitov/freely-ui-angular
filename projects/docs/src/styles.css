@@ -33,6 +33,20 @@ select {
   gap: 12px;
 }
 
+.docs-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* The readout opens above the chart. */
+  padding-top: 72px;
+}
+
+.docs-chart .toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .docs-column {
   display: flex;
   flex-direction: column;
