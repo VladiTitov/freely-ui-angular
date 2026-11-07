@@ -14,6 +14,9 @@ All notable changes to `@freely-ui/angular` are listed here. The project follows
   error while the lower end is above the upper one.
 - `revealable` on `input[fyTextField]`: inside `fy-form-field` a password gets a show/hide button.
 - UI labels `rangeFrom`, `rangeTo`, `showPassword`, `hidePassword`; icons `reveal`, `conceal`.
+- `fy-carousel`: slides declared with `ng-template fyCarouselSlide`, swiped with native snapping, with dots, a
+  two-way `index` and arrow-key navigation. A slide is rendered once it is next to the one in view, so its images
+  load only then. UI labels `carousel`, `carouselSlide`.
 
 ### Changed
 

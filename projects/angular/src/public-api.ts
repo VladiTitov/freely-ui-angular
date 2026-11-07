@@ -33,6 +33,7 @@ export * from './lib/components/badge/badge.component';
 export * from './lib/components/bottom-drawer/bottom-drawer.component';
 export * from './lib/components/button/button.component';
 export * from './lib/components/card/card.component';
+export * from './lib/components/carousel/carousel.component';
 export * from './lib/components/checkbox/checkbox.component';
 export * from './lib/components/chip/chip.component';
 export * from './lib/components/code-input/code-input.component';

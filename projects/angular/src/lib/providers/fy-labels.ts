@@ -68,6 +68,9 @@ export interface FyLabels {
   /** Button of a revealable password. */
   showPassword: string;
   hidePassword: string;
+  /** Accessible name of a carousel given none, and of each slide, as in "2 of 5". */
+  carousel: string;
+  carouselSlide: (index: number, total: number) => string;
 }
 
 export const DEFAULT_FY_LABELS: FyLabels = {
@@ -110,7 +113,9 @@ export const DEFAULT_FY_LABELS: FyLabels = {
   rangeFrom: 'From',
   rangeTo: 'To',
   showPassword: 'Show password',
-  hidePassword: 'Hide password'
+  hidePassword: 'Hide password',
+  carousel: 'Carousel',
+  carouselSlide: (index, total) => `${index} of ${total}`
 };
 
 /** Read on every render, so the labels may come from a signal and follow a language switch. */
