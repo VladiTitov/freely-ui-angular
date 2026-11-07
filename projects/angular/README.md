@@ -47,13 +47,14 @@ export class ProfileForm {}
 | Area | What there is |
 |---|---|
 | Actions | `fyButton`, `fy-chip`, `fy-dropdown-menu`, `fy-filter-toggle`, `fy-sort-menu` |
-| Text fields | `fyTextField`, `fyTextarea`, `fy-form-field`, `fy-code-input`, `fy-search-bar`, `fy-search-panel` |
+| Text fields | `fyTextField` (with a revealable password), `fyTextarea`, `fy-form-field`, `fy-number-field`, `fy-range-field`, `fy-code-input`, `fy-search-bar`, `fy-search-panel` |
 | Choices | `fy-checkbox`, `fy-switch`, `fy-radio-group`, `fy-select-field`, `fy-date-picker`, `fy-selectable-tile-grid`, `fy-tabs` |
-| Lists and data | `fy-item-list`, `fy-item-card`, `fy-data-grid`, `fy-pagination`, `fy-empty-state` |
-| Layout | `fy-page`, `fy-card`, `fy-accordion`, `fy-modal`, `fy-modal-panel`, `fy-bottom-drawer`, `fy-slide-sheet` |
-| Feedback | `fy-loader`, `fy-skeleton`, `fy-progress`, `fy-badge`, `fyTooltip`, `ToastService`, `PopupService` |
+| Lists and data | `fy-item-list`, `fy-item-card`, `fy-swipe-actions`, `fy-pull-to-refresh`, `fy-data-grid`, `fy-pagination`, `fy-empty-state` |
+| Layout | `fy-page`, `fy-card`, `fy-carousel`, `fy-accordion`, `fy-modal`, `fy-modal-panel`, `fy-bottom-drawer`, `fy-slide-sheet` |
+| Feedback | `fy-loader`, `fy-skeleton`, `fy-progress`, `fy-badge`, `fyTooltip`, `ToastService`, `PopupService`, `FyConfirmService` |
 | People and media | `fy-user-avatar`, `fy-avatar-stack`, `fy-avatar-header`, `fy-avatar-label`, `fy-image-grid`, `fy-image-viewer`, `fy-markdown-text` |
 | Navigation | `fy-nav-header`, `fy-navigation-dock`, `fy-navigation-drawer` (`@freely-ui/angular/navigation`) |
+| Charts | `fy-bar-chart`, `fy-line-chart` (`@freely-ui/angular/charts`) |
 
 Every selector, class and custom property of the library starts with `fy`, so it does not clash with the app.
 
@@ -187,6 +188,15 @@ and `fy-navigation-drawer`. Only this entry point needs `@angular/router`; the m
 import { NavHeaderComponent, NavigationDockComponent } from '@freely-ui/angular/navigation';
 ```
 
+## Charts
+
+`@freely-ui/angular/charts` holds `fy-bar-chart` and `fy-line-chart`, kept apart so an app without charts does not
+carry them. Series colours follow `--fy-chart-1` … `--fy-chart-6`, which fall back to the theme colours.
+
+```ts
+import { BarChartComponent, ChartSeries } from '@freely-ui/angular/charts';
+```
+
 ## Animations
 
 The components animate with CSS and Angular's `animate.enter` / `animate.leave`, so the app needs neither
@@ -219,7 +229,7 @@ of `fy-item-list` (`interpolate-size`).
 ## Development
 
 The library is the `angular` project of the [freely-ui-angular](https://github.com/VladiTitov/freely-ui-angular)
-workspace. `npm run build` packages it into `dist/angular` with the `navigation` and `telegram` entry points and the
+workspace. `npm run build` packages it into `dist/angular` with the `navigation`, `telegram` and `charts` entry points and the
 styles; `npm test` runs the unit tests. See [CONTRIBUTING.md](https://github.com/VladiTitov/freely-ui-angular/blob/master/CONTRIBUTING.md).
 
 ## License
