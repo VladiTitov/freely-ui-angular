@@ -3,9 +3,38 @@
 All notable changes to `@freely-ui/angular` are listed here. The project follows
 [Semantic Versioning](https://semver.org); while the version is `0.x`, a minor release may break the API.
 
-## Unreleased
+## 0.2.0
+
+### Added
+
+- `fy-number-field`: a field for amounts with a `number | null` value. Digits are grouped as the user types, both
+  `,` and `.` work as the decimal separator, `min` / `max` apply on blur, the arrow keys step by `step`; `decimals`,
+  `locale`, `prefix` and `suffix`. Its text helpers `formatNumber` and `readNumberEdit` are exported too.
+- `fy-range-field`: a "from – to" pair of number fields with a `{ min, max }` value and the `fyRange` validation
+  error while the lower end is above the upper one.
+- `revealable` on `input[fyTextField]`: inside `fy-form-field` a password gets a show/hide button.
+- UI labels `rangeFrom`, `rangeTo`, `showPassword`, `hidePassword`; icons `reveal`, `conceal`.
+- `fy-carousel`: slides declared with `ng-template fyCarouselSlide`, swiped with native snapping, with dots, a
+  two-way `index` and arrow-key navigation. A slide is rendered once it is next to the one in view, so its images
+  load only then. UI labels `carousel`, `carouselSlide`.
+- `fy-card` for dashboard figures: `trend` draws the change as a badge beside the value, `failed` swaps the figure
+  for a message and a retry button (`retry` output, `failedText`, `retryText`, UI label `loadFailed`).
+- `FyConfirmService.confirm()`: a yes/no dialog on the popup that resolves to a `boolean`; `destructive` paints the
+  confirm button red and plays a rigid haptic. UI labels `confirm`, `cancel`; popup button style `danger`.
+- `fy-swipe-actions`: buttons under a list row revealed by swiping it sideways (`startActions`, `endActions`);
+  a full swipe runs the outer action with a haptic, one row is open at a time, the buttons stay reachable from the
+  keyboard.
+- `fy-pull-to-refresh`: pulling the content down from the top of its scroll emits `refresh` and spins while
+  `refreshing` is true. UI label `refreshing`, icon `pullToRefresh`.
+- `@freely-ui/angular/charts`, a separate entry point, so the main one stays free of chart code: `fy-bar-chart`
+  (stacked or side by side) and `fy-line-chart` (with a wash under the line) over `data` and `ChartSeries`, with
+  a legend, a value axis on clean numbers, and a readout that hover or the arrow keys open for one item. Series
+  colours default to `--fy-chart-1` … `--fy-chart-6`, which fall back to the theme colours.
 
 ### Changed
+
+- `fy-card` groups a number `value` by `locale` (`LOCALE_ID` by default): `1280` shows as `1,280`. Pass a string to
+  show the value as it is.
 
 - The package homepage is the documentation site, https://vladititov.github.io/freely-ui-angular/.
 

@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  align-items: center;
+  gap: var(--fy-range-field-gap, var(--fy-space-s));
+}
+
+.fy-range-field__end {
+  flex: 1;
+  min-width: 0;
+}
+
+.fy-range-field__dash {
+  flex: none;
+  color: var(--fy-secondary-text);
+}

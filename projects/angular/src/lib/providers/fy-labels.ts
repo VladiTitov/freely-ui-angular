@@ -8,8 +8,13 @@ export interface FyLabels {
   back: string;
   /** Accessible name of a loader that was given none. */
   loading: string;
-  /** Button of the item list's error state. */
+  /** Button of the item list's error state and of a failed card. */
   retry: string;
+  /** Buttons of the confirm dialog. */
+  confirm: string;
+  cancel: string;
+  /** Message of a card whose figure could not be loaded. */
+  loadFailed: string;
   /** Clear button of the search field. */
   clear: string;
   /** Cross of a removable chip. */
@@ -62,6 +67,17 @@ export interface FyLabels {
   slideNext: string;
   slideDone: string;
   slideSkip: string;
+  /** Placeholders and names of the two fields of the range field. */
+  rangeFrom: string;
+  rangeTo: string;
+  /** Button of a revealable password. */
+  showPassword: string;
+  hidePassword: string;
+  /** Accessible name of a carousel given none, and of each slide, as in "2 of 5". */
+  carousel: string;
+  carouselSlide: (index: number, total: number) => string;
+  /** Spinner of the pull-to-refresh. */
+  refreshing: string;
 }
 
 export const DEFAULT_FY_LABELS: FyLabels = {
@@ -69,6 +85,9 @@ export const DEFAULT_FY_LABELS: FyLabels = {
   back: 'Back',
   loading: 'Loading',
   retry: 'Retry',
+  confirm: 'Confirm',
+  cancel: 'Cancel',
+  loadFailed: 'Could not load',
   clear: 'Clear',
   remove: 'Remove',
   add: 'Add',
@@ -100,7 +119,14 @@ export const DEFAULT_FY_LABELS: FyLabels = {
   changeDate: 'Change the date',
   slideNext: 'Next',
   slideDone: 'Got it',
-  slideSkip: 'Skip'
+  slideSkip: 'Skip',
+  rangeFrom: 'From',
+  rangeTo: 'To',
+  showPassword: 'Show password',
+  hidePassword: 'Hide password',
+  carousel: 'Carousel',
+  carouselSlide: (index, total) => `${index} of ${total}`,
+  refreshing: 'Refreshing'
 };
 
 /** Read on every render, so the labels may come from a signal and follow a language switch. */

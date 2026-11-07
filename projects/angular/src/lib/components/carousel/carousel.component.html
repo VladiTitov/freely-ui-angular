@@ -1,0 +1,19 @@
+<div #track class="fy-carousel__track" tabindex="0" (scroll)="onScroll()" (keydown)="onKeydown($event)">
+  @for (slide of slides(); track slide; let i = $index) {
+    <div class="fy-carousel__slide" role="group" aria-roledescription="slide"
+      [attr.aria-label]="labels().carouselSlide(i + 1, slides().length)"
+      [class.fy-carousel__slide--active]="i === index()">
+      @if (isRendered(slide)) {
+        <ng-container *ngTemplateOutlet="slide.template; context: { $implicit: i, active: i === index() }" />
+      }
+    </div>
+  }
+</div>
+@if (showDots()) {
+  <!-- The dots only point at the slide in view; the keyboard moves with the arrows on the track. -->
+  <div class="fy-carousel__dots" aria-hidden="true">
+    @for (slide of slides(); track slide; let i = $index) {
+      <span class="fy-carousel__dot" [class.fy-carousel__dot--active]="i === index()" (click)="goTo(i)"></span>
+    }
+  </div>
+}

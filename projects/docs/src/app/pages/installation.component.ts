@@ -63,6 +63,8 @@ providers: [
         <li><code>&#64;freely-ui/angular</code> — everything but the navigation; needs no router.</li>
         <li><code>&#64;freely-ui/angular/navigation</code> — the nav header, dock and drawer, built on the router.</li>
         <li><code>&#64;freely-ui/angular/telegram</code> — the Telegram Mini App platform.</li>
+        <li><code>&#64;freely-ui/angular/charts</code> — the bar and line charts, kept apart so an app without charts
+          does not carry them.</li>
       </ul>
     </article>
   `,

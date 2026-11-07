@@ -1,5 +1,16 @@
-import { Component } from '@angular/core';
-import { ACCORDION, BadgeComponent, ButtonComponent, CardComponent, EmptyStateComponent, TabsComponent } from '@freely-ui/angular';
+import { Component, signal } from '@angular/core';
+import {
+  ACCORDION,
+  BadgeComponent,
+  ButtonComponent,
+  CardComponent,
+  CardTrend,
+  CarouselComponent,
+  CarouselSlideDirective,
+  EmptyStateComponent,
+  ImageViewerComponent,
+  TabsComponent
+} from '@freely-ui/angular';
 import { ComponentDoc } from './doc.model';
 import { COLUMN } from './example-styles';
 
@@ -28,6 +39,60 @@ const card = `
   styles: `.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; } fy-card { min-height: 150px; }`,
 })
 class CardExample {}
+
+const cardStat = `
+<div class="stats">
+  <fy-card label="Users" [value]="users()" [trend]="trend" [loading]="users() === null" caption="since yesterday" />
+  <fy-card label="Errors" [failed]="true" (retry)="retried.set(retried() + 1)" />
+</div>
+<p>Retried: {{ retried() }}</p>
+`;
+
+@Component({
+  selector: 'docs-card-stat',
+  imports: [CardComponent],
+  template: cardStat,
+  styles: `.stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; } fy-card { min-height: 170px; }`,
+})
+class CardStatExample {
+  protected readonly users = signal<number | null>(12480);
+  protected readonly retried = signal(0);
+  protected readonly trend: CardTrend = { direction: 'up', tone: 'success', text: '2.4%', description: 'up 2.4% since yesterday' };
+}
+
+const carousel = `
+<fy-carousel class="photos" [(index)]="index" label="Photos">
+  @for (photo of photos; track photo.url; let i = $index) {
+    <ng-template fyCarouselSlide>
+      <button type="button" class="slide" (click)="viewer.open(i)">
+        <img [src]="photo.url" alt="" [attr.width]="photo.width" [attr.height]="photo.height" />
+      </button>
+    </ng-template>
+  }
+</fy-carousel>
+<p>Slide {{ index() + 1 }} of {{ photos.length }}</p>
+<fy-image-viewer #viewer [images]="photos" />
+`;
+
+@Component({
+  selector: 'docs-carousel',
+  imports: [CarouselComponent, CarouselSlideDirective, ImageViewerComponent],
+  template: carousel,
+  host: COLUMN,
+  styles: `
+    .photos { --fy-carousel-aspect-ratio: 4 / 3; --fy-carousel-slide-background: var(--fy-tertiary-background); }
+    .slide { display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
+    .slide img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  `,
+})
+class CarouselExample {
+  protected readonly index = signal(0);
+  protected readonly photos = [1015, 1016, 1018, 1019, 1021].map(id => ({
+    url: `https://picsum.photos/id/${id}/800/600`,
+    width: 800,
+    height: 600,
+  }));
+}
 
 const accordion = `
 <fy-accordion>
@@ -72,14 +137,25 @@ export const LAYOUT_DOCS: ComponentDoc[] = [
       description: 'Without a label the figure heads the card; with one the label heads it and the figure sits low. Slots: [cardAction], [cardBadge], the content and [cardFooter].',
       component: CardExample,
       code: card,
+    }, {
+      title: 'Dashboard figures',
+      description: 'trend puts the change beside the figure; failed swaps the figure for a message and a retry button. A number value is grouped by locale.',
+      component: CardStatExample,
+      code: cardStat,
     }],
     inputs: [
       { name: 'label', type: 'string', description: 'Heading of the card.' },
-      { name: 'value', type: 'number | string | null', description: 'The figure.' },
+      { name: 'value', type: 'number | string | null', description: 'The figure; a number is grouped by locale, a string is shown as it is.' },
       { name: 'caption', type: 'string | null', description: 'What the figure means.' },
       { name: 'loading', type: 'boolean', default: 'false', description: 'Skeletons in place of the figure, the caption and the content.' },
+      { name: 'trend', type: 'CardTrend | null', default: 'null', description: 'The change of the figure as a badge: { direction, tone, text, description? }.' },
+      { name: 'failed', type: 'boolean', default: 'false', description: 'A message and a retry button in place of the figure and the content.' },
+      { name: 'failedText', type: 'string', description: 'Message of the failed state; loadFailed of the UI labels by default.' },
+      { name: 'retryText', type: 'string', description: 'Text of the retry button; retry of the UI labels by default.' },
+      { name: 'locale', type: 'string', description: 'Locale a number value is grouped by; LOCALE_ID by default.' },
       { name: 'headingLevel', type: 'number', default: '2', description: 'Level of the label as a heading.' },
     ],
+    outputs: [{ name: 'retry', type: 'void', description: 'The retry button of the failed state was pressed.' }],
     cssVars: [
       { name: '--fy-card-background', default: 'var(--fy-secondary-background)', description: 'Fill of the card.' },
       { name: '--fy-card-padding', description: 'Padding of the card.' },
@@ -87,7 +163,42 @@ export const LAYOUT_DOCS: ComponentDoc[] = [
       { name: '--fy-card-value-size', default: 'var(--fy-font-size-xxl)', description: 'Size of the figure.' },
       { name: '--fy-card-figure-offset', default: 'auto', description: 'Space above the figure under a label.' },
     ],
-    accessibility: ['A labelled card is named by its label, which is a heading; a loading card has aria-busy.'],
+    accessibility: [
+      'A labelled card is named by its label, which is a heading; a loading card has aria-busy.',
+      'The trend badge is read by its description; the failed state is an alert.',
+    ],
+  },
+  {
+    slug: 'carousel',
+    title: 'Carousel',
+    group: 'Layout',
+    summary: 'Slides swiped with native snapping, with dots, a two-way index and slides rendered only once the user gets near them.',
+    imports: `import { CarouselComponent, CarouselSlideDirective } from '@freely-ui/angular';`,
+    selectors: ['fy-carousel', 'ng-template[fyCarouselSlide]'],
+    examples: [{
+      title: 'Photos with a viewer',
+      description: 'A slide is rendered once it is next to the one in view, so the photos further on load only then. A tap opens the image viewer.',
+      component: CarouselExample,
+      code: carousel,
+    }],
+    inputs: [
+      { name: 'index', type: 'number', default: '0', description: 'The slide in view, also as [(index)]; setting it scrolls there.' },
+      { name: 'label', type: 'string', description: 'Name of the carousel; carousel of the UI labels by default.' },
+      { name: 'dots', type: 'boolean', default: 'true', description: 'Dots under the slides; never drawn for a single slide.' },
+    ],
+    cssVars: [
+      { name: '--fy-carousel-slide-width', default: '100%', description: 'Width of a slide; less lets the next one peek in.' },
+      { name: '--fy-carousel-gap', default: '0px', description: 'Space between the slides.' },
+      { name: '--fy-carousel-aspect-ratio', default: 'auto', description: 'Shape of a slide, e.g. 4 / 3.' },
+      { name: '--fy-carousel-radius', default: 'var(--fy-radius-md)', description: 'Corner radius of the track.' },
+      { name: '--fy-carousel-slide-background', default: 'transparent', description: 'Fill behind a slide while it loads.' },
+      { name: '--fy-carousel-dot-active-color', default: 'var(--fy-accent)', description: 'Colour of the dot in view.' },
+    ],
+    accessibility: [
+      'role="region" with aria-roledescription="carousel"; each slide is a group named like "2 of 5" (carouselSlide of the UI labels).',
+      'The track takes the focus: the arrow keys, Home and End move between the slides.',
+      'The dots are for pointers only and hidden from screen readers.',
+    ],
   },
   {
     slug: 'accordion',

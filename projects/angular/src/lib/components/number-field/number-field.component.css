@@ -1,0 +1,62 @@
+/* The box of `.fy-text-field` around the input and its prefix and suffix, tuned by the same custom properties. */
+:host {
+  display: flex;
+  align-items: center;
+  gap: var(--fy-number-field-affix-gap, 6px);
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--fy-text-field-height, 44px);
+  padding: var(--fy-text-field-padding, 0 14px);
+  border: 1px solid var(--fy-text-field-border-color, var(--fy-tertiary-background));
+  border-radius: var(--fy-text-field-radius, var(--fy-radius-md));
+  background: var(--fy-text-field-background, var(--fy-primary-background));
+  color: var(--fy-primary-text);
+  font-family: var(--fy-font-family);
+  font-size: var(--fy-font-size-m);
+  cursor: text;
+  transition: border-color var(--fy-duration-base) ease;
+}
+
+:host(:focus-within) {
+  border-color: var(--fy-text-field-focus-color, var(--fy-accent));
+}
+
+:host(.fy-number-field--invalid) {
+  border-color: var(--fy-danger);
+}
+
+:host(.fy-number-field--disabled) {
+  opacity: 0.5;
+  cursor: default;
+}
+
+:host(.fy-number-field--plain) {
+  min-height: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  line-height: 1.4;
+}
+
+.fy-number-field__input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+}
+
+.fy-number-field__input::placeholder {
+  color: var(--fy-secondary-text);
+}
+
+.fy-number-field__affix {
+  flex: none;
+  color: var(--fy-number-field-affix-color, var(--fy-secondary-text));
+  white-space: nowrap;
+}

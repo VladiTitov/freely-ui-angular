@@ -16,6 +16,39 @@
   color: var(--fy-danger);
 }
 
+/* Lays nothing out unless it holds the reveal button, so the control stays a flex item of the field. */
+.fy-form-field__control {
+  display: contents;
+}
+
+.fy-form-field__control--revealable {
+  display: block;
+  position: relative;
+}
+
+.fy-form-field__reveal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--fy-form-field-reveal-size, 44px);
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--fy-secondary-text);
+  font-size: var(--fy-form-field-reveal-icon-size, 18px);
+  cursor: pointer;
+}
+
+.fy-form-field__reveal:focus-visible {
+  outline: 2px solid var(--fy-accent);
+  outline-offset: -4px;
+  border-radius: var(--fy-radius-md);
+}
+
 .fy-form-field__footer {
   display: flex;
   align-items: flex-start;

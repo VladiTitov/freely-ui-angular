@@ -28,7 +28,8 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/angular/tsconfig.spec.json"
+            "tsConfig": "projects/angular/tsconfig.spec.json",
+            "include": ["**/*.spec.ts", "../charts/src/**/*.spec.ts"]
           }
         }
       }

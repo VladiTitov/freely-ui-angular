@@ -1,0 +1,11 @@
+<div class="fy-pull-to-refresh__indicator" [style.height.px]="offset()" [style.--_progress]="progress()">
+  @if (spinning()) {
+    <fy-loader class="fy-pull-to-refresh__loader" [size]="24" [label]="labels().refreshing" />
+  } @else if (pulling()) {
+    <i class="fy-pull-to-refresh__arrow" [class]="icons.pullToRefresh" aria-hidden="true"
+      [class.fy-pull-to-refresh__arrow--armed]="progress() >= 1"></i>
+  }
+</div>
+<div class="fy-pull-to-refresh__content" [style.transform]="offset() ? 'translateY(' + offset() + 'px)' : null">
+  <ng-content />
+</div>

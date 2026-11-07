@@ -1,0 +1,33 @@
+<fy-number-field
+  class="fy-range-field__end"
+  [value]="value().min"
+  (valueChange)="setEnd('min', $event)"
+  [min]="min()"
+  [max]="max()"
+  [step]="step()"
+  [decimals]="decimals()"
+  [locale]="locale()"
+  [prefix]="prefix()"
+  [suffix]="suffix()"
+  [appearance]="appearance()"
+  [disabled]="isDisabled()"
+  [invalid]="reversed()"
+  [placeholder]="fromText()"
+  [ariaLabel]="fromText()" />
+<span class="fy-range-field__dash" aria-hidden="true">–</span>
+<fy-number-field
+  class="fy-range-field__end"
+  [value]="value().max"
+  (valueChange)="setEnd('max', $event)"
+  [min]="min()"
+  [max]="max()"
+  [step]="step()"
+  [decimals]="decimals()"
+  [locale]="locale()"
+  [prefix]="prefix()"
+  [suffix]="suffix()"
+  [appearance]="appearance()"
+  [disabled]="isDisabled()"
+  [invalid]="reversed()"
+  [placeholder]="toText()"
+  [ariaLabel]="toText()" />

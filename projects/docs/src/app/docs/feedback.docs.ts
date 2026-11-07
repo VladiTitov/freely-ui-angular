@@ -1,5 +1,14 @@
-import { Component, signal } from '@angular/core';
-import { BadgeComponent, ButtonComponent, LoaderComponent, ProgressComponent, SkeletonComponent, TooltipDirective } from '@freely-ui/angular';
+import { Component, inject, signal } from '@angular/core';
+import {
+  BadgeComponent,
+  ButtonComponent,
+  FyConfirmService,
+  LoaderComponent,
+  PopupComponent,
+  ProgressComponent,
+  SkeletonComponent,
+  TooltipDirective
+} from '@freely-ui/angular';
 import { ComponentDoc } from './doc.model';
 import { COLUMN, ROW } from './example-styles';
 
@@ -69,7 +78,74 @@ const tooltip = `
 })
 class TooltipExample {}
 
+const confirm = `
+<button fyButton type="button" variant="secondary" (click)="leave()">Leave the group</button>
+<button fyButton type="button" variant="secondary" (click)="remove()">Delete the wish</button>
+<p>Answer: {{ answer() }}</p>
+<!-- Once in the app, usually in the root component. -->
+<fy-popup />
+`;
+
+const confirmCode = `${confirm}
+// component
+private readonly confirmation = inject(FyConfirmService);
+
+async remove() {
+  const yes = await this.confirmation.confirm({
+    title: 'Delete the wish?',
+    message: 'Friends who booked it will be told.',
+    confirmText: 'Delete',
+    destructive: true,
+  });
+  if (yes) { /* delete */ }
+}`;
+
+@Component({ selector: 'docs-confirm', imports: [ButtonComponent, PopupComponent], template: confirm, host: ROW })
+class ConfirmExample {
+  private readonly confirmation = inject(FyConfirmService);
+  protected readonly answer = signal('—');
+
+  protected async leave(): Promise<void> {
+    const yes = await this.confirmation.confirm({ title: 'Leave the group?', message: 'You can join again with a new invite.' });
+    this.answer.set(yes ? 'left' : 'stayed');
+  }
+
+  protected async remove(): Promise<void> {
+    const yes = await this.confirmation.confirm({
+      title: 'Delete the wish?',
+      message: 'Friends who booked it will be told.',
+      confirmText: 'Delete',
+      destructive: true,
+    });
+    this.answer.set(yes ? 'deleted' : 'kept');
+  }
+}
+
 export const FEEDBACK_DOCS: ComponentDoc[] = [
+  {
+    slug: 'confirm',
+    title: 'Confirm dialog',
+    group: 'Feedback',
+    summary: 'A yes/no question in the popup that resolves to a boolean; a destructive answer turns red.',
+    imports: `import { FyConfirmService, PopupComponent } from '@freely-ui/angular';`,
+    selectors: ['FyConfirmService', 'fy-popup'],
+    examples: [{
+      title: 'Plain and destructive',
+      description: 'confirm() resolves to true only on the confirm button; cancel, the close button, the backdrop and Esc give false. Needs one <fy-popup /> in the app.',
+      component: ConfirmExample,
+      code: confirmCode,
+    }],
+    inputs: [
+      { name: 'title', type: 'string', description: 'The question.' },
+      { name: 'message', type: 'string', description: 'A line under it.' },
+      { name: 'content / contentContext', type: 'TemplateRef / object', description: 'A template in place of the message, e.g. the item at stake.' },
+      { name: 'confirmText', type: 'string', description: 'Text of the confirm button; confirm of the UI labels by default.' },
+      { name: 'cancelText', type: 'string', description: 'Text of the cancel button; cancel of the UI labels by default.' },
+      { name: 'destructive', type: 'boolean', default: 'false', description: 'A red confirm button with a rigid haptic, for deleting or declining.' },
+      { name: 'wordBreak', type: 'boolean', default: 'false', description: 'Breaks long words of the message, e.g. a link.' },
+    ],
+    accessibility: ['The popup is a modal dialog (role="dialog", aria-modal); Esc closes it as a cancel.'],
+  },
   {
     slug: 'badge',
     title: 'Badge',

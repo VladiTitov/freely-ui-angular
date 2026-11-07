@@ -17,9 +17,9 @@ export interface DocProperty {
   description: string;
 }
 
-export type DocGroup = 'Actions' | 'Forms' | 'Feedback' | 'Layout' | 'People';
+export type DocGroup = 'Actions' | 'Forms' | 'Feedback' | 'Layout' | 'Lists' | 'Charts' | 'People';
 
-export const DOC_GROUPS: readonly DocGroup[] = ['Actions', 'Forms', 'Feedback', 'Layout', 'People'];
+export const DOC_GROUPS: readonly DocGroup[] = ['Actions', 'Forms', 'Feedback', 'Layout', 'Lists', 'Charts', 'People'];
 
 /** The page of one component. */
 export interface ComponentDoc {

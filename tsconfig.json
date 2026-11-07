@@ -20,6 +20,9 @@
       ],
       "@freely-ui/angular/navigation": [
         "./projects/angular/navigation/src/public-api.ts"
+      ],
+      "@freely-ui/angular/charts": [
+        "./projects/angular/charts/src/public-api.ts"
       ]
     },
     "importHelpers": true,

@@ -8,6 +8,11 @@ export interface FyFieldControl {
   readonly valueLength?: Signal<number>;
   /** `maxlength` of the native element, for the counter; null without one. */
   readonly maxLength?: Signal<number | null>;
+  /** A password the field may show as plain text; the field then draws the show/hide button. */
+  readonly revealable?: Signal<boolean>;
+  /** The password is shown as plain text. */
+  readonly revealed?: Signal<boolean>;
+  toggleReveal?(): void;
 }
 
 /** What a control needs from the `fy-form-field` around it. */

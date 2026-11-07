@@ -16,6 +16,10 @@ import { TextareaDirective, TextFieldDirective } from './text-field.directive';
     </fy-form-field>
 
     <input fyTextField class="alone" aria-describedby="own-hint" />
+
+    <fy-form-field label="Password">
+      <input fyTextField type="password" class="password" revealable />
+    </fy-form-field>
   `
 })
 class HostComponent {
@@ -91,6 +95,32 @@ describe('FormFieldComponent', () => {
 
     expect(alone.getAttribute('aria-describedby')).toBe('own-hint');
     expect(alone.hasAttribute('aria-invalid')).toBe(false);
+  });
+
+  it('draws no reveal button for a field that is not revealable', async () => {
+    const { emailField } = await render();
+
+    expect(emailField.querySelector('.fy-form-field__reveal')).toBeNull();
+  });
+
+  it('shows and hides a revealable password', async () => {
+    const { fixture, root } = await render();
+    const password = root.querySelector<HTMLInputElement>('input.password')!;
+    const button = () => root.querySelector<HTMLButtonElement>('.fy-form-field__reveal')!;
+
+    expect(password.type).toBe('password');
+    expect(password.classList).toContain('fy-text-field--revealable');
+    expect(button().getAttribute('aria-label')).toBe('Show password');
+    expect(button().getAttribute('aria-controls')).toBe(password.id);
+
+    button().click();
+    await fixture.whenStable();
+    expect(password.type).toBe('text');
+    expect(button().getAttribute('aria-label')).toBe('Hide password');
+
+    button().click();
+    await fixture.whenStable();
+    expect(password.type).toBe('password');
   });
 
   it('styles the textarea as a growing text field', async () => {

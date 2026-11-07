@@ -1,0 +1,29 @@
+@if (prefix(); as affix) {
+  <span class="fy-number-field__affix" aria-hidden="true">{{ affix }}</span>
+}
+<input
+  #control
+  class="fy-number-field__input"
+  type="text"
+  role="spinbutton"
+  autocomplete="off"
+  spellcheck="false"
+  [id]="id()"
+  [value]="text()"
+  [attr.inputmode]="inputMode()"
+  [placeholder]="placeholder()"
+  [disabled]="isDisabled()"
+  [attr.aria-label]="ariaLabel() || null"
+  [attr.aria-valuenow]="value()"
+  [attr.aria-valuemin]="min()"
+  [attr.aria-valuemax]="max()"
+  [attr.aria-valuetext]="valueText()"
+  [attr.aria-describedby]="field?.describedBy() ?? null"
+  [attr.aria-invalid]="isInvalid() ? 'true' : null"
+  [attr.aria-required]="field?.required() ? 'true' : null"
+  (input)="onInput(control)"
+  (keydown)="onKeydown($event)"
+  (blur)="onBlur()" />
+@if (suffix(); as affix) {
+  <span class="fy-number-field__affix" aria-hidden="true">{{ affix }}</span>
+}

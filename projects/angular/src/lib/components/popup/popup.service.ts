@@ -2,7 +2,8 @@ import { Injectable, TemplateRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { HapticFeedback } from '../../haptics/haptics';
 
-export type PopupButtonStyle = 'accent' | 'muted';
+/** `accent` — the main answer, `danger` — a main answer that deletes or declines something, `muted` — the way out. */
+export type PopupButtonStyle = 'accent' | 'danger' | 'muted';
 
 export interface PopupButton {
   /** Value returned by `open()` when this button is pressed. */

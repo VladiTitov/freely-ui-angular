@@ -1,17 +1,21 @@
 import { Component, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   CheckboxComponent,
   CodeInputComponent,
   DatePickerComponent,
   FormFieldComponent,
+  NumberFieldComponent,
+  NumberRange,
   RADIO_GROUP,
+  RangeFieldComponent,
   SelectFieldComponent,
   SelectFieldOption,
   SwitchComponent,
   TextareaDirective,
   TextFieldDirective
 } from '@freely-ui/angular';
+import { JsonPipe } from '@angular/common';
 import { ComponentDoc } from './doc.model';
 import { COLUMN, ROW } from './example-styles';
 
@@ -45,6 +49,65 @@ const textFieldPlain = `
   styles: `.card { padding: 14px 18px; border-radius: var(--fy-radius-lg); background: var(--fy-tertiary-background); }`,
 })
 class TextFieldPlainExample {}
+
+const password = `
+<fy-form-field label="Password" hint="The eye shows what you typed.">
+  <input fyTextField type="password" revealable autocomplete="new-password" [(ngModel)]="password" />
+</fy-form-field>
+`;
+
+@Component({ selector: 'docs-password', imports: [FormFieldComponent, TextFieldDirective, FormsModule], template: password, host: COLUMN })
+class PasswordExample {
+  protected password = 'correct horse';
+}
+
+const numberField = `
+<fy-form-field label="Price" hint="Digits are grouped as you type; a comma or a dot starts the cents.">
+  <fy-number-field [(ngModel)]="price" [decimals]="2" [min]="0" [max]="1000000" suffix="BYN" />
+</fy-form-field>
+<fy-form-field label="Guests">
+  <fy-number-field [(ngModel)]="guests" [min]="1" [max]="50" placeholder="How many?" />
+</fy-form-field>
+<p>Value: {{ price ?? 'null' }} · {{ guests ?? 'null' }}</p>
+`;
+
+@Component({ selector: 'docs-number-field', imports: [FormFieldComponent, NumberFieldComponent, FormsModule], template: numberField, host: COLUMN })
+class NumberFieldExample {
+  protected price: number | null = 1250.5;
+  protected guests: number | null = null;
+}
+
+const numberFieldPlain = `
+<div class="card">
+  <fy-number-field appearance="plain" [decimals]="2" [min]="0" prefix="$" placeholder="0.00" ariaLabel="Amount" />
+</div>
+`;
+
+@Component({
+  selector: 'docs-number-field-plain',
+  imports: [NumberFieldComponent],
+  template: numberFieldPlain,
+  host: COLUMN,
+  styles: `.card { padding: 14px 18px; border-radius: var(--fy-radius-lg); background: var(--fy-secondary-background); }`,
+})
+class NumberFieldPlainExample {}
+
+const rangeField = `
+<fy-form-field label="Budget" [error]="budget.hasError('fyRange') ? 'From is above to.' : null">
+  <fy-range-field [formControl]="budget" [min]="0" [decimals]="2" suffix="BYN" />
+</fy-form-field>
+<p>Value: {{ budget.value | json }}</p>
+`;
+
+@Component({
+  selector: 'docs-range-field',
+  imports: [FormFieldComponent, RangeFieldComponent, ReactiveFormsModule, JsonPipe],
+  template: rangeField,
+  host: COLUMN,
+})
+class RangeFieldExample {
+  protected readonly budget = new FormControl<NumberRange>({ min: 20, max: null });
+}
 
 const textarea = `
 <fy-form-field label="Note" hint="Up to 120 characters." counter>
@@ -187,9 +250,11 @@ export const FORM_DOCS: ComponentDoc[] = [
     examples: [
       { title: 'With a label, a hint and an error', description: 'The form field points its label at the field and describes the field by the hint or the error.', component: TextFieldExample, code: textField },
       { title: 'Plain', description: 'No box of its own, for a row inside a card the page draws.', component: TextFieldPlainExample, code: textFieldPlain },
+      { title: 'Revealable password', description: 'Inside a form field, revealable adds a button that shows the password as plain text.', component: PasswordExample, code: password },
     ],
     inputs: [
       { name: 'appearance', type: "'outline' | 'plain'", default: "'outline'", description: 'fyTextField: a bordered box, or no border and fill.' },
+      { name: 'revealable', type: 'boolean', default: 'false', description: 'fyTextField: a password the form field around it lets the user show; type="password" only.' },
       { name: 'label', type: 'string', description: 'fy-form-field: the label above the control.' },
       { name: 'hint', type: 'string | null', description: 'fy-form-field: a line under the control.' },
       { name: 'error', type: 'string | null', description: 'fy-form-field: replaces the hint while set and marks the control invalid.' },
@@ -202,9 +267,11 @@ export const FORM_DOCS: ComponentDoc[] = [
       { name: '--fy-text-field-border-color', default: 'var(--fy-tertiary-background)', description: 'Border of the field.' },
       { name: '--fy-text-field-focus-color', default: 'var(--fy-accent)', description: 'Border while focused.' },
       { name: '--fy-form-field-label-color', default: 'var(--fy-secondary-text)', description: 'Colour of the label.' },
+      { name: '--fy-form-field-reveal-size', default: '44px', description: 'Width of the show/hide button and the room the password leaves for it.' },
     ],
     accessibility: [
       'The label gets for, the control aria-describedby, aria-invalid and aria-required; no ids to write by hand.',
+      'The show/hide button is named Show password or Hide password (showPassword / hidePassword of the UI labels), points at the field with aria-controls and keeps the focus in it.',
       'Outside a form field the aria attributes the page sets stay as they are.',
       'It stays a native input, so autocomplete, the keyboard and the password manager work as usual.',
     ],
@@ -255,6 +322,63 @@ export const FORM_DOCS: ComponentDoc[] = [
       { name: '--fy-code-input-focus-color', default: 'var(--fy-accent)', description: 'Border of the active cell.' },
     ],
     accessibility: ['One input with autocomplete="one-time-code" takes the code; the cells are hidden from screen readers.'],
+  },
+  {
+    slug: 'number-field',
+    title: 'Number field',
+    group: 'Forms',
+    summary: 'A field for amounts with a number value: digits grouped as you type, either separator for the decimals, a prefix or a suffix.',
+    imports: `import { NumberFieldComponent } from '@freely-ui/angular';`,
+    selectors: ['fy-number-field'],
+    examples: [
+      { title: 'Price and count', description: `The value is a number, or null while empty. min and max apply when the field loses focus; the arrow keys step by step. ${FORMS_NOTE}`, component: NumberFieldExample, code: numberField },
+      { title: 'Plain', description: 'No box of its own, for a row inside a card the page draws.', component: NumberFieldPlainExample, code: numberFieldPlain },
+    ],
+    inputs: [
+      { name: 'value', type: 'number | null', default: 'null', description: 'The number, also as [(value)].' },
+      { name: 'decimals', type: 'number', default: '0', description: 'Digits after the decimal separator; 0 takes whole numbers only.' },
+      { name: 'min', type: 'number | null', default: 'null', description: 'Smallest value; with none below 0 the field takes no minus.' },
+      { name: 'max', type: 'number | null', default: 'null', description: 'Largest value.' },
+      { name: 'step', type: 'number', default: '1', description: 'What the arrow keys add or take away.' },
+      { name: 'locale', type: 'string', description: 'Locale of the separators; LOCALE_ID by default.' },
+      { name: 'prefix / suffix', type: 'string', description: 'Text before or after the number, e.g. a currency.' },
+      { name: 'placeholder', type: 'string', default: "''", description: 'Shown while empty.' },
+      { name: 'appearance', type: "'outline' | 'plain'", default: "'outline'", description: 'A bordered box, or no border and fill.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the field.' },
+      { name: 'invalid', type: 'boolean', default: 'false', description: 'Marks the field invalid on its own; a form field with an error does too.' },
+      { name: 'ariaLabel', type: 'string', description: 'Name of the input when no form field labels it.' },
+    ],
+    cssVars: [
+      { name: '--fy-text-field-*', description: 'The same box properties as the text field.' },
+      { name: '--fy-number-field-affix-color', default: 'var(--fy-secondary-text)', description: 'Colour of the prefix and the suffix.' },
+      { name: '--fy-number-field-affix-gap', default: '6px', description: 'Space between the number and its prefix or suffix.' },
+    ],
+    accessibility: [
+      'role="spinbutton" with aria-valuenow, aria-valuemin and aria-valuemax; aria-valuetext reads the number with its prefix and suffix.',
+      'The keyboard is numeric on phones, decimal when decimals is above 0, and the full one when negatives are allowed, for the minus.',
+      'Pasting "1 234,50" or "1,234.50" gives 1234.5 in any locale.',
+    ],
+  },
+  {
+    slug: 'range-field',
+    title: 'Range field',
+    group: 'Forms',
+    summary: 'A "from – to" pair of number fields with a { min, max } value, e.g. a budget filter.',
+    imports: `import { NumberRange, RangeFieldComponent } from '@freely-ui/angular';`,
+    selectors: ['fy-range-field'],
+    examples: [
+      { title: 'Budget', description: `Either end may stay empty. While from is above to both fields turn invalid and the form gets the fyRange error. ${FORMS_NOTE}`, component: RangeFieldExample, code: rangeField },
+    ],
+    inputs: [
+      { name: 'value', type: 'NumberRange', default: '{ min: null, max: null }', description: 'Both ends, also as [(value)].' },
+      { name: 'min / max / step / decimals / locale', type: 'number | string', description: 'As in the number field, for both fields.' },
+      { name: 'prefix / suffix', type: 'string', description: 'Text before or after each number.' },
+      { name: 'fromLabel / toLabel', type: 'string', description: 'Name and placeholder of each field; rangeFrom / rangeTo of the UI labels by default.' },
+      { name: 'appearance', type: "'outline' | 'plain'", default: "'outline'", description: 'A bordered box, or no border and fill.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables both fields.' },
+    ],
+    cssVars: [{ name: '--fy-range-field-gap', default: 'var(--fy-space-s)', description: 'Space around the dash.' }],
+    accessibility: ['role="group"; the label of a form field points at the lower field, and each field is named by its own label.'],
   },
   {
     slug: 'checkbox',

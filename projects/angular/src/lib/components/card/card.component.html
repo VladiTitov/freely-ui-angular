@@ -1,9 +1,14 @@
 <ng-template #figure>
-  @if (loading()) {
+  @if (loading() && !failed()) {
     <fy-skeleton class="fy-card__value-skeleton" />
-  } @else if (hasValue()) {
+  } @else if (ready() && hasValue()) {
     <span class="fy-card__value-row">
-      <span class="fy-card__value">{{ value() }}</span>
+      <span class="fy-card__value">{{ displayValue() }}</span>
+      @if (trend(); as change) {
+        <fy-badge class="fy-card__trend" size="m" [tone]="change.tone"
+          [direction]="change.direction === 'flat' ? null : change.direction"
+          [attr.aria-label]="change.description ?? change.text">{{ change.text }}</fy-badge>
+      }
       <ng-content select="[cardBadge]" />
     </span>
   }
@@ -24,7 +29,12 @@
   </div>
 }
 
-@if (loading()) {
+@if (failed()) {
+  <div class="fy-card__failed" role="alert">
+    <span class="fy-card__failed-text">{{ failedText() ?? labels().loadFailed }}</span>
+    <button type="button" fyButton variant="secondary" size="s" (click)="retry.emit()">{{ retryText() ?? labels().retry }}</button>
+  </div>
+} @else if (loading()) {
   <div class="fy-card__lines-skeleton" aria-busy="true" [attr.aria-label]="labels().loading">
     <fy-skeleton class="fy-card__line-skeleton" />
     <fy-skeleton class="fy-card__line-skeleton fy-card__line-skeleton--short" />

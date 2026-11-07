@@ -46,6 +46,8 @@ theme.setPreference('dark'); // 'light', 'dark' or 'system'`;
           <code>--fy-secondary-background</code>, <code>--fy-tertiary-background</code>, <code>--fy-primary-text</code>,
           <code>--fy-secondary-text</code>, <code>--fy-danger</code>, <code>--fy-success</code>, <code>--fy-warning</code>,
           <code>--fy-info</code>.</li>
+        <li>Charts: <code>--fy-chart-1</code> … <code>--fy-chart-6</code>, the colours of the series in order; unset,
+          they take the accent, success, warning, info, danger and secondary text colours.</li>
         <li>Sizes: <code>--fy-font-size-*</code>, <code>--fy-radius-*</code>, <code>--fy-space-*</code>,
           <code>--fy-button-s|m|l</code>.</li>
         <li>Depth and motion: <code>--fy-shadow-s|m|l</code>, <code>--fy-z-*</code>, <code>--fy-duration-*</code>,

@@ -99,6 +99,11 @@
   background: var(--fy-accent);
 }
 
+.fy-sheet-btn--danger {
+  color: var(--fy-on-danger, #fff);
+  background: var(--fy-danger);
+}
+
 .fy-sheet-btn--cancel {
   color: var(--fy-secondary-text);
   background: var(--fy-tertiary-background);

@@ -1,0 +1,63 @@
+:host {
+  display: block;
+}
+
+.fy-carousel__track {
+  display: flex;
+  gap: var(--fy-carousel-gap, 0px);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  border-radius: var(--fy-carousel-radius, var(--fy-radius-md));
+  outline: none;
+  scrollbar-width: none;
+}
+
+.fy-carousel__track::-webkit-scrollbar {
+  display: none;
+}
+
+.fy-carousel__track:focus-visible {
+  box-shadow: 0 0 0 2px var(--fy-accent);
+}
+
+.fy-carousel__slide {
+  flex: 0 0 var(--fy-carousel-slide-width, 100%);
+  min-width: 0;
+  aspect-ratio: var(--fy-carousel-aspect-ratio, auto);
+  overflow: hidden;
+  border-radius: var(--fy-carousel-slide-radius, 0);
+  background: var(--fy-carousel-slide-background, transparent);
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.fy-carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--fy-carousel-dot-gap, 6px);
+  margin-top: var(--fy-carousel-dots-offset, 10px);
+}
+
+.fy-carousel__dot {
+  width: var(--fy-carousel-dot-size, 6px);
+  height: var(--fy-carousel-dot-size, 6px);
+  border-radius: 50%;
+  background: var(--fy-carousel-dot-color, var(--fy-secondary-text));
+  opacity: 0.4;
+  cursor: pointer;
+  transition:
+    opacity var(--fy-duration-base) ease,
+    background-color var(--fy-duration-base) ease;
+}
+
+.fy-carousel__dot--active {
+  background: var(--fy-carousel-dot-active-color, var(--fy-accent));
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fy-carousel__dot {
+    transition: none;
+  }
+}

@@ -175,7 +175,7 @@ describe('CardComponent and SkeletonComponent', () => {
 
     expect(card.getAttribute('aria-labelledby')).toBe(label.id);
     expect(label.getAttribute('role')).toBe('heading');
-    expect(card.querySelector('.fy-card__value')?.textContent?.trim()).toBe('1280');
+    expect(card.querySelector('.fy-card__value')?.textContent?.trim()).toBe('1,280');
     expect(card.querySelector('.fy-card__value-row .badge')).not.toBeNull();
     expect(card.querySelector('.fy-card__caption')?.textContent?.trim()).toBe('today');
   });
