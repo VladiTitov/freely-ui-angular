@@ -11,7 +11,8 @@
   "include": [
     "src/**/*.ts",
     "telegram/src/**/*.ts",
-    "navigation/src/**/*.ts"
+    "navigation/src/**/*.ts",
+    "charts/src/**/*.ts"
   ],
   "exclude": [
     "**/*.spec.ts"

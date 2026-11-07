@@ -1,0 +1,63 @@
+@if (showLegend()) {
+  <ul class="fy-chart__legend">
+    @for (series of views(); track series.id) {
+      <li><span class="fy-chart__key" [style.background]="series.color" aria-hidden="true"></span>{{ series.label }}</li>
+    }
+  </ul>
+}
+
+<div class="fy-chart__frame">
+  <svg [attr.width]="width()" [attr.height]="height()" [attr.viewBox]="'0 0 ' + width() + ' ' + height()" role="img"
+    [attr.aria-label]="label() || null" tabindex="0" (pointermove)="onPointerMove($event)"
+    (pointerleave)="active.set(null)" (focus)="onFocus()" (blur)="active.set(null)" (keydown)="onKey($event)">
+    @for (tick of scale().ticks; track tick) {
+      <line class="fy-chart__grid" [attr.x1]="margin.left" [attr.x2]="width() - margin.right" [attr.y1]="y(tick)"
+        [attr.y2]="y(tick)" />
+      <text class="fy-chart__tick" [attr.x]="margin.left - 8" [attr.y]="y(tick)" text-anchor="end"
+        dominant-baseline="middle">{{ formatValue(tick) }}</text>
+    }
+
+    @for (item of xLabels(); track item.index) {
+      <text class="fy-chart__tick" [attr.x]="x(item.index)" [attr.y]="height() - 6" text-anchor="middle">{{ item.text }}</text>
+    }
+
+    @let index = active();
+    @if (index !== null) {
+      <line class="fy-chart__crosshair" [attr.x1]="x(index)" [attr.x2]="x(index)" [attr.y1]="margin.top"
+        [attr.y2]="baseline()" />
+    }
+
+    @if (kind === 'bars') {
+      @for (column of bars(); track $index) {
+        <g class="fy-chart__column" [class.fy-chart__column--dim]="index !== null && index !== $index">
+          @for (segment of column; track $index) {
+            <path class="fy-chart__bar" [attr.d]="segment.path" [style.fill]="segment.color" />
+          }
+        </g>
+      }
+    } @else {
+      @for (line of lines(); track line.id) {
+        @if (line.area) {
+          <path class="fy-chart__area" [attr.d]="line.area" [style.fill]="line.color" />
+        }
+        <path class="fy-chart__line" [attr.d]="line.line" [style.stroke]="line.color" />
+        @let point = index !== null ? line.points[index] : line.points[line.points.length - 1];
+        @if (point) {
+          <circle class="fy-chart__dot" [attr.cx]="point[0]" [attr.cy]="point[1]" r="4" [style.fill]="line.color" />
+        }
+      }
+    }
+  </svg>
+
+  @if (readout(); as info) {
+    <div class="fy-chart__readout" [style.left.px]="info.left" aria-live="polite">
+      <span class="fy-chart__readout-title">{{ info.title }}</span>
+      @for (row of info.rows; track row.id) {
+        <span class="fy-chart__readout-row">
+          <span class="fy-chart__readout-key" [style.background]="row.color" aria-hidden="true"></span>
+          <b>{{ row.value }}</b> {{ row.label }}
+        </span>
+      }
+    </div>
+  }
+</div>

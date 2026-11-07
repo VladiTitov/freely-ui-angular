@@ -26,6 +26,10 @@ All notable changes to `@freely-ui/angular` are listed here. The project follows
   keyboard.
 - `fy-pull-to-refresh`: pulling the content down from the top of its scroll emits `refresh` and spins while
   `refreshing` is true. UI label `refreshing`, icon `pullToRefresh`.
+- `@freely-ui/angular/charts`, a separate entry point, so the main one stays free of chart code: `fy-bar-chart`
+  (stacked or side by side) and `fy-line-chart` (with a wash under the line) over `data` and `ChartSeries`, with
+  a legend, a value axis on clean numbers, and a readout that hover or the arrow keys open for one item. Series
+  colours default to `--fy-chart-1` … `--fy-chart-6`, which fall back to the theme colours.
 
 ### Changed
 
