@@ -21,6 +21,11 @@ All notable changes to `@freely-ui/angular` are listed here. The project follows
   for a message and a retry button (`retry` output, `failedText`, `retryText`, UI label `loadFailed`).
 - `FyConfirmService.confirm()`: a yes/no dialog on the popup that resolves to a `boolean`; `destructive` paints the
   confirm button red and plays a rigid haptic. UI labels `confirm`, `cancel`; popup button style `danger`.
+- `fy-swipe-actions`: buttons under a list row revealed by swiping it sideways (`startActions`, `endActions`);
+  a full swipe runs the outer action with a haptic, one row is open at a time, the buttons stay reachable from the
+  keyboard.
+- `fy-pull-to-refresh`: pulling the content down from the top of its scroll emits `refresh` and spins while
+  `refreshing` is true. UI label `refreshing`, icon `pullToRefresh`.
 
 ### Changed
 

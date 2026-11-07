@@ -1,0 +1,45 @@
+:host {
+  position: relative;
+  display: block;
+  /* The browser's own overscroll would pull the page along with ours. */
+  overscroll-behavior-y: contain;
+}
+
+/* Above the content, in the room the content moves down to leave. */
+.fy-pull-to-refresh__indicator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: var(--fy-pull-to-refresh-color, var(--fy-secondary-text));
+  pointer-events: none;
+}
+
+.fy-pull-to-refresh__arrow {
+  font-size: var(--fy-pull-to-refresh-icon-size, 20px);
+  opacity: var(--_progress);
+  transition: transform var(--fy-duration-base) ease;
+}
+
+.fy-pull-to-refresh__arrow--armed {
+  transform: rotate(180deg);
+}
+
+.fy-pull-to-refresh__content {
+  transition: transform var(--fy-duration-base) var(--fy-ease-out, ease-out);
+}
+
+:host(.fy-pull-to-refresh--pulling) .fy-pull-to-refresh__content {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fy-pull-to-refresh__arrow,
+  .fy-pull-to-refresh__content {
+    transition: none;
+  }
+}

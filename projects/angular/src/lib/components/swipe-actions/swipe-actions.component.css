@@ -1,0 +1,101 @@
+:host {
+  position: relative;
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--fy-swipe-actions-radius, var(--fy-radius-xl));
+  /* The page keeps vertical scrolling; the sideways movement is ours. */
+  touch-action: pan-y;
+}
+
+.fy-swipe-actions__content {
+  position: relative;
+  z-index: 1;
+  transition: transform var(--fy-duration-base) var(--fy-ease-out, ease-out);
+}
+
+:host(.fy-swipe-actions--dragging) .fy-swipe-actions__content {
+  transition: none;
+}
+
+.fy-swipe-actions__actions {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  overflow: hidden;
+}
+
+:host(:not(.fy-swipe-actions--dragging)) .fy-swipe-actions__actions {
+  transition: width var(--fy-duration-base) var(--fy-ease-out, ease-out);
+}
+
+/* The first action of a side sits at the outer edge. */
+.fy-swipe-actions__actions--start {
+  inset-inline-start: 0;
+  flex-direction: row;
+}
+
+.fy-swipe-actions__actions--end {
+  inset-inline-end: 0;
+  flex-direction: row-reverse;
+}
+
+.fy-swipe-actions__button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex: 0 0 auto;
+  padding: 0 var(--fy-space-s);
+  border: none;
+  background: var(--_tone);
+  color: var(--fy-swipe-actions-color, #fff);
+  font-family: var(--fy-font-family);
+  font-size: var(--fy-font-size-s);
+  cursor: pointer;
+  --_tone: var(--fy-swipe-actions-accent, var(--fy-accent));
+}
+
+.fy-swipe-actions__button[data-tone='danger'] {
+  --_tone: var(--fy-swipe-actions-danger, var(--fy-danger));
+}
+
+.fy-swipe-actions__button[data-tone='neutral'] {
+  --_tone: var(--fy-swipe-actions-neutral, var(--fy-secondary-text));
+}
+
+/* The outer button takes the room a full swipe opens. */
+.fy-swipe-actions__button--primary {
+  flex-grow: 1;
+}
+
+.fy-swipe-actions__button:focus-visible {
+  outline: 2px solid var(--fy-swipe-actions-color, #fff);
+  outline-offset: -4px;
+}
+
+.fy-swipe-actions__icon {
+  font-size: var(--fy-swipe-actions-icon-size, 20px);
+  transition: transform var(--fy-duration-fast) ease-out;
+}
+
+.fy-swipe-actions__button--armed .fy-swipe-actions__icon {
+  transform: scale(1.2);
+}
+
+.fy-swipe-actions__label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fy-swipe-actions__content,
+  .fy-swipe-actions__actions,
+  .fy-swipe-actions__icon {
+    transition: none !important;
+  }
+}

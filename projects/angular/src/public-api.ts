@@ -77,4 +77,6 @@ export * from './lib/components/modal/modal.component';
 export * from './lib/components/modal-panel/modal-panel.component';
 export * from './lib/components/prompt-modal/prompt-modal.component';
 export * from './lib/components/progress/progress.component';
+export * from './lib/components/pull-to-refresh/pull-to-refresh.component';
+export * from './lib/components/swipe-actions/swipe-actions.component';
 export * from './lib/components/radio-group/radio-group.component';
