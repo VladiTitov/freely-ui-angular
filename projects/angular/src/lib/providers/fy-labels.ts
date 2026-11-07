@@ -8,8 +8,10 @@ export interface FyLabels {
   back: string;
   /** Accessible name of a loader that was given none. */
   loading: string;
-  /** Button of the item list's error state. */
+  /** Button of the item list's error state and of a failed card. */
   retry: string;
+  /** Message of a card whose figure could not be loaded. */
+  loadFailed: string;
   /** Clear button of the search field. */
   clear: string;
   /** Cross of a removable chip. */
@@ -78,6 +80,7 @@ export const DEFAULT_FY_LABELS: FyLabels = {
   back: 'Back',
   loading: 'Loading',
   retry: 'Retry',
+  loadFailed: 'Could not load',
   clear: 'Clear',
   remove: 'Remove',
   add: 'Add',

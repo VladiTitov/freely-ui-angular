@@ -17,8 +17,13 @@ All notable changes to `@freely-ui/angular` are listed here. The project follows
 - `fy-carousel`: slides declared with `ng-template fyCarouselSlide`, swiped with native snapping, with dots, a
   two-way `index` and arrow-key navigation. A slide is rendered once it is next to the one in view, so its images
   load only then. UI labels `carousel`, `carouselSlide`.
+- `fy-card` for dashboard figures: `trend` draws the change as a badge beside the value, `failed` swaps the figure
+  for a message and a retry button (`retry` output, `failedText`, `retryText`, UI label `loadFailed`).
 
 ### Changed
+
+- `fy-card` groups a number `value` by `locale` (`LOCALE_ID` by default): `1280` shows as `1,280`. Pass a string to
+  show the value as it is.
 
 - The package homepage is the documentation site, https://vladititov.github.io/freely-ui-angular/.
 

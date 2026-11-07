@@ -99,6 +99,20 @@
   width: 60%;
 }
 
+.fy-card__failed {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--fy-space-s);
+  margin-top: auto;
+}
+
+.fy-card__failed-text {
+  color: var(--fy-secondary-text);
+  font-size: var(--fy-font-size-m);
+  line-height: 1.25;
+}
+
 .fy-card__footer {
   display: flex;
   gap: var(--fy-space-s);
