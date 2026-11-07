@@ -72,6 +72,14 @@ abstract class FieldControlBase implements FyFieldControl {
  * <input fyTextField appearance="plain" [(ngModel)]="price" placeholder="Price" />
  * ```
  *
+ * `revealable` on a password inside `fy-form-field` adds a button that shows the password as plain text:
+ *
+ * ```html
+ * <fy-form-field label="Password">
+ *   <input fyTextField type="password" revealable autocomplete="current-password" formControlName="password" />
+ * </fy-form-field>
+ * ```
+ *
  * Styled by `base.css` (`.fy-text-field`); tune with the `--fy-text-field-*` custom properties.
  */
 @Directive({
@@ -80,9 +88,27 @@ abstract class FieldControlBase implements FyFieldControl {
   host: {
     class: 'fy-text-field',
     '[class.fy-text-field--plain]': 'appearance() === "plain"',
+    '[class.fy-text-field--revealable]': 'revealable()',
   },
 })
-export class TextFieldDirective extends FieldControlBase {}
+export class TextFieldDirective extends FieldControlBase {
+  /** Lets `fy-form-field` show the password as plain text. Only for `type="password"`. */
+  readonly revealable = input(false, { transform: booleanAttribute });
+  private readonly shown = signal(false);
+  readonly revealed = this.shown.asReadonly();
+
+  constructor() {
+    super();
+    // The type is the page's attribute; it is switched only while the password may be shown.
+    effect(() => {
+      if (this.revealable()) (this.element as HTMLInputElement).type = this.shown() ? 'text' : 'password';
+    });
+  }
+
+  toggleReveal(): void {
+    if (this.revealable()) this.shown.update(shown => !shown);
+  }
+}
 
 /**
  * A multi-line text field on the native `<textarea>` that grows with its text up to

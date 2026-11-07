@@ -5,6 +5,16 @@ All notable changes to `@freely-ui/angular` are listed here. The project follows
 
 ## Unreleased
 
+### Added
+
+- `fy-number-field`: a field for amounts with a `number | null` value. Digits are grouped as the user types, both
+  `,` and `.` work as the decimal separator, `min` / `max` apply on blur, the arrow keys step by `step`; `decimals`,
+  `locale`, `prefix` and `suffix`. Its text helpers `formatNumber` and `readNumberEdit` are exported too.
+- `fy-range-field`: a "from – to" pair of number fields with a `{ min, max }` value and the `fyRange` validation
+  error while the lower end is above the upper one.
+- `revealable` on `input[fyTextField]`: inside `fy-form-field` a password gets a show/hide button.
+- UI labels `rangeFrom`, `rangeTo`, `showPassword`, `hidePassword`; icons `reveal`, `conceal`.
+
 ### Changed
 
 - The package homepage is the documentation site, https://vladititov.github.io/freely-ui-angular/.

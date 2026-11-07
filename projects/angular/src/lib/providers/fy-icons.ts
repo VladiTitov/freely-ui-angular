@@ -46,6 +46,9 @@ export interface FyIcons {
   errorFilled: string;
   /** Avatar stack with nobody in it. */
   people: string;
+  /** Button of a revealable password while hidden / shown. */
+  reveal: string;
+  conceal: string;
 }
 
 export const DEFAULT_FY_ICONS: FyIcons = {
@@ -72,7 +75,9 @@ export const DEFAULT_FY_ICONS: FyIcons = {
   trendDown: 'bi bi-arrow-down',
   error: 'bi bi-exclamation-circle',
   errorFilled: 'bi bi-exclamation-circle-fill',
-  people: 'bi bi-people'
+  people: 'bi bi-people',
+  reveal: 'bi bi-eye',
+  conceal: 'bi bi-eye-slash'
 };
 
 export const FY_ICONS = new InjectionToken<FyIcons>('FY_ICONS', {

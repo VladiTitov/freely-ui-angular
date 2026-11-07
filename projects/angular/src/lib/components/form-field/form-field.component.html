@@ -3,7 +3,17 @@
     {{ text }}@if (required()) {<span class="fy-form-field__required" aria-hidden="true">*</span>}
   </label>
 }
-<ng-content />
+<div class="fy-form-field__control" [class.fy-form-field__control--revealable]="revealable()">
+  <ng-content />
+  @if (revealable()) {
+    <!-- mousedown keeps the focus, and the keyboard, in the password. -->
+    <button type="button" class="fy-form-field__reveal" [attr.aria-controls]="control()?.id()"
+      [attr.aria-label]="revealed() ? labels().hidePassword : labels().showPassword" [fyHaptic]="HapticImpact.Light"
+      (mousedown)="$event.preventDefault()" (click)="control()?.toggleReveal?.()">
+      <i [class]="revealed() ? icons.conceal : icons.reveal" aria-hidden="true"></i>
+    </button>
+  }
+</div>
 @if (error() || hint() || count()) {
   <div class="fy-form-field__footer">
     @if (error(); as text) {

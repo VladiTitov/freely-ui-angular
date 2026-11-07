@@ -62,6 +62,12 @@ export interface FyLabels {
   slideNext: string;
   slideDone: string;
   slideSkip: string;
+  /** Placeholders and names of the two fields of the range field. */
+  rangeFrom: string;
+  rangeTo: string;
+  /** Button of a revealable password. */
+  showPassword: string;
+  hidePassword: string;
 }
 
 export const DEFAULT_FY_LABELS: FyLabels = {
@@ -100,7 +106,11 @@ export const DEFAULT_FY_LABELS: FyLabels = {
   changeDate: 'Change the date',
   slideNext: 'Next',
   slideDone: 'Got it',
-  slideSkip: 'Skip'
+  slideSkip: 'Skip',
+  rangeFrom: 'From',
+  rangeTo: 'To',
+  showPassword: 'Show password',
+  hidePassword: 'Hide password'
 };
 
 /** Read on every render, so the labels may come from a signal and follow a language switch. */

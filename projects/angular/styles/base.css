@@ -227,6 +227,16 @@ fy-empty-state {
   overflow-y: auto;
 }
 
+/* Room for the show/hide button `fy-form-field` draws over a revealable password. */
+.fy-text-field--revealable {
+  padding-inline-end: var(--fy-form-field-reveal-size, 44px);
+}
+
+/* Edge's own reveal button would sit next to ours. */
+.fy-text-field--revealable::-ms-reveal {
+  display: none;
+}
+
 .fy-text-field--plain {
   min-height: 0;
   padding: 0;
