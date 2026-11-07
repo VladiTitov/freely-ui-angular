@@ -25,6 +25,7 @@
         <button *ngFor="let button of buttons" type="button"
           class="fy-sheet-btn"
           [class.fy-sheet-btn--accept]="(button.style ?? 'muted') === 'accent'"
+          [class.fy-sheet-btn--danger]="button.style === 'danger'"
           [class.fy-sheet-btn--cancel]="(button.style ?? 'muted') === 'muted'"
           [fyHaptic]="button.haptic ?? HapticImpact.Light"
           (click)="onButton(button)">{{ button.text }}</button>

@@ -19,6 +19,8 @@ All notable changes to `@freely-ui/angular` are listed here. The project follows
   load only then. UI labels `carousel`, `carouselSlide`.
 - `fy-card` for dashboard figures: `trend` draws the change as a badge beside the value, `failed` swaps the figure
   for a message and a retry button (`retry` output, `failedText`, `retryText`, UI label `loadFailed`).
+- `FyConfirmService.confirm()`: a yes/no dialog on the popup that resolves to a `boolean`; `destructive` paints the
+  confirm button red and plays a rigid haptic. UI labels `confirm`, `cancel`; popup button style `danger`.
 
 ### Changed
 

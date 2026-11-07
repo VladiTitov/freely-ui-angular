@@ -10,6 +10,9 @@ export interface FyLabels {
   loading: string;
   /** Button of the item list's error state and of a failed card. */
   retry: string;
+  /** Buttons of the confirm dialog. */
+  confirm: string;
+  cancel: string;
   /** Message of a card whose figure could not be loaded. */
   loadFailed: string;
   /** Clear button of the search field. */
@@ -80,6 +83,8 @@ export const DEFAULT_FY_LABELS: FyLabels = {
   back: 'Back',
   loading: 'Loading',
   retry: 'Retry',
+  confirm: 'Confirm',
+  cancel: 'Cancel',
   loadFailed: 'Could not load',
   clear: 'Clear',
   remove: 'Remove',

@@ -53,6 +53,7 @@ export * from './lib/components/page/page.component';
 export * from './lib/components/pagination/pagination.component';
 export * from './lib/components/popup/popup.component';
 export * from './lib/components/popup/popup.service';
+export * from './lib/components/popup/confirm.service';
 export * from './lib/components/search-bar/search-bar.component';
 export * from './lib/components/search-panel/search-panel.component';
 export * from './lib/components/filter-toggle/filter-toggle.component';
