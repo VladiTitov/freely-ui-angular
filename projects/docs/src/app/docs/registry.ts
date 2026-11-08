@@ -7,6 +7,7 @@ import { FEEDBACK_DOCS } from './feedback.docs';
 import { FORM_DOCS } from './forms.docs';
 import { LAYOUT_DOCS } from './layout.docs';
 import { LIST_DOCS } from './lists.docs';
+import { OVERLAY_DOCS } from './overlays.docs';
 import { PEOPLE_DOCS } from './people.docs';
 
 /** Every page, in the order of the menu: by group as DOC_GROUPS lists them, then by title. */
@@ -17,6 +18,7 @@ export const COMPONENT_DOCS: readonly ComponentDoc[] = [
   ...FEEDBACK_DOCS,
   ...LAYOUT_DOCS,
   ...LIST_DOCS,
+  ...OVERLAY_DOCS,
   ...CHART_DOCS,
   ...PEOPLE_DOCS,
   ...DIRECTIVE_DOCS,
