@@ -7,6 +7,7 @@ import { FEEDBACK_DOCS } from './feedback.docs';
 import { FORM_DOCS } from './forms.docs';
 import { LAYOUT_DOCS } from './layout.docs';
 import { LIST_DOCS } from './lists.docs';
+import { MEDIA_DOCS } from './media.docs';
 import { OVERLAY_DOCS } from './overlays.docs';
 import { PEOPLE_DOCS } from './people.docs';
 
@@ -19,6 +20,7 @@ export const COMPONENT_DOCS: readonly ComponentDoc[] = [
   ...LAYOUT_DOCS,
   ...LIST_DOCS,
   ...OVERLAY_DOCS,
+  ...MEDIA_DOCS,
   ...CHART_DOCS,
   ...PEOPLE_DOCS,
   ...DIRECTIVE_DOCS,
