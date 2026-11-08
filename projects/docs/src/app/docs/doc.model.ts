@@ -17,9 +17,35 @@ export interface DocProperty {
   description: string;
 }
 
-export type DocGroup = 'Actions' | 'Forms' | 'Feedback' | 'Layout' | 'Lists' | 'Charts' | 'People';
+export type DocGroup =
+  | 'Actions'
+  | 'Forms'
+  | 'Data'
+  | 'Lists'
+  | 'Feedback'
+  | 'Overlays'
+  | 'Layout'
+  | 'Media'
+  | 'Charts'
+  | 'People'
+  | 'Directives'
+  | 'Pipes';
 
-export const DOC_GROUPS: readonly DocGroup[] = ['Actions', 'Forms', 'Feedback', 'Layout', 'Lists', 'Charts', 'People'];
+/** Order of the groups in the menu; a group with no pages yet is not shown. */
+export const DOC_GROUPS: readonly DocGroup[] = [
+  'Actions',
+  'Forms',
+  'Data',
+  'Lists',
+  'Feedback',
+  'Overlays',
+  'Layout',
+  'Media',
+  'Charts',
+  'People',
+  'Directives',
+  'Pipes',
+];
 
 /** The page of one component. */
 export interface ComponentDoc {
