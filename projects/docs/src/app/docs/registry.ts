@@ -1,5 +1,6 @@
 import { ACTION_DOCS } from './actions.docs';
 import { CHART_DOCS } from './charts.docs';
+import { DATA_DOCS } from './data.docs';
 import { DIRECTIVE_DOCS } from './directives.docs';
 import { ComponentDoc, DOC_GROUPS, DocGroup } from './doc.model';
 import { FEEDBACK_DOCS } from './feedback.docs';
@@ -12,6 +13,7 @@ import { PEOPLE_DOCS } from './people.docs';
 export const COMPONENT_DOCS: readonly ComponentDoc[] = [
   ...ACTION_DOCS,
   ...FORM_DOCS,
+  ...DATA_DOCS,
   ...FEEDBACK_DOCS,
   ...LAYOUT_DOCS,
   ...LIST_DOCS,
