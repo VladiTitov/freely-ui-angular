@@ -9,10 +9,40 @@ import {
   CarouselSlideDirective,
   EmptyStateComponent,
   ImageViewerComponent,
+  PageComponent,
   TabsComponent
 } from '@freely-ui/angular';
 import { ComponentDoc } from './doc.model';
 import { COLUMN } from './example-styles';
+
+const page = `
+<div class="frame">
+  <fy-page title="Wishes">
+    <button titleAddon fyButton type="button" variant="ghost" size="s" iconOnly aria-label="Help">
+      <i class="bi bi-question-circle"></i>
+    </button>
+    <button action fyButton type="button" size="s" icon="bi bi-plus-lg">Add</button>
+    <fy-tabs subheader [tabs]="['Mine', 'Booked']" [(activeIndex)]="tab" ariaLabel="Wishes" />
+    @for (n of rows; track n) {
+      <p class="row">{{ tab === 0 ? 'My wish' : 'Booked wish' }} {{ n }}</p>
+    }
+  </fy-page>
+</div>
+`;
+
+@Component({
+  selector: 'docs-page',
+  imports: [PageComponent, ButtonComponent, TabsComponent],
+  template: page,
+  styles: `
+    .frame { height: 360px; max-width: 420px; overflow: hidden; border-radius: var(--fy-radius-lg); background: var(--fy-primary-background); }
+    .row { margin: 0; padding: 12px 0; border-bottom: 1px solid var(--fy-tertiary-background); }
+  `,
+})
+class PageExample {
+  protected tab = 0;
+  protected readonly rows = Array.from({ length: 15 }, (_, i) => i + 1);
+}
 
 const card = `
 <div class="cards">
@@ -125,6 +155,31 @@ const emptyState = `
 class EmptyStateExample {}
 
 export const LAYOUT_DOCS: ComponentDoc[] = [
+  {
+    slug: 'page',
+    title: 'Page',
+    group: 'Layout',
+    summary: 'A screen of the app: a scroll area with a pinned header of a title, an action and a subheader.',
+    imports: `import { PageComponent } from '@freely-ui/angular';`,
+    selectors: ['fy-page'],
+    examples: [{
+      title: 'A list with tabs',
+      description: 'The page fills its parent and scrolls itself; the header stays pinned. Slots: [titleAddon] after the title, [action] at its end and [subheader] pinned under it, e.g. tabs.',
+      component: PageExample,
+      code: page,
+    }],
+    inputs: [
+      { name: 'title', type: 'string', default: "''", description: 'The title in the header.' },
+      { name: 'bare', type: 'boolean', default: 'false', description: 'No header: only the scroll area, e.g. for a page with an avatar header.' },
+    ],
+    cssVars: [
+      { name: '--fy-page-sticky-height', description: 'Set by the page: the live height of its pinned header, for content that sticks under it, e.g. the item list toolbar.' },
+    ],
+    accessibility: [
+      'The header is a header element; the title is plain text, so give the screen an h1 of its own when it needs one.',
+      'The scroll area is the page’s, so the avatar header and the sticky toolbar of the item list find it on their own.',
+    ],
+  },
   {
     slug: 'card',
     title: 'Card',

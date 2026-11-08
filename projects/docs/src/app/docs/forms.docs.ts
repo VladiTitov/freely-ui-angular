@@ -237,6 +237,32 @@ class DatePickerExample {
   protected readonly birthday = signal('1990-05-17');
 }
 
+const formField = `
+<fy-form-field label="Group name" hint="Friends see it in their list." required>
+  <input fyTextField type="text" [(ngModel)]="group" />
+</fy-form-field>
+
+<fy-form-field label="About the wish" counter [error]="about.length > 120 ? 'Keep it under 120 characters.' : null">
+  <textarea fyTextarea rows="1" maxlength="140" [(ngModel)]="about"></textarea>
+</fy-form-field>
+
+<fy-form-field label="Confirmation code">
+  <fy-code-input [(ngModel)]="code" />
+</fy-form-field>
+`;
+
+@Component({
+  selector: 'docs-form-field',
+  imports: [FormFieldComponent, TextFieldDirective, TextareaDirective, CodeInputComponent, FormsModule],
+  template: formField,
+  host: COLUMN,
+})
+class FormFieldExample {
+  protected group = 'Book club';
+  protected about = 'A big mug that keeps tea hot.';
+  protected code = '';
+}
+
 const FORMS_NOTE = 'Works with ngModel and reactive forms and takes its disabled state from the form.';
 
 export const FORM_DOCS: ComponentDoc[] = [
@@ -496,5 +522,38 @@ export const FORM_DOCS: ComponentDoc[] = [
       { name: '--fy-date-picker-font-size', default: 'var(--fy-font-size-m)', description: 'Size of the date.' },
     ],
     accessibility: ['The native date input lies over the chip, so the keyboard and the system picker work as usual.'],
+  },
+  {
+    slug: 'form-field',
+    title: 'Form field',
+    group: 'Forms',
+    summary: 'A label, the control and a line under it for a hint, an error or the length, wired to the control without ids.',
+    imports: `import { FormFieldComponent } from '@freely-ui/angular';`,
+    selectors: ['fy-form-field'],
+    examples: [{
+      title: 'A hint, a counter with an error and a code',
+      description: 'It works with fyTextField, fyTextarea and fy-code-input. The error replaces the hint while it is set; required only marks the label and the control, validation stays with the form. A revealable password gets a show button, see the text field page.',
+      component: FormFieldExample,
+      code: formField,
+    }],
+    inputs: [
+      { name: 'label', type: 'string', description: 'The label, pointed at the control.' },
+      { name: 'hint', type: 'string | null', description: 'A line under the control.' },
+      { name: 'error', type: 'string | null', description: 'Shown instead of the hint while set; marks the field and the control invalid.' },
+      { name: 'required', type: 'boolean', default: 'false', description: 'An asterisk on the label and aria-required on the control.' },
+      { name: 'counter', type: 'boolean', default: 'false', description: 'The length of the text, against maxlength when the control has one.' },
+    ],
+    cssVars: [
+      { name: '--fy-form-field-gap', default: '6px', description: 'Space between the label, the control and the line under it.' },
+      { name: '--fy-form-field-inset', default: '14px', description: 'Side inset of the label and the line under it.' },
+      { name: '--fy-form-field-label-size', default: 'var(--fy-font-size-s)', description: 'Size of the label.' },
+      { name: '--fy-form-field-label-color', default: 'var(--fy-secondary-text)', description: 'Colour of the label.' },
+      { name: '--fy-form-field-reveal-size', default: '44px', description: 'Size of the show-password button.' },
+      { name: '--fy-form-field-reveal-icon-size', default: '18px', description: 'Size of its icon.' },
+    ],
+    accessibility: [
+      'The label points at the control; the control is described by the hint or the error and gets aria-invalid and aria-required.',
+      'The error is read by a polite live region; the counter is hidden from screen readers, maxlength already limits the text.',
+    ],
   },
 ];
