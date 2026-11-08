@@ -1,7 +1,7 @@
 import { ACTION_DOCS } from './actions.docs';
 import { CHART_DOCS } from './charts.docs';
 import { DATA_DOCS } from './data.docs';
-import { DIRECTIVE_DOCS } from './directives.docs';
+import { DIRECTIVE_DOCS, PIPE_DOCS } from './directives.docs';
 import { ComponentDoc, DOC_GROUPS, DocGroup } from './doc.model';
 import { FEEDBACK_DOCS } from './feedback.docs';
 import { FORM_DOCS } from './forms.docs';
@@ -24,6 +24,7 @@ export const COMPONENT_DOCS: readonly ComponentDoc[] = [
   ...CHART_DOCS,
   ...PEOPLE_DOCS,
   ...DIRECTIVE_DOCS,
+  ...PIPE_DOCS,
 ].sort((a, b) => DOC_GROUPS.indexOf(a.group) - DOC_GROUPS.indexOf(b.group) || a.title.localeCompare(b.title, 'en'));
 
 /** The groups that have pages, each with its pages in order. */
