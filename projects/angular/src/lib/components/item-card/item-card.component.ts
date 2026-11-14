@@ -17,4 +17,6 @@ export class ItemCardComponent {
   @Input() subtitle?: string | null;
   /** Accent border and subtitle, e.g. for a default or selected row. */
   @Input({ transform: booleanAttribute }) accent = false;
+  /** Let title and subtitle wrap onto several lines instead of truncating with an ellipsis. */
+  @Input({ transform: booleanAttribute }) wrap = false;
 }

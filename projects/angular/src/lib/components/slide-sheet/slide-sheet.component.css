@@ -52,10 +52,20 @@
 }
 
 .fy-slide-sheet__skip {
+  margin: 0;
+  padding: var(--fy-space-s) var(--fy-space-m);
+  border: 0;
+  border-radius: var(--fy-radius-md);
   background: none;
   color: var(--fy-secondary-text);
+  font-family: inherit;
   font-size: var(--fy-font-size-m);
   cursor: pointer;
+}
+
+.fy-slide-sheet__skip:focus-visible {
+  outline: 2px solid var(--fy-accent);
+  outline-offset: 2px;
 }
 
 .fy-slide-sheet__track {

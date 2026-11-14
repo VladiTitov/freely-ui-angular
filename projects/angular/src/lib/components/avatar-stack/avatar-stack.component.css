@@ -9,6 +9,9 @@
 
 /* Ring in the surface colour separates overlapping avatars. */
 .fy-avatar-stack__item {
+  /* Own stacking context: the positioned avatar inside cannot paint above the next item, so later items sit on top. */
+  position: relative;
+  z-index: 0;
   display: flex;
   border-radius: 50%;
   box-shadow: 0 0 0 2px var(--fy-avatar-stack-ring, var(--fy-secondary-background));
@@ -32,6 +35,7 @@
 }
 
 .fy-avatar-stack__more {
+  z-index: 1;
   color: var(--fy-accent);
   font-size: var(--fy-font-size-s);
   font-weight: 600;

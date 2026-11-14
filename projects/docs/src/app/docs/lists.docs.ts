@@ -232,18 +232,18 @@ export const LIST_DOCS: ComponentDoc[] = [
     inputs: [
       { name: 'startActions', type: 'SwipeAction[]', default: '[]', description: 'Revealed by swiping toward the end of the line; the first sits at the outer edge.' },
       { name: 'endActions', type: 'SwipeAction[]', default: '[]', description: 'Revealed by swiping toward the start; the first sits at the outer edge.' },
-      { name: 'actionWidth', type: 'number', default: '76', description: 'Width of one button in px.' },
+      { name: 'actionWidth', type: 'number', default: '76', description: 'Width of the slot of one round button in px.' },
       { name: 'fullSwipe', type: 'boolean', default: 'true', description: 'Swiping past 60% of the row runs its outer action.' },
       { name: 'disabled', type: 'boolean', default: 'false', description: 'The row does not move.' },
     ],
     outputs: [{ name: 'action', type: 'string', description: 'The id of the action pressed or swiped; the row closes.' }],
     cssVars: [
-      { name: '--fy-swipe-actions-radius', default: 'var(--fy-radius-xl)', description: 'Corner radius; matches the item card.' },
+      { name: '--fy-swipe-actions-button-size', default: '52px', description: 'Diameter of a round button.' },
       { name: '--fy-swipe-actions-accent / -danger / -neutral', description: 'Fill of the buttons by tone.' },
-      { name: '--fy-swipe-actions-color', default: '#fff', description: 'Text and icon colour of the buttons.' },
+      { name: '--fy-swipe-actions-color', default: '#fff', description: 'Icon colour of the buttons.' },
     ],
     accessibility: [
-      'The buttons are real buttons named by their label; focusing one opens its side, so it is in view.',
+      'The buttons are real buttons named by their label (aria-label), though round and icon-only; focusing one opens its side, so it is in view.',
       'Esc and a tap anywhere else close the row; one row is open at a time.',
       'The click that ends a swipe, and a tap on an open row, do not reach the row itself.',
     ],

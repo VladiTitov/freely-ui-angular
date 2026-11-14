@@ -31,7 +31,7 @@ save(grid: ImageGridComponent) {
   styles: `button { align-self: flex-start; } p { margin: 0; color: var(--fy-secondary-text); }`,
 })
 class ImageGridExample {
-  protected readonly saved: ImageGridItem[] = [1015, 1016].map(id => ({ id: String(id), url: `https://picsum.photos/id/${id}/160/160` }));
+  protected readonly saved: ImageGridItem[] = [1015, 1016].map(id => ({ id: String(id), url: `demo/photo-${id}.svg` }));
   protected readonly result = signal('Add or remove a photo, then save.');
 
   protected save(grid: ImageGridComponent): void {
@@ -62,7 +62,7 @@ const imageViewer = `
   `,
 })
 class ImageViewerExample {
-  protected readonly photos: ViewerImage[] = [1018, 1019, 1021, 1022].map(id => ({ url: `https://picsum.photos/id/${id}/1200/900` }));
+  protected readonly photos: ViewerImage[] = [1018, 1019, 1021, 1022].map(id => ({ url: `demo/photo-${id}.svg` }));
 }
 
 const markdownText = `<fy-markdown-text [text]="text" />`;

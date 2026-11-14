@@ -66,3 +66,15 @@
 .fy-item-card--accent .fy-item-card__subtitle {
   color: var(--fy-accent);
 }
+
+.fy-item-card--wrap .fy-item-card__title,
+.fy-item-card--wrap .fy-item-card__subtitle {
+  overflow: visible;
+  white-space: normal;
+  text-overflow: clip;
+}
+
+.fy-item-card--wrap .fy-item-card__subtitle {
+  margin-top: 2px;
+  line-height: 1.3;
+}

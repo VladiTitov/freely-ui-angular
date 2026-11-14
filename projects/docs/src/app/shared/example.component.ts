@@ -41,7 +41,9 @@ import { CodeBlockComponent } from './code-block.component';
       border: 1px solid var(--fy-tertiary-background);
       border-radius: var(--fy-radius-md);
       background: var(--fy-primary-background);
-      overflow-x: auto;
+      /* Not clipped: dropdown panels and other popups must be able to open past the preview box. */
+      overflow: visible;
+      min-width: 0;
     }
   `,
 })
