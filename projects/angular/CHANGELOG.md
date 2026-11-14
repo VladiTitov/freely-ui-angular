@@ -3,6 +3,23 @@
 All notable changes to `@freely-ui/angular` are listed here. The project follows
 [Semantic Versioning](https://semver.org); while the version is `0.x`, a minor release may break the API.
 
+## 0.2.1
+
+### Fixed
+
+- `fy-item-card`: long titles and subtitles can wrap onto several lines with the new `wrap` input, instead of being
+  truncated with an ellipsis.
+- `fy-slide-sheet`: the "Skip" button in full mode no longer shows the browser's default button border and padding, and
+  has a focus ring.
+- `fy-avatar-stack`: the "+N" badge is drawn on top of the last avatar instead of being overlapped by it.
+- `fy-swipe-actions`: the actions are round icon buttons instead of a filled rectangular panel, which removes the
+  square edge and the leftover fill under the row.
+
+### Changed
+
+- `fy-swipe-actions`: the `--fy-swipe-actions-radius` variable is replaced by `--fy-swipe-actions-button-size`
+  (52px by default).
+
 ## 0.2.0
 
 ### Added
