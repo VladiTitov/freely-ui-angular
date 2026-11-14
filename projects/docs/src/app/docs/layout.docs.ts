@@ -35,7 +35,7 @@ const page = `
   imports: [PageComponent, ButtonComponent, TabsComponent],
   template: page,
   styles: `
-    .frame { height: 360px; max-width: 420px; overflow: hidden; border-radius: var(--fy-radius-lg); background: var(--fy-primary-background); }
+    .frame { box-sizing: border-box; height: 360px; max-width: 420px; padding: 20px 20px 0; overflow: hidden; border-radius: var(--fy-radius-lg); background: var(--fy-primary-background); }
     .row { margin: 0; padding: 12px 0; border-bottom: 1px solid var(--fy-tertiary-background); }
   `,
 })
@@ -118,7 +118,7 @@ const carousel = `
 class CarouselExample {
   protected readonly index = signal(0);
   protected readonly photos = [1015, 1016, 1018, 1019, 1021].map(id => ({
-    url: `https://picsum.photos/id/${id}/800/600`,
+    url: `demo/photo-${id}.svg`,
     width: 800,
     height: 600,
   }));
