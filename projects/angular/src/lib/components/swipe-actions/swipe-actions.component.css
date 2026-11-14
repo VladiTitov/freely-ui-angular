@@ -24,21 +24,44 @@
   bottom: 0;
   display: flex;
   overflow: hidden;
+  box-sizing: content-box;
 }
 
 :host(:not(.fy-swipe-actions--dragging)) .fy-swipe-actions__actions {
-  transition: width var(--fy-duration-base) var(--fy-ease-out, ease-out);
+  transition:
+    width var(--fy-duration-base) var(--fy-ease-out, ease-out),
+    visibility 0s linear;
+}
+
+/*
+ * Closed: not drawn at all, so no hairline of the fill shows along the edge of the row. The hiding waits for the
+ * closing slide to end.
+ */
+.fy-swipe-actions__actions--idle {
+  visibility: hidden;
+}
+
+:host(:not(.fy-swipe-actions--dragging)) .fy-swipe-actions__actions--idle {
+  transition:
+    width var(--fy-duration-base) var(--fy-ease-out, ease-out),
+    visibility 0s linear var(--fy-duration-base);
 }
 
 /* The first action of a side sits at the outer edge. */
+/*
+ * The fill runs on under the row by one corner radius, so the rounded corners of the row show fill behind them
+ * rather than a square edge with dark wedges.
+ */
 .fy-swipe-actions__actions--start {
   inset-inline-start: 0;
   flex-direction: row;
+  padding-inline-end: var(--fy-swipe-actions-radius, var(--fy-radius-xl));
 }
 
 .fy-swipe-actions__actions--end {
   inset-inline-end: 0;
   flex-direction: row-reverse;
+  padding-inline-start: var(--fy-swipe-actions-radius, var(--fy-radius-xl));
 }
 
 .fy-swipe-actions__button {

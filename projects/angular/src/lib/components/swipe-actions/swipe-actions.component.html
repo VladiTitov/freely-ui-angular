@@ -1,6 +1,6 @@
 @if (startActions().length) {
   <div class="fy-swipe-actions__actions fy-swipe-actions__actions--start"
-    [style.width.px]="offset() > 0 ? offset() : 0">
+    [class.fy-swipe-actions__actions--idle]="offset() <= 0" [style.width.px]="offset() > 0 ? offset() : 0">
     @for (item of startActions(); track item.id; let first = $first) {
       <ng-container *ngTemplateOutlet="button; context: { $implicit: item, primary: first }" />
     }
@@ -8,7 +8,7 @@
 }
 @if (endActions().length) {
   <div class="fy-swipe-actions__actions fy-swipe-actions__actions--end"
-    [style.width.px]="offset() < 0 ? -offset() : 0">
+    [class.fy-swipe-actions__actions--idle]="offset() >= 0" [style.width.px]="offset() < 0 ? -offset() : 0">
     @for (item of endActions(); track item.id; let first = $first) {
       <ng-container *ngTemplateOutlet="button; context: { $implicit: item, primary: first }" />
     }
